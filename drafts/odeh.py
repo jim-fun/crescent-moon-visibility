@@ -6,7 +6,6 @@ import astronomy
 #import pandas
 from tqdm import tqdm
 
-
 KM_PER_AU = 1.4959787069098932e+8   #<const> The number of kilometers per astronomical unit.
 
 def calculate(base_time, latitude, longitude):
