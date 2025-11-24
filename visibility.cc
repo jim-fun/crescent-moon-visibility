@@ -14,17 +14,21 @@
 #pragma GCC diagnostic pop
 
 // To be passed compiled time
-#ifndef PIXEL_PER_DEGREE
-#define PIXEL_PER_DEGREE 4
+#ifndef PIXEL_PER_DEGREE_LON
+#define PIXEL_PER_DEGREE_LON 4
+#endif
+#ifndef PIXEL_PER_DEGREE_LAT
+#define PIXEL_PER_DEGREE_LAT 4
 #endif
 
-const unsigned pixelsPerDegree = PIXEL_PER_DEGREE;
+const unsigned pixelsPerDegreeLon = PIXEL_PER_DEGREE_LON;
+const unsigned pixelsPerDegreeLat = PIXEL_PER_DEGREE_LAT;
 const int minLatitude = -90;
 const int maxLatitude = +90;
 const int minLongitude = -180;
 const int maxLongitude = +180;
-const unsigned width = (maxLongitude - minLongitude) * pixelsPerDegree;
-const unsigned height = (maxLatitude - minLatitude) * pixelsPerDegree;
+const unsigned width = (maxLongitude - minLongitude) * pixelsPerDegreeLon;
+const unsigned height = (maxLatitude - minLatitude) * pixelsPerDegreeLat;
 
 struct details_t
 {
@@ -202,8 +206,8 @@ static void render(uint32_t *image, astro_time_t base_time)
         // double max_q_value = -INFINITY; unsigned max_q_value_x = 0, max_q_value_y = 0;
         for (unsigned j = 0; j < height; ++j)
         {
-            double latitude = ((height - (j + 1)) / (double)pixelsPerDegree) + minLatitude;
-            double longitude = (i / (double)pixelsPerDegree) + minLongitude;
+            double latitude = ((height - (j + 1)) / (double)pixelsPerDegreeLat) + minLatitude;
+            double longitude = (i / (double)pixelsPerDegreeLon) + minLongitude;
             bool draw_moon_line = false;
             double result_time = 0;
             double q_value = -INFINITY;
