@@ -1,4 +1,4 @@
-#!/Users/yaaqov/github/crescent-moon-visibility/.venv/bin/python3.12
+#!/home/yaaqov/jupyterlab/crescent-moon-visibility/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
