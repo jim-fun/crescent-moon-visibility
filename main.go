@@ -191,7 +191,7 @@ func main() {
 		for i := 0; i < DaysToProcess; i++ {
 			currentDate := nm.AddDate(0, 0, i)
 			dateStr := currentDate.Format("2006-01-02")
-			outputFile := filepath.Join(outDir, dateStr+".png")
+			outputFile := filepath.Join(outDir, dateStr)
 			moonAge := currentDate.Sub(nm).Hours() / 24.0
 			tasks = append(tasks, task{DateStr: dateStr, OutputFile: outputFile, MoonAge: moonAge})
 		}
