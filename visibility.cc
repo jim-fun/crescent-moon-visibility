@@ -208,6 +208,12 @@ static void render(uint32_t *image, astro_time_t base_time)
         {
             double latitude = ((height - (j + 1)) / (double)pixelsPerDegreeLat) + minLatitude;
             double longitude = (i / (double)pixelsPerDegreeLon) + minLongitude;
+
+            if (latitude > 60 || latitude < -60) {
+                image[i + j * width] = 0x00000000;
+                continue;
+            }
+
             bool draw_moon_line = false;
             double result_time = 0;
             double q_value = -INFINITY;
@@ -226,13 +232,13 @@ static void render(uint32_t *image, astro_time_t base_time)
             else if (q_code == 'F')
                 color = 0x00000000;
             else if (q_code == 'G')
-                color = 0x00000000;
+                color = 0x7F404040; // Semi-transparent Dark Gray for pre-conjunction
             else if (q_code == 'H')
                 color = 0x00000000;
             else if (q_code == 'I')
                 color = 0x00000000;
             else if (q_code == 'J')
-                color = 0x00000000;
+                color = 0x7F404040; // Semi-transparent Dark Gray for pre-conjunction + moonset before sunset
             if (draw_moon_line)
                 color = 0xFFFFFFFF;
             image[i + j * width] = color;

@@ -4,30 +4,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 
 ## High Priority Features
 
-### 1. Latitude Capping
-- **Task**: Cap latitude at -60° & +60°
-- **Rationale**: Extreme polar regions have unusual sunset/sunrise behavior that can cause edge cases
-- **Implementation**: Add latitude bounds checking in the render function
-- **Impact**: Improved stability and more reliable results
 
-### 2. Moon Age Display
-- **Task**: Add moon age information to map visualization
-- **Rationale**: Users want to know the elapsed time since new moon
-- **Implementation**:
-  - Display moon age contour lines (already partially implemented with white lines)
-  - Add moon age value to image annotation
-  - Include in legend or map metadata
-- **Impact**: Better understanding of lunar phase timing
-
-### 3. Before Conjunction Color Coding
-- **Task**: Implement distinct color for regions before astronomical conjunction
-- **Rationale**: Distinguish between pre-conjunction (old crescent from previous lunation) and post-conjunction (new crescent)
-- **Implementation**:
-  - Add color category for pre-conjunction regions
-  - Update rendering logic to detect this state
-  - Document the new color in README
-- **Status**: Partially implemented (category 'G' exists but rendered as black)
-- **Impact**: More accurate astronomical representation
 
 ## Medium Priority Features
 

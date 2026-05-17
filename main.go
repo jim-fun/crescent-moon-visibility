@@ -46,6 +46,7 @@ func getNewMoonsInYear(year int) []time.Time {
 type task struct {
 	DateStr    string
 	OutputFile string
+	MoonAge    float64
 }
 
 func parseYears(yearsStr string, startYear, endYear int) []int {
@@ -106,7 +107,8 @@ func main() {
 			currentDate := nm.AddDate(0, 0, i)
 			dateStr := currentDate.Format("2006-01-02")
 			outputFile := filepath.Join(outDir, dateStr+".png")
-			tasks = append(tasks, task{DateStr: dateStr, OutputFile: outputFile})
+			moonAge := currentDate.Sub(nm).Hours() / 24.0
+			tasks = append(tasks, task{DateStr: dateStr, OutputFile: outputFile, MoonAge: moonAge})
 		}
 	}
 
@@ -138,7 +140,7 @@ func main() {
 				if stat, err := os.Stat(t.OutputFile); err == nil {
 					fmt.Printf("✓ [Worker %d] Generated %s (%.2f MB)\n", workerID, t.OutputFile, float64(stat.Size())/(1024*1024))
 					mu.Lock()
-					mapFiles = append(mapFiles, t.OutputFile)
+					mapFiles = append(mapFiles, fmt.Sprintf("%s|%.2f", t.OutputFile, t.MoonAge))
 					mu.Unlock()
 				}
 			}

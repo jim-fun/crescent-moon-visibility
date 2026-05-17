@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 from PIL import Image as PILImage, ImageDraw, ImageFont
 
-def process_file(output_file, base_umat):
+def process_file(output_file, base_umat, moon_age="?"):
     # Load overlay
     overlay = cv2.imread(output_file, cv2.IMREAD_UNCHANGED)
     if overlay is None:
@@ -58,7 +58,7 @@ def process_file(output_file, base_umat):
     draw = ImageDraw.Draw(pil_img, 'RGBA')
     
     # Legend background
-    draw.rectangle([3100, 1820, 3820, 2140], fill=(255, 255, 255, 230))
+    draw.rectangle([3100, 1820, 3820, 2180], fill=(255, 255, 255, 230))
     
     try:
         font_large = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf", 36)
@@ -70,11 +70,12 @@ def process_file(output_file, base_umat):
         font_item = font_large
         
     date_str = os.path.basename(output_file).replace('.png', '')
-    draw.text((3120, 1840), date_str, font=font_large, fill=(0, 0, 0, 255))
+    draw.text((3120, 1840), f"{date_str} (Age: {moon_age} days)", font=font_large, fill=(0, 0, 0, 255))
     draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
     
     y = 1938
     colors = [
+        ("#404040", "Before Conjunction / Moonset before Sunset"),
         ("#0080A0", "Not visible (even with telescope)"),
         ("#FFCC00", "Visible only with optical aid"),
         ("#00E6E6", "Visible to experienced observer"),
@@ -108,5 +109,8 @@ if __name__ == "__main__":
     # Pre-load base map to GPU memory
     base_umat = cv2.UMat(base)
         
-    for f in sys.argv[1:]:
-        process_file(f, base_umat)
+    for arg in sys.argv[1:]:
+        parts = arg.split('|')
+        f = parts[0]
+        moon_age = parts[1] if len(parts) > 1 else "?"
+        process_file(f, base_umat, moon_age)
