@@ -11,6 +11,7 @@
 //   - macOS: Metal/OpenCL
 //   - Linux/NVIDIA: CUDA via OpenCL
 //   - Linux/AMD: ROCm via OpenCL
+//   - Linux/Intel: Intel GPU Compute Runtime via OpenCL
 package main
 
 import (
@@ -19,6 +20,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -82,23 +84,63 @@ func getNewMoonsCached(year int) []time.Time {
 	return moons
 }
 
+// parseMonths parses a comma-separated string of month numbers (1-12) into a set.
+// Returns nil (zero value) when the input is empty — caller should use all months.
+func parseMonths(s string) map[int]bool {
+	if s == "" {
+		return nil
+	}
+	m := make(map[int]bool)
+	for _, p := range strings.Split(s, ",") {
+		n, err := strconv.Atoi(strings.TrimSpace(p))
+		if err == nil && n >= 1 && n <= 12 {
+			m[n] = true
+		}
+	}
+	return m
+}
+
 func main() {
 	var yearsStr string
+	var monthsStr string
 	var startYear, endYear int
 	var outDir string
 	var maxWorkers int
+	var useGPU bool
+	var noBlend bool
 
 	flag.StringVar(&yearsStr, "years", "", "Comma-separated list of years (e.g., 2027,2028)")
+	flag.StringVar(&monthsStr, "months", "", "Comma-separated list of months to process (e.g., 1,2 for Jan/Feb; 1-12) — overrides year range when set")
 	flag.IntVar(&startYear, "start", 2027, "Start year (if -years is not set)")
 	flag.IntVar(&endYear, "end", 2027, "End year (inclusive)")
 	flag.StringVar(&outDir, "out", "output_maps", "Output directory for the generated maps")
 	flag.IntVar(&maxWorkers, "workers", 4, "Number of parallel workers for CPU generation")
+	flag.BoolVar(&useGPU, "gpu", false, "Use GPU renderer (gpu_visibility.out) instead of CPU (visibility.out)")
+	flag.BoolVar(&noBlend, "noblend", false, "Skip GPU blending step — useful when map_nasa.png or OpenCV dependencies are unavailable")
 	flag.Parse()
 
 	years := parseYears(yearsStr, startYear, endYear)
 	if len(years) == 0 {
 		fmt.Println("No years specified to process.")
 		return
+	}
+
+	// Determine renderer: GPU binary if available and -gpu flag, otherwise CPU.
+	var rendererBin string
+	if useGPU {
+		gpuBin := "./gpu_visibility.out"
+		if _, err := os.Stat(gpuBin); err == nil {
+			rendererBin = gpuBin
+		} else {
+			fmt.Printf("[warn] -gpu requested but %s not found — falling back to CPU renderer\n", gpuBin)
+			rendererBin = "./visibility.out"
+		}
+	} else {
+		rendererBin = "./visibility.out"
+		if _, err := os.Stat(rendererBin); err != nil {
+			fmt.Printf("[warn] %s not found — run 'make cpu' to build the CPU renderer\n", rendererBin)
+			return
+		}
 	}
 
 	if err := os.MkdirAll(outDir, 0755); err != nil {
@@ -113,9 +155,35 @@ func main() {
 		allMoons = append(allMoons, moons...)
 	}
 
-	fmt.Printf("Processing %d years. Found %d total new moons.\n", len(years), len(allMoons))
-	fmt.Printf("Generating %d days per new moon = %d total maps\n", DaysToProcess, len(allMoons)*DaysToProcess)
-	fmt.Printf("Output Directory: %s | Workers: %d\n", outDir, maxWorkers)
+	// Filter by month if -months is set.
+	selectedMonths := parseMonths(monthsStr)
+	if selectedMonths != nil {
+		var filtered []time.Time
+		for _, m := range allMoons {
+			if selectedMonths[int(m.Month())] {
+				filtered = append(filtered, m)
+			}
+		}
+		allMoons = filtered
+	}
+
+	fmt.Printf("Processing %d year(s). Found %d total new moons (%d maps).\n",
+		len(years), len(allMoons), len(allMoons)*DaysToProcess)
+	if selectedMonths != nil {
+		var months []int
+		for m := range selectedMonths {
+			months = append(months, m)
+		}
+		sort.Ints(months)
+		fmt.Printf("  Filtered to month(s): %s\n", strings.Join(func() []string {
+			var ss []string
+			for _, m := range months {
+				ss = append(ss, strconv.Itoa(m))
+			}
+			return ss
+		}(), ","))
+	}
+	fmt.Printf("Output Directory: %s | Workers: %d | Renderer: %s\n", outDir, maxWorkers, rendererBin)
 
 	// Build the task list: for each new moon, generate maps for N consecutive days.
 	var tasks []task
@@ -143,15 +211,15 @@ func main() {
 	globalStartTime := time.Now()
 	cpuStartTime := time.Now()
 
-	// Phase 1: Parallel CPU rendering via the C++ visibility.out binary.
+	// Phase 1: Parallel rendering via the C++ renderer binary.
 	// Each worker picks tasks from the channel and shells out to the renderer.
-	fmt.Println("\n[1/2] Starting parallel CPU generation (OpenMP calculation)...")
+	fmt.Println("\n[1/2] Starting parallel generation (" + func() string { if useGPU { return "GPU (OpenCL)" } else { return "CPU (OpenMP)" } }() + ")...")
 	for i := 0; i < maxWorkers; i++ {
 		wg.Add(1)
 		go func(workerID int) {
 			defer wg.Done()
 			for t := range taskCh {
-				cmd := exec.Command("./visibility.out", t.DateStr, "map", TimeType, Method, t.OutputFile)
+				cmd := exec.Command(rendererBin, t.DateStr, "map", TimeType, Method, t.OutputFile)
 				if err := cmd.Run(); err != nil {
 					fmt.Printf("✗ [Worker %d] Failed %s: %v\n", workerID, t.DateStr, err)
 					continue
@@ -168,12 +236,16 @@ func main() {
 	}
 
 	wg.Wait()
-	fmt.Printf("=> CPU generation complete in %.2fs.\n", time.Since(cpuStartTime).Seconds())
+	rendererName := "CPU"
+	if useGPU {
+		rendererName = "GPU"
+	}
+	fmt.Printf("=> %s generation complete in %.2fs.\n", rendererName, time.Since(cpuStartTime).Seconds())
 
 	// Phase 2: GPU-accelerated batch blending via OpenCV OpenCL T-API.
 	// All generated PNGs are passed to gpu_blend.py in a single invocation
 	// to amortise GPU context setup and base-map loading costs.
-	if len(mapFiles) > 0 {
+	if len(mapFiles) > 0 && !noBlend {
 		fmt.Println("\n[2/2] Starting universal GPU batch blending (macOS Metal / AMD ROCm / NVIDIA CUDA)...")
 
 		args := append([]string{"gpu_blend.py"}, mapFiles...)

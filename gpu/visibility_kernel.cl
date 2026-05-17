@@ -1,0 +1,302 @@
+// visibility_kernel.cl — OpenCL kernel for crescent moon visibility computation.
+//
+// This kernel receives precomputed ephemeris lookup tables from the CPU host
+// (sun/moon positions at fine time intervals) and performs per-pixel:
+//   1. Horizon coordinate transforms (equatorial → local alt/az)
+//   2. Rise/set time binary search
+//   3. Visibility parameter computation
+//   4. Yallop/Odeh category classification
+//
+// Compatible with: macOS (Metal/OpenCL), Linux NVIDIA (CUDA/OpenCL),
+//                  Linux AMD (ROCm/OpenCL)
+
+#pragma OPENCL EXTENSION cl_khr_fp64 : enable
+
+#define DEG2RAD 0.017453292519943295
+#define RAD2DEG 57.29577951308232
+#define PI_VAL  3.14159265358979323846
+
+// ---------- helpers ----------
+
+// Compute local sidereal time (hours) for a given UT offset (days) and longitude (degrees).
+// gmst0 is the GMST at the base_time epoch, precomputed on host.
+double local_sidereal_time(double ut_offset_days, double longitude_deg, double gmst0_hours) {
+    // Earth rotates 360.98564736629 deg/day relative to stars
+    double gmst = gmst0_hours + ut_offset_days * 24.0 * 1.00273790935;
+    double lst = gmst + longitude_deg / 15.0;
+    // Normalize to [0,24)
+    lst = fmod(lst, 24.0);
+    if (lst < 0.0) lst += 24.0;
+    return lst;
+}
+
+// Equatorial (RA hours, Dec degrees) → altitude (radians) for observer at lat_rad
+double eq_to_alt(double ra_hours, double dec_deg, double lat_rad, double lst_hours) {
+    double ha_rad = (lst_hours - ra_hours) * 15.0 * DEG2RAD;
+    double dec_rad = dec_deg * DEG2RAD;
+    return asin(sin(lat_rad) * sin(dec_rad) + cos(lat_rad) * cos(dec_rad) * cos(ha_rad));
+}
+
+// Equatorial → azimuth (radians, measured from North through East)
+double eq_to_az(double ra_hours, double dec_deg, double lat_rad, double lst_hours, double alt_rad) {
+    double ha_rad = (lst_hours - ra_hours) * 15.0 * DEG2RAD;
+    double dec_rad = dec_deg * DEG2RAD;
+    double cos_lat = cos(lat_rad);
+    double sin_az_num = -sin(ha_rad) * cos(dec_rad);
+    double cos_az_num = sin(dec_rad) * cos_lat - cos(dec_rad) * sin(lat_rad) * cos(ha_rad);
+    double az = atan2(sin_az_num, cos_az_num);
+    if (az < 0.0) az += 2.0 * PI_VAL;
+    return az;
+}
+
+// Linear interpolation helper for ephemeris table lookup
+double interp(__global const double *table, double fractional_idx, int max_idx) {
+    int i0 = (int)floor(fractional_idx);
+    if (i0 < 0) i0 = 0;
+    if (i0 >= max_idx - 1) i0 = max_idx - 2;
+    double frac = fractional_idx - (double)i0;
+    return table[i0] + frac * (table[i0 + 1] - table[i0]);
+}
+
+// Convert a UT offset (days from base_time) to an ephemeris table index.
+// The table covers [start_offset, start_offset + n_steps * step_days).
+double ut_to_index(double ut_offset, double start_offset, double step_days) {
+    return (ut_offset - start_offset) / step_days;
+}
+
+// Binary search for the time when a body crosses the horizon (altitude = threshold).
+// direction: +1 = search for setting (alt goes below threshold)
+//           -1 = search for rising  (alt goes above threshold)
+// Returns the UT offset (days) of the crossing, or -9999 on failure.
+double search_rise_set(
+    __global const double *body_ra,
+    __global const double *body_dec,
+    int n_steps, double start_offset, double step_days,
+    double lat_rad, double longitude_deg, double gmst0,
+    double threshold_rad, int is_setting,
+    double search_start, double search_end)
+{
+    // Coarse scan: find sign change
+    int n_scan = 200;
+    double dt = (search_end - search_start) / (double)n_scan;
+    double prev_alt = 0.0;
+    double t_lo = -9999.0, t_hi = -9999.0;
+    int found = 0;
+
+    for (int k = 0; k <= n_scan; k++) {
+        double t = search_start + k * dt;
+        double idx = ut_to_index(t, start_offset, step_days);
+        double ra  = interp(body_ra,  idx, n_steps);
+        double dec = interp(body_dec, idx, n_steps);
+        double lst = local_sidereal_time(t, longitude_deg, gmst0);
+        double alt = eq_to_alt(ra, dec, lat_rad, lst);
+        double val = alt - threshold_rad;
+
+        if (k > 0) {
+            // For setting: look for val going from positive to negative
+            // For rising:  look for val going from negative to positive
+            if (is_setting && prev_alt > 0.0 && val <= 0.0) {
+                t_lo = search_start + (k - 1) * dt;
+                t_hi = t;
+                found = 1;
+                break;
+            }
+            if (!is_setting && prev_alt < 0.0 && val >= 0.0) {
+                t_lo = search_start + (k - 1) * dt;
+                t_hi = t;
+                found = 1;
+                break;
+            }
+        }
+        prev_alt = val;
+    }
+
+    if (!found) return -9999.0;
+
+    // Refine with bisection (20 iterations → ~1e-6 day precision ≈ 0.1 second)
+    for (int iter = 0; iter < 20; iter++) {
+        double t_mid = 0.5 * (t_lo + t_hi);
+        double idx = ut_to_index(t_mid, start_offset, step_days);
+        double ra  = interp(body_ra,  idx, n_steps);
+        double dec = interp(body_dec, idx, n_steps);
+        double lst = local_sidereal_time(t_mid, longitude_deg, gmst0);
+        double alt = eq_to_alt(ra, dec, lat_rad, lst) - threshold_rad;
+
+        if ((is_setting && alt > 0.0) || (!is_setting && alt < 0.0))
+            t_lo = t_mid;
+        else
+            t_hi = t_mid;
+    }
+    return 0.5 * (t_lo + t_hi);
+}
+
+// ---------- main kernel ----------
+
+__kernel void visibility_map(
+    // Ephemeris tables (precomputed on CPU at fine time intervals)
+    __global const double *sun_ra,       // [n_steps] RA in hours
+    __global const double *sun_dec,      // [n_steps] Dec in degrees
+    __global const double *moon_ra,      // [n_steps] RA in hours
+    __global const double *moon_dec,     // [n_steps] Dec in degrees
+    // Moon physical parameters at each time step
+    __global const double *moon_sd,      // [n_steps] semi-diameter arcmin
+    __global const double *moon_elong,   // [n_steps] geocentric elongation deg
+    // Scalar parameters
+    double gmst0,           // GMST at base_time (hours)
+    double base_ut,         // base_time UT value (days)
+    double new_moon_prev,   // UT offset of previous new moon
+    double new_moon_next,   // UT offset of next new moon
+    double eph_start,       // start UT offset of ephemeris tables
+    double eph_step,        // time step in days
+    int    n_steps,         // number of ephemeris entries
+    int    width,           // image width in pixels
+    int    height,          // image height in pixels
+    int    ppd_lon,         // pixels per degree longitude
+    int    ppd_lat,         // pixels per degree latitude
+    int    is_evening,      // 1 = evening (setting), 0 = morning (rising)
+    int    is_yallop,       // 1 = yallop, 0 = odeh
+    // Output
+    __global uint *image    // [width * height] ABGR pixel colors
+)
+{
+    int gid = get_global_id(0);
+    if (gid >= width * height) return;
+
+    int px = gid % width;
+    int py = gid / width;
+
+    double latitude  = ((double)(height - (py + 1)) / (double)ppd_lat) + (-90.0);
+    double longitude = ((double)px / (double)ppd_lon) + (-180.0);
+
+    // Latitude capping at ±60°
+    if (latitude > 60.0 || latitude < -60.0) {
+        image[gid] = 0x00000000;
+        return;
+    }
+
+    double lat_rad = latitude * DEG2RAD;
+
+    // Time adjustment for longitude
+    double lon_offset = -longitude / 360.0;  // days
+
+    // Sun threshold: -0.8333 degrees (standard refraction + solar semi-diameter)
+    double sun_thresh = -0.8333 * DEG2RAD;
+    // Moon threshold: approximate (ignoring parallax for rise/set search)
+    double moon_thresh = 0.125 * DEG2RAD;
+
+    // Search window: ±0.75 days around lon-adjusted time
+    double search_center = lon_offset;
+    double search_lo = search_center - 0.75;
+    double search_hi = search_center + 0.75;
+
+    int setting = is_evening ? 1 : 0;
+
+    double t_sun = search_rise_set(sun_ra, sun_dec, n_steps, eph_start, eph_step,
+                                   lat_rad, longitude, gmst0, sun_thresh, setting,
+                                   search_lo, search_hi);
+    double t_moon = search_rise_set(moon_ra, moon_dec, n_steps, eph_start, eph_step,
+                                    lat_rad, longitude, gmst0, moon_thresh, setting,
+                                    search_lo, search_hi);
+
+    if (t_sun < -9000.0 || t_moon < -9000.0) {
+        image[gid] = 0x00000000; // 'H' — no rise/set
+        return;
+    }
+
+    double lag_time = (t_moon - t_sun) * (is_evening ? 1.0 : -1.0);
+
+    double t_best = (lag_time < 0.0)
+        ? t_sun
+        : t_sun + lag_time * 4.0 / 9.0 * (is_evening ? 1.0 : -1.0);
+
+    // New moon determination
+    double nm_nearest = (fabs(t_sun - new_moon_prev) <= fabs(new_moon_next - t_sun))
+                        ? new_moon_prev : new_moon_next;
+
+    // Moon age line
+    int draw_moon_line = (((int)round((t_best - nm_nearest) * 24.0 * 20.0)) % 20) == 0;
+
+    int before_new_moon = ((t_sun - nm_nearest) * (is_evening ? 1.0 : -1.0)) < 0.0;
+
+    // Early exits
+    uint color = 0x00000000;
+    if (lag_time < 0.0 && before_new_moon) {
+        color = 0x7F404040; // 'J'
+        if (draw_moon_line) color = 0xFFFFFFFF;
+        image[gid] = color;
+        return;
+    }
+    if (lag_time < 0.0) {
+        // 'I' — moonset before sunset
+        if (draw_moon_line) color = 0xFFFFFFFF;
+        image[gid] = color;
+        return;
+    }
+    if (before_new_moon) {
+        color = 0x7F404040; // 'G'
+        if (draw_moon_line) color = 0xFFFFFFFF;
+        image[gid] = color;
+        return;
+    }
+
+    // Compute astronomical parameters at best time
+    double idx_best = ut_to_index(t_best, eph_start, eph_step);
+
+    double s_ra  = interp(sun_ra,   idx_best, n_steps);
+    double s_dec = interp(sun_dec,  idx_best, n_steps);
+    double m_ra  = interp(moon_ra,  idx_best, n_steps);
+    double m_dec = interp(moon_dec, idx_best, n_steps);
+    double SD    = interp(moon_sd,  idx_best, n_steps);
+    double ARCL  = interp(moon_elong, idx_best, n_steps);
+
+    double lst_best = local_sidereal_time(t_best, longitude, gmst0);
+
+    double sun_alt  = eq_to_alt(s_ra, s_dec, lat_rad, lst_best);
+    double sun_az   = eq_to_az(s_ra, s_dec, lat_rad, lst_best, sun_alt);
+    double moon_alt = eq_to_alt(m_ra, m_dec, lat_rad, lst_best);
+    double moon_az  = eq_to_az(m_ra, m_dec, lat_rad, lst_best, moon_alt);
+
+    double lunar_parallax = SD / 0.27245;
+    double SD_topo = SD * (1.0 + sin(moon_alt) * sin(lunar_parallax / 60.0 * DEG2RAD));
+    double DAZ = sun_az * RAD2DEG - moon_az * RAD2DEG;
+    double W_topo = SD_topo * (1.0 - cos(ARCL * DEG2RAD));
+
+    double ARCV;
+    if (is_yallop) {
+        // Yallop uses geocentric positions for ARCV
+        ARCV = moon_alt * RAD2DEG - sun_alt * RAD2DEG;
+    } else {
+        double COSARCV = cos(ARCL * DEG2RAD) / cos(DAZ * DEG2RAD);
+        COSARCV = clamp(COSARCV, -1.0, 1.0);
+        ARCV = acos(COSARCV) * RAD2DEG;
+    }
+
+    // Classification
+    double value;
+    char result;
+    if (is_yallop) {
+        value = (ARCV - (11.8371 - 6.3226 * W_topo + 0.7319 * W_topo * W_topo - 0.1018 * W_topo * W_topo * W_topo)) / 10.0;
+        if      (value >  0.216) result = 'A';
+        else if (value > -0.014) result = 'B';
+        else if (value > -0.160) result = 'C';
+        else if (value > -0.232) result = 'D';
+        else if (value > -0.293) result = 'E';
+        else                     result = 'F';
+    } else {
+        value = ARCV - (7.1651 - 6.3226 * W_topo + 0.7319 * W_topo * W_topo - 0.1018 * W_topo * W_topo * W_topo);
+        if      (value >= 5.65)  result = 'A';
+        else if (value >= 2.00)  result = 'C';
+        else if (value >= -0.96) result = 'E';
+        else                     result = 'F';
+    }
+
+    if      (result == 'A') color = 0x00CCCCFF; // RGBA — stbi_write_png writes bytes as R,G,B,A
+    else if (result == 'B') color = 0x00B3B3FF;
+    else if (result == 'C') color = 0xE600E6FF;
+    else if (result == 'D') color = 0xB300B3FF;
+    else if (result == 'E') color = 0xB300B3FF;
+    else                    color = 0x00000000;
+
+    if (draw_moon_line) color = 0xFFFFFFFF;
+    image[gid] = color;
+}

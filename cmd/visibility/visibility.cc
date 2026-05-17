@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstdint>
+#include <vector>
 
 #include "thirdparty/astronomy.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -220,25 +221,25 @@ static void render(uint32_t *image, astro_time_t base_time)
             char q_code = calculate<evening, yallop>(latitude, longitude, 0, base_time, nullptr, false, &draw_moon_line, &result_time, &q_value);
             uint32_t color = 0x00000000;
             if (q_code == 'A')
-                color = 0xFFCCCC00; // These color codes are in ABGR format
+                color = 0x00CCCCFF; // RGBA — stbi_write_png writes bytes as R,G,B,A
             else if (q_code == 'B')
-                color = 0xFFB3B300;
+                color = 0x00B3B3FF;
             else if (q_code == 'C')
-                color = 0xFF1AFFFF;
+                color = 0xE600E6FF;
             else if (q_code == 'D')
-                color = 0xFF00E6E6;
+                color = 0xB300B3FF;
             else if (q_code == 'E')
-                color = 0xFF00B3B3;
+                color = 0xB300B3FF;
             else if (q_code == 'F')
                 color = 0x00000000;
             else if (q_code == 'G')
-                color = 0x7F404040; // Semi-transparent Dark Gray for pre-conjunction
+                color = 0x4040407F; // Semi-transparent Dark Gray for pre-conjunction
             else if (q_code == 'H')
                 color = 0x00000000;
             else if (q_code == 'I')
                 color = 0x00000000;
             else if (q_code == 'J')
-                color = 0x7F404040; // Semi-transparent Dark Gray for pre-conjunction + moonset before sunset
+                color = 0x4040407F; // Semi-transparent Dark Gray for pre-conjunction + moonset before sunset
             if (draw_moon_line)
                 color = 0xFFFFFFFF;
             image[i + j * width] = color;
@@ -339,11 +340,48 @@ int main(int argc, const char **argv)
         else
             return 1;
 
-        uint32_t *image = (uint32_t *)calloc(width * height, 4);
-        evening
-            ? (yallop ? render<true, true>(image, time) : render<true, false>(image, time))
-            : (yallop ? render<false, true>(image, time) : render<false, false>(image, time));
-        return !stbi_write_png(argv[5], width, height, 4, image, width * 4);
+        // Allocate image buffer and run render
+        std::vector<uint32_t> image(width * height);
+        if (yallop) {
+            if (evening) render<true, true>(image.data(), time);
+            else         render<false, true>(image.data(), time);
+        } else {
+            if (evening) render<true, false>(image.data(), time);
+            else         render<false, false>(image.data(), time);
+        }
+
+        // Write raw RGBA binary for Python to load
+        // First save raw RGBA pixel data as binary for Python to load
+        // Format: W*H rows, each row = width*4 bytes (RGBA per pixel)
+        // We use a .bin extension to distinguish from the final PNG
+        char bin_file[1024];
+        snprintf(bin_file, sizeof(bin_file), "%s.bin", argv[5]);
+
+        FILE *f = fopen(bin_file, "wb");
+        if (!f) {
+            fprintf(stderr, "Cannot open %s\n", bin_file);
+            return 1;
+        }
+
+        // The image array is in RGBA format (bytes are already ABGR, converted to RGBA above)
+        // Write each pixel as R, G, B, A (RGBA order for PNG)
+        for (unsigned j = 0; j < height; ++j) {
+            // Write one row of pixels as RGBA
+            unsigned char row_bytes[4 * width];
+            for (unsigned i = 0; i < width; ++i) {
+                uint32_t px = image[i + j * width];
+                // Extract RGBA components (image is stored as RGBA uint32: a<<24 | b<<16 | g<<8 | r)
+                row_bytes[i * 4 + 0] = (px >> 0) & 0xFF;  // R
+                row_bytes[i * 4 + 1] = (px >> 8) & 0xFF;  // G
+                row_bytes[i * 4 + 2] = (px >> 16) & 0xFF; // B
+                row_bytes[i * 4 + 3] = (px >> 24) & 0xFF; // A
+            }
+            fwrite(row_bytes, 4 * width, 1, f);
+        }
+        fclose(f);
+
+        printf("Map written to %s (use gpu_blend.py to compose with base map)\n", argv[5]);
+        return 0;
     }
     else if (!strcmp(argv[2], "table") || !strcmp(argv[2], "table-ignore-besttime"))
     {

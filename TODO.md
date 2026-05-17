@@ -103,10 +103,14 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 
 ## Completed
 
-- ~~Latitude Capping~~ — Capped at ±60° in `visibility.cc` render loop
+- ~~Latitude Capping~~ — Capped at ±60° in `visibility.cc` and OpenCL kernel render loops
 - ~~Moon Age Display~~ — Moon age shown in legend via Go → Python pipeline
 - ~~Before Conjunction Color Coding~~ — Category 'G' and 'J' now render as semi-transparent dark gray
-- ~~GPU Acceleration~~ — OpenCV OpenCL T-API in `gpu_blend.py` (macOS/AMD/NVIDIA)
+- ~~GPU Acceleration~~ — OpenCL compute kernel in `gpu/visibility_kernel.cl` with `gpu/gpu_render.c` host
+  - Cross-platform support: macOS (Metal/OpenCL), NVIDIA (CUDA/OpenCL), AMD (ROCm/OpenCL), Intel GPU
+  - GPU binary auto-selected via `-gpu` flag in orchestrator
+  - GPU blending via OpenCV OpenCL T-API in `gpu_blend.py`
+- ~~Cross-platform Makefile~~ — Auto-detects platform, OpenCL headers, and ROCm/CUDA paths
 - ~~Caching and Memoization~~ — New moon dates cached in Go orchestrator (`newMoonCache`)
 - ~~Refactoring~~ — CGO bindings extracted to `internal/astro`, C++ renderer moved to `cmd/visibility/`
 - ~~Unit Testing~~ — 8 tests in `main_test.go` covering parseYears, astronomy, caching
