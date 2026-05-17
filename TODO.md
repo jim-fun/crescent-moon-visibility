@@ -2,13 +2,9 @@
 
 This document tracks planned enhancements and features for the Crescent Moon Visibility Maps Generator.
 
-## High Priority Features
-
-
-
 ## Medium Priority Features
 
-### 4. Additional Visibility Criteria
+### 1. Additional Visibility Criteria
 - **Task**: Implement alternative crescent visibility criteria
 - **Options**:
   - Schaefer criterion (1988)
@@ -18,7 +14,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 - **Rationale**: Different criteria may be preferred by different communities
 - **Impact**: Broader applicability and validation opportunities
 
-### 5. Atmospheric Extinction Modeling
+### 2. Atmospheric Extinction Modeling
 - **Task**: Add atmospheric extinction variations
 - **Details**:
   - Seasonal atmospheric density changes
@@ -26,7 +22,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
   - Geographic variation in atmospheric conditions
 - **Impact**: Improved accuracy, especially at lower altitudes
 
-### 6. Terrain Elevation Integration
+### 3. Terrain Elevation Integration
 - **Task**: Incorporate terrain elevation data
 - **Implementation**:
   - Integrate SRTM or similar elevation datasets
@@ -34,7 +30,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
   - Account for elevated observation points
 - **Impact**: More realistic visibility predictions for terrestrial observers
 
-### 7. Observer Experience Factor
+### 4. Observer Experience Factor
 - **Task**: Add observer experience parameter
 - **Details**:
   - Beginner vs expert observer adjustments
@@ -44,7 +40,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 
 ## Low Priority / Future Enhancements
 
-### 8. Web-Based Interface
+### 5. Web-Based Interface
 - **Task**: Create web UI for interactive map generation
 - **Features**:
   - Date picker
@@ -55,7 +51,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 - **Technologies**: WebAssembly (compile C++ to WASM), JavaScript frontend
 - **Impact**: Easier accessibility for non-technical users
 
-### 9. Real-Time Visibility Predictions
+### 6. Real-Time Visibility Predictions
 - **Task**: Automatic calculation for upcoming new moons
 - **Features**:
   - Automated scheduling
@@ -63,7 +59,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
   - Location-based alerts
 - **Impact**: Proactive user notifications
 
-### 10. Historical Sighting Database
+### 7. Historical Sighting Database
 - **Task**: Validate predictions against historical sighting reports
 - **Data Sources**:
   - ICOP (Islamic Crescents' Observation Project)
@@ -71,7 +67,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
   - Observatory reports
 - **Impact**: Validation and calibration of models
 
-### 11. Configurable Map Projections
+### 8. Configurable Map Projections
 - **Task**: Support multiple map projections
 - **Options**:
   - Mercator (current)
@@ -80,54 +76,14 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
   - Mollweide
 - **Impact**: Better visualization for different use cases
 
-### 12. Multi-Language Support
+### 9. Multi-Language Support
 - **Task**: Internationalize output and annotations
 - **Languages**: Arabic, English, French, Turkish, Urdu, Malay, etc.
 - **Impact**: Global accessibility
 
-## Code Quality Improvements
-
-### 13. Unit Testing
-- **Task**: Add comprehensive test suite
-- **Coverage**:
-  - Astronomical calculation accuracy
-  - Edge cases (polar regions, date boundaries)
-  - Regression tests
-- **Framework**: GoogleTest or similar
-
-### 14. Documentation
-- **Task**: Add inline code documentation
-- **Details**:
-  - Doxygen-style comments
-  - Algorithm explanations
-  - Parameter descriptions
-- **Impact**: Better code maintainability
-
-### 15. Refactoring
-- **Task**: Code organization improvements
-- **Areas**:
-  - Separate astronomical calculations into library
-  - Modularize rendering logic
-  - Extract constants to configuration file
-- **Impact**: Easier maintenance and extension
-
-## Performance Optimizations
-
-### 16. GPU Acceleration
-- **Task**: Implement CUDA/OpenCL rendering
-- **Expected Gain**: 10-100x speedup for high-resolution maps
-- **Impact**: Real-time rendering of 4K+ resolution maps
-
-### 17. Caching and Memoization
-- **Task**: Cache repeated calculations
-- **Targets**:
-  - New moon times
-  - Sun/moon ephemeris data
-- **Impact**: Faster batch processing
-
 ## Research and Validation
 
-### 18. Accuracy Analysis
+### 10. Accuracy Analysis
 - **Task**: Systematic comparison with observational data
 - **Methodology**:
   - Compare with HMNAO predictions
@@ -135,7 +91,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
   - Statistical analysis of differences
 - **Output**: Research paper or technical report
 
-### 19. Sensitivity Analysis
+### 11. Sensitivity Analysis
 - **Task**: Analyze parameter sensitivity
 - **Parameters**:
   - Atmospheric refraction model
@@ -145,7 +101,18 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 
 ---
 
-**Last Updated:** December 28, 2025
+## Completed
+
+- ~~Latitude Capping~~ — Capped at ±60° in `visibility.cc` render loop
+- ~~Moon Age Display~~ — Moon age shown in legend via Go → Python pipeline
+- ~~Before Conjunction Color Coding~~ — Category 'G' and 'J' now render as semi-transparent dark gray
+- ~~GPU Acceleration~~ — OpenCV OpenCL T-API in `gpu_blend.py` (macOS/AMD/NVIDIA)
+- ~~Caching and Memoization~~ — New moon dates cached in Go orchestrator (`newMoonCache`)
+- ~~Refactoring~~ — CGO bindings extracted to `internal/astro`, C++ renderer moved to `cmd/visibility/`
+- ~~Unit Testing~~ — 8 tests in `main_test.go` covering parseYears, astronomy, caching
+- ~~Documentation~~ — Inline docs added to `main.go`, `internal/astro/astro.go`, `gpu_blend.py`
+
+**Last Updated:** May 17, 2026
 
 ## How to Contribute
 

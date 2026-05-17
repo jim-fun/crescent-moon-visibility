@@ -1,11 +1,18 @@
+// Crescent Moon Visibility Map Generator — Golang Orchestrator
+//
+// This program orchestrates the generation of crescent moon visibility maps
+// across configurable year ranges. It uses the Astronomy Engine (via CGO in
+// internal/astro) to compute new moon dates, dispatches parallel CPU workers
+// to run the C++ renderer (visibility.out), and then hands off all generated
+// images to a GPU-accelerated Python blending script (gpu_blend.py) that
+// composites them onto a NASA base map using OpenCV's OpenCL Transparent API.
+//
+// Supported GPU backends (auto-detected by OpenCL):
+//   - macOS: Metal/OpenCL
+//   - Linux/NVIDIA: CUDA via OpenCL
+//   - Linux/AMD: ROCm via OpenCL
 package main
 
-/*
-#cgo CFLAGS: -I${SRCDIR}/thirdparty -O3
-#cgo LDFLAGS: -lm
-#include "astronomy.c"
-*/
-import "C"
 import (
 	"flag"
 	"fmt"
@@ -16,39 +23,32 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/jim-fun/crescent-moon-visibility/internal/astro"
 )
 
 const (
+	// DaysToProcess is the number of consecutive days to generate maps for
+	// after each new moon (the new moon day + 2 following days).
 	DaysToProcess = 3
-	Method        = "yallop"
-	TimeType      = "evening"
+
+	// Method selects the visibility criterion used by the C++ renderer.
+	// Supported values: "yallop", "odeh".
+	Method = "yallop"
+
+	// TimeType selects evening (waxing) or morning (waning) crescent.
+	TimeType = "evening"
 )
 
-func getNewMoonsInYear(year int) []time.Time {
-	var moons []time.Time
-	startTime := C.Astronomy_MakeTime(C.int(year), 1, 1, 0, 0, 0)
-	for {
-		result := C.Astronomy_SearchMoonPhase(0, startTime, 40)
-		if result.status != C.ASTRO_SUCCESS {
-			break
-		}
-		utc := C.Astronomy_UtcFromTime(result.time)
-		if int(utc.year) != year {
-			break
-		}
-		moonDate := time.Date(int(utc.year), time.Month(utc.month), int(utc.day), 0, 0, 0, 0, time.UTC)
-		moons = append(moons, moonDate)
-		startTime = C.Astronomy_AddDays(result.time, 20)
-	}
-	return moons
-}
-
+// task represents a single map-generation job.
 type task struct {
-	DateStr    string
-	OutputFile string
-	MoonAge    float64
+	DateStr    string  // ISO date passed to visibility.out
+	OutputFile string  // path to the output PNG
+	MoonAge    float64 // days elapsed since the parent new moon
 }
 
+// parseYears parses the -years CSV flag or falls back to the -start/-end range.
+// Returns a deduplicated, ordered slice of calendar years to process.
 func parseYears(yearsStr string, startYear, endYear int) []int {
 	var years []int
 	if yearsStr != "" {
@@ -65,6 +65,21 @@ func parseYears(yearsStr string, startYear, endYear int) []int {
 		}
 	}
 	return years
+}
+
+// newMoonCache stores previously computed new moon dates to avoid redundant
+// CGO calls when the same year appears in multiple runs or overlapping ranges.
+var newMoonCache = make(map[int][]time.Time)
+
+// getNewMoonsCached returns new moon dates for a year, using a cache to avoid
+// recomputing the expensive Astronomy Engine lunar phase search.
+func getNewMoonsCached(year int) []time.Time {
+	if cached, ok := newMoonCache[year]; ok {
+		return cached
+	}
+	moons := astro.NewMoonsInYear(year)
+	newMoonCache[year] = moons
+	return moons
 }
 
 func main() {
@@ -91,9 +106,10 @@ func main() {
 		return
 	}
 
+	// Phase 0: Compute new moon dates for all requested years (cached).
 	var allMoons []time.Time
 	for _, y := range years {
-		moons := getNewMoonsInYear(y)
+		moons := getNewMoonsCached(y)
 		allMoons = append(allMoons, moons...)
 	}
 
@@ -101,6 +117,7 @@ func main() {
 	fmt.Printf("Generating %d days per new moon = %d total maps\n", DaysToProcess, len(allMoons)*DaysToProcess)
 	fmt.Printf("Output Directory: %s | Workers: %d\n", outDir, maxWorkers)
 
+	// Build the task list: for each new moon, generate maps for N consecutive days.
 	var tasks []task
 	for _, nm := range allMoons {
 		for i := 0; i < DaysToProcess; i++ {
@@ -112,6 +129,7 @@ func main() {
 		}
 	}
 
+	// Fan-out tasks to a buffered channel consumed by worker goroutines.
 	taskCh := make(chan task, len(tasks))
 	for _, t := range tasks {
 		taskCh <- t
@@ -125,6 +143,8 @@ func main() {
 	globalStartTime := time.Now()
 	cpuStartTime := time.Now()
 
+	// Phase 1: Parallel CPU rendering via the C++ visibility.out binary.
+	// Each worker picks tasks from the channel and shells out to the renderer.
 	fmt.Println("\n[1/2] Starting parallel CPU generation (OpenMP calculation)...")
 	for i := 0; i < maxWorkers; i++ {
 		wg.Add(1)
@@ -150,14 +170,17 @@ func main() {
 	wg.Wait()
 	fmt.Printf("=> CPU generation complete in %.2fs.\n", time.Since(cpuStartTime).Seconds())
 
+	// Phase 2: GPU-accelerated batch blending via OpenCV OpenCL T-API.
+	// All generated PNGs are passed to gpu_blend.py in a single invocation
+	// to amortise GPU context setup and base-map loading costs.
 	if len(mapFiles) > 0 {
 		fmt.Println("\n[2/2] Starting universal GPU batch blending (macOS Metal / AMD ROCm / NVIDIA CUDA)...")
-		
+
 		args := append([]string{"gpu_blend.py"}, mapFiles...)
 		cmd := exec.Command("python3", args...)
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
-		
+
 		gpuStart := time.Now()
 		if err := cmd.Run(); err != nil {
 			fmt.Printf("✗ GPU blending failed: %v\n", err)

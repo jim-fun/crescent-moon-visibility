@@ -29,10 +29,13 @@ pip install opencv-python-headless pillow numpy
 # 2. Compile the C++ visibility renderer
 g++ -fopenmp -O3 -Wall -o visibility.out -fno-exceptions \
     -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 \
-    visibility.cc thirdparty/astronomy.c -lm
+    -I. cmd/visibility/visibility.cc thirdparty/astronomy.c -lm
 
 # 3. Build the Golang Orchestrator
-go build -o crescent_maps main.go
+go build -o crescent_maps .
+
+# 4. Run tests
+go test -v .
 ```
 
 ## Usage
