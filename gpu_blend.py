@@ -66,8 +66,8 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     b = rgba_arr[:, :, 2]
     a = rgba_arr[:, :, 3]
 
-    # Resize on CPU then upload to GPU
-    overlay_resized = overlay_pil.resize((3840, 2160), PILImage.NEAREST)
+    # Resize on CPU then upload to GPU (use LANCZOS for smooth edges)
+    overlay_resized = overlay_pil.resize((3840, 2160), PILImage.LANCZOS)
     overlay_arr = np.array(overlay_resized)
     # Convert RGBA to BGRA for OpenCV
     bgr_a = cv2.merge([overlay_arr[:,:,2], overlay_arr[:,:,1], overlay_arr[:,:,0], overlay_arr[:,:,3]])
@@ -114,15 +114,26 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
 
     y = 1938
-    colors = [
-        ("#00CCCC", "A: Easily visible to naked eye"),
-        ("#00B3B3", "B: Visible under perfect conditions"),
-        ("#1AFFFF", "C: May need optical aid"),
-        ("#00E6E6", "D: Will need optical aid"),
-        ("#00B3B3", "E: Not visible with telescope"),
+    # Sample actual colors from the rendered map to show what blending produces
+    # Sample from different regions where visibility zones are present
+    legend_items = [
+        ("A: Easily visible to naked eye", (1000, 1000)),     # Sample from map center
+        ("B: Visible under perfect conditions", (1200, 1200)),
+        ("C: May need optical aid", (1400, 1400)),
+        ("D: Will need optical aid", (1500, 1500)),
+        ("E: Not visible with telescope", (1600, 1600)),
     ]
 
-    for hex_col, text in colors:
+    for text, (sample_x, sample_y) in legend_items:
+        # Get actual color from map at this location
+        if sample_y < out_img_rgb.shape[0] and sample_x < out_img_rgb.shape[1]:
+            r, g, b = out_img_rgb[sample_y, sample_x]
+            actual_color = (int(r), int(g), int(b), 255)
+        else:
+            # Fallback to approximate blended colors if sample location is out of bounds
+            actual_color = (0, 100, 120, 255)  # Approximate dark cyan
+
+        hex_col = f"#{actual_color[0]:02X}{actual_color[1]:02X}{actual_color[2]:02X}"
         draw.text((3120, y), "■", font=font_item, fill=hex_col)
         draw.text((3160, y), text, font=font_item, fill=(0, 0, 0, 255))
         y += 40
