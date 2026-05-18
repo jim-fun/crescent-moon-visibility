@@ -115,17 +115,18 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
 
     y = 1938
     colors = [
-        ("#00CCCC", "Easily visible to naked eye"),
-        ("#00B3B3", "Visible under perfect conditions"),
-        ("#E600E6", "May need optical aid"),
-        ("#B300B3", "Will need optical aid"),
-        ("#404040", "Before Conjunction / Not visible")
+        ("#7F4040", "Before Conjunction / Pre-conjunction visibility"),
+        ("#FFFFFF", "Moon age marker lines"),
     ]
 
     for hex_col, text in colors:
-        draw.text((3120, y), "●", font=font_item, fill=hex_col)
+        draw.text((3120, y), "■", font=font_item, fill=hex_col)
         draw.text((3160, y), text, font=font_item, fill=(0, 0, 0, 255))
         y += 40
+
+    # Note about visibility zones
+    draw.text((3120, y+20), "Note: Visibility calculation shows", font=font_item, fill=(80, 80, 80, 255))
+    draw.text((3120, y+60), "pre-conjunction zones in reddish-brown", font=font_item, fill=(80, 80, 80, 255))
 
     # Save as RGBA PNG (PIL preserves alpha)
     png_output = base_name + ".png"
