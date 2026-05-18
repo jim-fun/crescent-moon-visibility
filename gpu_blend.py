@@ -29,7 +29,9 @@ def _find_font(size: int, weight: str = "normal") -> ImageFont.FreeTypeFont:
 def process_file(output_file, base_umat, moon_age, ones_umat):
     # Load overlay: try raw RGBA binary first, then PNG
     rgba_data = None
-    bin_path = output_file + ".bin"
+    # Handle both "YYYY-MM-DD.png" and "YYYY-MM-DD" formats
+    base_name = output_file.replace('.png', '') if output_file.endswith('.png') else output_file
+    bin_path = base_name + ".bin"
 
     if os.path.exists(bin_path):
         # Load raw RGBA binary data from C++ renderer
@@ -47,10 +49,11 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
             raise ValueError(f"Unexpected binary size: {rgba_data.size} bytes ({pixel_count} pixels)")
     else:
         # Fallback: load PNG with PIL (preserves alpha)
+        png_path = base_name + ".png" if not output_file.endswith('.png') else output_file
         try:
-            overlay_pil = PILImage.open(output_file).convert('RGBA')
+            overlay_pil = PILImage.open(png_path).convert('RGBA')
         except Exception:
-            overlay_pil = PILImage.open(output_file)
+            overlay_pil = PILImage.open(png_path)
             if overlay_pil.mode != 'RGBA':
                 overlay_pil = overlay_pil.convert('RGBA')
 
@@ -88,8 +91,8 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
 
     out_f = cv2.add(cv2.multiply(fg_f, alpha_3c), cv2.multiply(bg_f, inv_alpha_3c))
 
-    # Convert back to 8-bit
-    out_umat = cv2.convertScaleAbs(out_f, alpha=255.0, beta=0.0)
+    # Convert back to 8-bit (values already in 0-255 range)
+    out_umat = cv2.convertScaleAbs(out_f, alpha=1.0, beta=0.0)
 
     # Download from GPU to CPU
     out_img = out_umat.get()
@@ -106,7 +109,7 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     font_title = _find_font(size=26)
     font_item = _find_font(size=22)
 
-    date_str = os.path.basename(output_file).replace('.png', '')
+    date_str = os.path.basename(base_name)
     draw.text((3120, 1840), f"{date_str} (Age: {moon_age} days)", font=font_large, fill=(0, 0, 0, 255))
     draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
 
@@ -125,7 +128,8 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
         y += 40
 
     # Save as RGBA PNG (PIL preserves alpha)
-    pil_img.save(output_file, "PNG", optimize=True)
+    png_output = base_name + ".png"
+    pil_img.save(png_output, "PNG", optimize=True)
     # Clean up binary file
     if os.path.exists(bin_path):
         os.remove(bin_path)
