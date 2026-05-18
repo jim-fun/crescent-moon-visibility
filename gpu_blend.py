@@ -33,15 +33,18 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
 
     if os.path.exists(bin_path):
         # Load raw RGBA binary data from C++ renderer
-        width, height = 3840, 2160  # overlay is resized to this
         with open(bin_path, 'rb') as f:
             rgba_data = np.frombuffer(f.read(), dtype=np.uint8)
-        # If it's the original size (3600x2160), resize to 3840x2160
-        if rgba_data.size == width * height * 4:
-            overlay_pil = PILImage.fromarray(rgba_data.reshape(height, width, 4), 'RGBA')
+        # Determine dimensions from data size (PIXEL_PER_DEGREE_LON=4, PIXEL_PER_DEGREE_LAT=4)
+        bytes_per_pixel = 4
+        pixel_count = rgba_data.size // bytes_per_pixel
+        # 1440x720 for CPU renderer (360*4 x 180*4)
+        if pixel_count == 1440 * 720:
+            overlay_pil = PILImage.fromarray(rgba_data.reshape(720, 1440, 4), 'RGBA')
+        elif pixel_count == 3840 * 2160:
+            overlay_pil = PILImage.fromarray(rgba_data.reshape(2160, 3840, 4), 'RGBA')
         else:
-            # Load as 3-channel PNG (backward compat)
-            pass
+            raise ValueError(f"Unexpected binary size: {rgba_data.size} bytes ({pixel_count} pixels)")
     else:
         # Fallback: load PNG with PIL (preserves alpha)
         try:
