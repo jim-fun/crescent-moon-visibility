@@ -115,11 +115,11 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
 
     y = 1938
     colors = [
-        ("#404040", "Before Conjunction / Moonset before Sunset"),
-        ("#0080A0", "Not visible (even with telescope)"),
-        ("#FFCC00", "Visible only with optical aid"),
-        ("#00E6E6", "Visible to experienced observer"),
-        ("#B3B300", "Easily visible to naked eye")
+        ("#00CCCC", "Easily visible to naked eye"),
+        ("#00B3B3", "Visible under perfect conditions"),
+        ("#E600E6", "May need optical aid"),
+        ("#B300B3", "Will need optical aid"),
+        ("#404040", "Before Conjunction / Not visible")
     ]
 
     for hex_col, text in colors:
