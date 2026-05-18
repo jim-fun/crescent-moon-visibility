@@ -114,14 +114,12 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
 
     y = 1938
-    # Use actual blended cyan colors (60% blend with base map produces darker, duller tones)
-    # These are calculated: pure_color * 0.6 + base_map * 0.4 for typical ocean/map colors
+    # Visibility zones shown as cyan gradient (darkest = least visible, brightest = most visible)
+    # Colors are what actually appears after 60% blending with base map
     colors = [
-        ("#00CCCC", "A: Easily visible to naked eye"),          # Bright cyan
-        ("#00B3B3", "B: Visible under perfect conditions"),      # Darker cyan
-        ("#1AFFFF", "C: May need optical aid"),                  # Light blue
-        ("#00E6E6", "D: Will need optical aid"),                 # Bright cyan
-        ("#007C82", "E: Not visible with telescope"),            # Darkest blended cyan
+        ("#027F88", "A-B: Easily visible / Perfect conditions"),
+        ("#03828E", "C-D: May/will need optical aid"),
+        ("#007C82", "E: Not visible with telescope"),
     ]
 
     for hex_col, text in colors:
