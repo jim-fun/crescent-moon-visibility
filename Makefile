@@ -66,8 +66,6 @@ cpu: $(CPU_BIN)
 
 $(CPU_BIN): cmd/visibility/visibility.cc thirdparty/astronomy.c
 	g++ $(CPU_CFLAGS) -o $@ \
-		-fopenmp \
-		-DPIXEL_PER_DEGREE_LON=4 -DPIXEL_PER_DEGREE_LAT=4 \
 		-I. \
 		cmd/visibility/visibility.cc thirdparty/astronomy.c \
 		$(CPU_LDFLAGS)
