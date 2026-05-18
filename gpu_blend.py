@@ -99,21 +99,21 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     # Download from GPU to CPU
     out_img = out_umat.get()
 
-    # Convert BGR to RGB for PIL, then force RGBA mode
+    # Convert BGR to RGB for PIL
     out_img_rgb = cv2.cvtColor(out_img, cv2.COLOR_BGR2RGB)
-    pil_img = PILImage.fromarray(out_img_rgb, 'RGB').convert('RGBA')
-    draw = ImageDraw.Draw(pil_img, 'RGBA')
+    pil_img = PILImage.fromarray(out_img_rgb, 'RGB')
+    draw = ImageDraw.Draw(pil_img, 'RGB')
 
     # Legend background
-    draw.rectangle([3100, 1820, 3820, 2180], fill=(255, 255, 255, 230))
+    draw.rectangle([3100, 1820, 3820, 2180], fill=(255, 255, 255))
 
     font_large = _find_font(size=36, weight="bold")
     font_title = _find_font(size=26)
     font_item = _find_font(size=22)
 
     date_str = os.path.basename(base_name)
-    draw.text((3120, 1840), date_str, font=font_large, fill=(0, 0, 0, 255))
-    draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
+    draw.text((3120, 1840), date_str, font=font_large, fill=(0, 0, 0))
+    draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0))
 
     y = 1938
     # Visibility zones with enhanced colors (80% blend for better distinction)
@@ -127,12 +127,12 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
 
     for hex_col, text in colors:
         draw.text((3120, y), "■", font=font_item, fill=hex_col)
-        draw.text((3160, y), text, font=font_item, fill=(0, 0, 0, 255))
+        draw.text((3160, y), text, font=font_item, fill=(0, 0, 0))
         y += 35
 
-    # Save as RGBA PNG (PIL preserves alpha)
+    # Save as RGB PNG with maximum compression
     png_output = base_name + ".png"
-    pil_img.save(png_output, "PNG", optimize=True)
+    pil_img.save(png_output, "PNG", optimize=True, compress_level=9)
     # Clean up binary file
     if os.path.exists(bin_path):
         os.remove(bin_path)
