@@ -130,9 +130,9 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
         draw.text((3160, y), text, font=font_item, fill=(0, 0, 0))
         y += 35
 
-    # Save as RGB PNG with maximum compression
-    png_output = base_name + ".png"
-    pil_img.save(png_output, "PNG", optimize=True, compress_level=9)
+    # Save as WEBP with high quality for better compression
+    webp_output = base_name + ".webp"
+    pil_img.save(webp_output, "WEBP", quality=98, method=6)
     # Clean up binary file
     if os.path.exists(bin_path):
         os.remove(bin_path)
