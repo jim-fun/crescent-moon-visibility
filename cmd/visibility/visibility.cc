@@ -233,13 +233,13 @@ static void render(uint32_t *image, astro_time_t base_time)
             else if (q_code == 'F')
                 color = 0x00000000; // Black/transparent - Not visible
             else if (q_code == 'G')
-                color = 0x7F404040; // Semi-transparent dark gray - Pre-conjunction
+                color = 0x00000000; // Transparent - Pre-conjunction
             else if (q_code == 'H')
                 color = 0x00000000;
             else if (q_code == 'I')
                 color = 0x00000000;
             else if (q_code == 'J')
-                color = 0x4040407F; // Semi-transparent Dark Gray for pre-conjunction + moonset before sunset
+                color = 0x00000000; // Transparent - Pre-conjunction + moonset before sunset
             if (draw_moon_line)
                 color = 0xFFFFFFFF;
             image[i + j * width] = color;
