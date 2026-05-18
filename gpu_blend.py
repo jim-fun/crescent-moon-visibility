@@ -78,9 +78,9 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     fg_umat = cv2.merge([channels[0], channels[1], channels[2]])
     a_umat = channels[3]
 
-    # Create alpha mask (0.0 to 1.0) and apply 60% blend
+    # Create alpha mask (0.0 to 1.0) and apply 80% blend for better visibility zone distinction
     alpha_f = cv2.multiply(a_umat, 1.0 / 255.0, dtype=cv2.CV_32F)
-    alpha_blend = cv2.multiply(alpha_f, 0.6, dtype=cv2.CV_32F)
+    alpha_blend = cv2.multiply(alpha_f, 0.8, dtype=cv2.CV_32F)
 
     # Prepare 3-channel alpha
     alpha_3c = cv2.merge([alpha_blend, alpha_blend, alpha_blend])
@@ -114,18 +114,19 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
 
     y = 1938
-    # Visibility zones shown as cyan gradient (darkest = least visible, brightest = most visible)
-    # Colors are what actually appears after 60% blending with base map
+    # Visibility zones with enhanced colors (80% blend for better distinction)
     colors = [
-        ("#027F88", "A-B: Easily visible / Perfect conditions"),
-        ("#03828E", "C-D: May/will need optical aid"),
-        ("#007C82", "E: Not visible with telescope"),
+        ("#00CCCC", "A: Easily visible"),
+        ("#00B3B3", "B: Perfect conditions"),
+        ("#1AFFFF", "C: Optical aid"),
+        ("#00E6E6", "D: More optical aid"),
+        ("#00A0A0", "E: Not visible/telescope"),
     ]
 
     for hex_col, text in colors:
         draw.text((3120, y), "■", font=font_item, fill=hex_col)
         draw.text((3160, y), text, font=font_item, fill=(0, 0, 0, 255))
-        y += 40
+        y += 35
 
     # Save as RGBA PNG (PIL preserves alpha)
     png_output = base_name + ".png"
