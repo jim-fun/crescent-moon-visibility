@@ -117,9 +117,9 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     colors = [
         ("#00CCCC", "A: Easily visible to naked eye"),
         ("#00B3B3", "B: Visible under perfect conditions"),
-        ("#E600E6", "C: May need optical aid"),
-        ("#B300B3", "D/E: Will need optical aid"),
-        ("#404040", "F/G/H/I/J: Not visible / Pre-conjunction"),
+        ("#1AFFFF", "C: May need optical aid"),
+        ("#00E6E6", "D: Will need optical aid"),
+        ("#00B3B3", "E: Not visible with telescope"),
     ]
 
     for hex_col, text in colors:

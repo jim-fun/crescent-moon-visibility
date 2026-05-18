@@ -221,15 +221,15 @@ static void render(uint32_t *image, astro_time_t base_time)
             char q_code = calculate<evening, yallop>(latitude, longitude, 0, base_time, nullptr, false, &draw_moon_line, &result_time, &q_value);
             uint32_t color = 0x00000000;
             if (q_code == 'A')
-                color = 0xFFCCCC00; // Cyan - Crescent easily visible (RGBA format: A|BGR)
+                color = 0xFFCCCC00; // Cyan - Crescent easily visible
             else if (q_code == 'B')
                 color = 0xFFB3B300; // Darker cyan - Visible under perfect conditions
             else if (q_code == 'C')
-                color = 0xFFE600E6; // Magenta - May need optical aid
+                color = 0xFF1AFFFF; // Light blue/cyan - May need optical aid
             else if (q_code == 'D')
-                color = 0xFFB300B3; // Dark magenta - Will need optical aid
+                color = 0xFF00E6E6; // Bright cyan - Will need optical aid
             else if (q_code == 'E')
-                color = 0xFFB300B3; // Dark magenta - Not visible with telescope
+                color = 0xFF00B3B3; // Darker cyan - Not visible with telescope
             else if (q_code == 'F')
                 color = 0x00000000; // Black/transparent - Not visible
             else if (q_code == 'G')
