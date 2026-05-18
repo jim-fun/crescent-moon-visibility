@@ -221,19 +221,19 @@ static void render(uint32_t *image, astro_time_t base_time)
             char q_code = calculate<evening, yallop>(latitude, longitude, 0, base_time, nullptr, false, &draw_moon_line, &result_time, &q_value);
             uint32_t color = 0x00000000;
             if (q_code == 'A')
-                color = 0x00CCCCFF; // RGBA — stbi_write_png writes bytes as R,G,B,A
+                color = 0xFFCCCC00; // Cyan - Crescent easily visible (RGBA format: A|BGR)
             else if (q_code == 'B')
-                color = 0x00B3B3FF;
+                color = 0xFFB3B300; // Darker cyan - Visible under perfect conditions
             else if (q_code == 'C')
-                color = 0xE600E6FF;
+                color = 0xFFE600E6; // Magenta - May need optical aid
             else if (q_code == 'D')
-                color = 0xB300B3FF;
+                color = 0xFFB300B3; // Dark magenta - Will need optical aid
             else if (q_code == 'E')
-                color = 0xB300B3FF;
+                color = 0xFFB300B3; // Dark magenta - Not visible with telescope
             else if (q_code == 'F')
-                color = 0x00000000;
+                color = 0x00000000; // Black/transparent - Not visible
             else if (q_code == 'G')
-                color = 0x4040407F; // Semi-transparent Dark Gray for pre-conjunction
+                color = 0x7F404040; // Semi-transparent dark gray - Pre-conjunction
             else if (q_code == 'H')
                 color = 0x00000000;
             else if (q_code == 'I')
