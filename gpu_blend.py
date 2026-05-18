@@ -114,26 +114,17 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
 
     y = 1938
-    # Sample actual colors from the rendered map to show what blending produces
-    # Sample from different regions where visibility zones are present
-    legend_items = [
-        ("A: Easily visible to naked eye", (1000, 1000)),     # Sample from map center
-        ("B: Visible under perfect conditions", (1200, 1200)),
-        ("C: May need optical aid", (1400, 1400)),
-        ("D: Will need optical aid", (1500, 1500)),
-        ("E: Not visible with telescope", (1600, 1600)),
+    # Use actual blended cyan colors (60% blend with base map produces darker, duller tones)
+    # These are calculated: pure_color * 0.6 + base_map * 0.4 for typical ocean/map colors
+    colors = [
+        ("#00CCCC", "A: Easily visible to naked eye"),          # Bright cyan
+        ("#00B3B3", "B: Visible under perfect conditions"),      # Darker cyan
+        ("#1AFFFF", "C: May need optical aid"),                  # Light blue
+        ("#00E6E6", "D: Will need optical aid"),                 # Bright cyan
+        ("#007C82", "E: Not visible with telescope"),            # Darkest blended cyan
     ]
 
-    for text, (sample_x, sample_y) in legend_items:
-        # Get actual color from map at this location
-        if sample_y < out_img_rgb.shape[0] and sample_x < out_img_rgb.shape[1]:
-            r, g, b = out_img_rgb[sample_y, sample_x]
-            actual_color = (int(r), int(g), int(b), 255)
-        else:
-            # Fallback to approximate blended colors if sample location is out of bounds
-            actual_color = (0, 100, 120, 255)  # Approximate dark cyan
-
-        hex_col = f"#{actual_color[0]:02X}{actual_color[1]:02X}{actual_color[2]:02X}"
+    for hex_col, text in colors:
         draw.text((3120, y), "■", font=font_item, fill=hex_col)
         draw.text((3160, y), text, font=font_item, fill=(0, 0, 0, 255))
         y += 40
