@@ -60,7 +60,7 @@ endif
 
 .PHONY: all cpu gpu go clean
 
-all: $(GO_BIN)
+all: $(CPU_BIN) $(GO_BIN)
 ifneq ($(GPU_SUPPORTED),yes)
 	@echo "[warn] OpenCL dev headers not found — GPU renderer skipped (CPU + Go built OK)"
 else
