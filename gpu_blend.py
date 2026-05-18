@@ -91,8 +91,8 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
 
     out_f = cv2.add(cv2.multiply(fg_f, alpha_3c), cv2.multiply(bg_f, inv_alpha_3c))
 
-    # Convert back to 8-bit (values already in 0-255 range)
-    out_umat = cv2.convertScaleAbs(out_f, alpha=1.0, beta=0.0)
+    # Convert back to 8-bit
+    out_umat = cv2.multiply(out_f, 1.0, dtype=cv2.CV_8U)
 
     # Download from GPU to CPU
     out_img = out_umat.get()
@@ -110,7 +110,7 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     font_item = _find_font(size=22)
 
     date_str = os.path.basename(base_name)
-    draw.text((3120, 1840), f"{date_str} (Age: {moon_age} days)", font=font_large, fill=(0, 0, 0, 255))
+    draw.text((3120, 1840), date_str, font=font_large, fill=(0, 0, 0, 255))
     draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0, 255))
 
     y = 1938
