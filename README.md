@@ -52,10 +52,10 @@ make go           # compile crescent_maps
 ### Build Troubleshooting
 
 ```bash
-# If GPU renderer fails to build due to missing OpenCL headers:
-# Ubuntu/Debian: sudo apt install ocl-icd-dev
-# Fedora: sudo dnf install ocl-icd-devel
-# Arch: sudo pacman -S ocl-icd
+# If GPU renderer fails to build due to missing OpenCL headers/library:
+# Ubuntu/Debian: sudo apt install ocl-icd-opencl-dev opencl-headers
+# Fedora: sudo dnf install ocl-icd-devel opencl-headers
+# Arch: sudo pacman -S ocl-icd opencl-headers
 # macOS: OpenCL is built-in — ensure Xcode CLI tools are installed
 
 # Build only CPU + Go if OpenCL headers are unavailable:

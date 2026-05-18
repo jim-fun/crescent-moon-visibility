@@ -38,10 +38,10 @@ GPU_SUPPORTED := no
 ifeq ($(UNAME_S),Darwin)
   GPU_SUPPORTED := yes
 else
-  ifneq ($(shell test -f /opt/rocm/include/CL/cl.h 2>/dev/null && echo yes || echo no), no)
+  ifneq ($(shell test -f /opt/rocm/include/CL/cl.h 2>/dev/null && test -f /opt/rocm/lib/libOpenCL.so 2>/dev/null && echo yes || echo no), no)
     GPU_SUPPORTED := yes
     GPU_LDFLAGS += -L/opt/rocm/lib -lOpenCL
-  else ifneq ($(shell test -d /usr/local/cuda && echo yes || echo no), no)
+  else ifneq ($(shell test -f /usr/local/cuda/lib64/libOpenCL.so 2>/dev/null && echo yes || echo no), no)
     GPU_SUPPORTED := yes
     GPU_LDFLAGS += -L/usr/local/cuda/lib64 -lOpenCL
   else ifneq ($(shell pkg-config --exists opencl 2>/dev/null && echo yes || echo no), no)
@@ -49,6 +49,12 @@ else
     GPU_LDFLAGS += $(shell pkg-config --cflags --libs opencl 2>/dev/null)
   else ifneq ($(shell test -f /usr/include/CL/cl.h 2>/dev/null && echo yes || echo no), no)
     GPU_SUPPORTED := yes
+    # Standard Debian/Ubuntu library locations
+    ifeq ($(shell uname -m),aarch64)
+      GPU_LDFLAGS += -L/lib/aarch64-linux-gnu -lOpenCL
+    else
+      GPU_LDFLAGS += -L/usr/lib/x86_64-linux-gnu -lOpenCL
+    endif
   endif
 endif
 
