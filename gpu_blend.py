@@ -83,9 +83,10 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     fg_umat = cv2.merge([channels[0], channels[1], channels[2]])
     a_umat = channels[3]
 
-    # Create alpha mask (0.0 to 1.0) and apply 80% blend for better visibility zone distinction
+    # Create alpha mask (0.0 to 1.0) and apply 60% blend so the NASA base map
+    # remains clearly visible through the visibility-zone overlay.
     alpha_f = cv2.multiply(a_umat, 1.0 / 255.0, dtype=cv2.CV_32F)
-    alpha_blend = cv2.multiply(alpha_f, 0.8, dtype=cv2.CV_32F)
+    alpha_blend = cv2.multiply(alpha_f, 0.6, dtype=cv2.CV_32F)
 
     # Prepare 3-channel alpha
     alpha_3c = cv2.merge([alpha_blend, alpha_blend, alpha_blend])
