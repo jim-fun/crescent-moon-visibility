@@ -51,7 +51,10 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
             raise ValueError(f"Unexpected binary size: {rgba_data.size} bytes ({pixel_count} pixels)")
     else:
         # Fallback: load PNG with PIL (preserves alpha)
+        # GPU renderer writes PNG without .png extension; CPU writes .bin
         png_path = base_name + ".png" if not output_file.endswith('.png') else output_file
+        if not os.path.exists(png_path) and os.path.exists(base_name):
+            png_path = base_name
         try:
             overlay_pil = PILImage.open(png_path).convert('RGBA')
         except Exception:
@@ -133,9 +136,11 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     # Save as WEBP with high quality for better compression
     webp_output = base_name + ".webp"
     pil_img.save(webp_output, "WEBP", quality=98, method=6)
-    # Clean up binary file
+    # Clean up source overlay (CPU .bin or GPU no-extension PNG)
     if os.path.exists(bin_path):
         os.remove(bin_path)
+    elif os.path.exists(base_name) and base_name != webp_output:
+        os.remove(base_name)
 
 if __name__ == "__main__":
     if not sys.argv[1:]:
