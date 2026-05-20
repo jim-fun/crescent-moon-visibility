@@ -274,36 +274,40 @@ static void render(uint32_t *image, astro_time_t base_time)
         //     image[max_q_value_x + max_q_value_y * width] = 0xFF0000FF;
     }
 
-#define DIAMOND_SIZE 7
+    // Draw a filled diamond with a black outer ring for visibility on the map.
+    // Outer = OUTER_SIZE (Manhattan), inner = OUTER_SIZE-2 → ring of black.
+#define OUTER_SIZE 22
     if (min_naked_eye_x != 0 && min_naked_eye_y != 0)
     {
-        for (int i = -DIAMOND_SIZE; i <= DIAMOND_SIZE; ++i)
+        for (int i = -OUTER_SIZE; i <= OUTER_SIZE; ++i)
         {
-            for (int j = -DIAMOND_SIZE; j <= DIAMOND_SIZE; ++j)
+            for (int j = -OUTER_SIZE; j <= OUTER_SIZE; ++j)
             {
-                if (abs(i) + abs(j) > DIAMOND_SIZE)
-                    continue;
-                unsigned naked_eye = min_naked_eye_x + i + (min_naked_eye_y + j) * width;
-                if (naked_eye < width * height)
-                    image[naked_eye] = 0xFF0000FF;
+                int dist = abs(i) + abs(j);
+                if (dist > OUTER_SIZE) continue;
+                unsigned idx = min_naked_eye_x + i + (min_naked_eye_y + j) * width;
+                if (idx >= width * height) continue;
+                // 0xAABBGGRR layout: red = 0xFF0000FF
+                image[idx] = (dist > OUTER_SIZE - 3) ? 0xFF000000 : 0xFF0000FF;
             }
         }
     }
     if (min_telescope_x != 0 && min_telescope_y != 0)
     {
-        for (int i = -DIAMOND_SIZE; i <= DIAMOND_SIZE; ++i)
+        for (int i = -OUTER_SIZE; i <= OUTER_SIZE; ++i)
         {
-            for (int j = -DIAMOND_SIZE; j <= DIAMOND_SIZE; ++j)
+            for (int j = -OUTER_SIZE; j <= OUTER_SIZE; ++j)
             {
-                if (abs(i) + abs(j) > DIAMOND_SIZE)
-                    continue;
-                unsigned telescope = min_telescope_x + i + (min_telescope_y + j) * width;
-                if (telescope < width * height)
-                    image[telescope] = 0xFFFF0000;
+                int dist = abs(i) + abs(j);
+                if (dist > OUTER_SIZE) continue;
+                unsigned idx = min_telescope_x + i + (min_telescope_y + j) * width;
+                if (idx >= width * height) continue;
+                // 0xAABBGGRR layout: blue = 0xFFFF0000
+                image[idx] = (dist > OUTER_SIZE - 3) ? 0xFF000000 : 0xFFFF0000;
             }
         }
     }
-#undef DIAMOND_SIZE
+#undef OUTER_SIZE
 }
 
 int main(int argc, const char **argv)
