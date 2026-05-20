@@ -31,7 +31,9 @@ import (
 
 const (
 	// DaysToProcess is the number of consecutive days to generate maps for
-	// after each new moon (the new moon day + 2 following days).
+	// after each new moon. The first map is the day AFTER the new moon (day +1)
+	// since on the new moon day itself the crescent is too young (<24h) to be
+	// realistically visible anywhere on Earth.
 	DaysToProcess = 3
 
 	// Method selects the visibility criterion used by the C++ renderer.
@@ -188,7 +190,7 @@ func main() {
 	// Build the task list: for each new moon, generate maps for N consecutive days.
 	var tasks []task
 	for _, nm := range allMoons {
-		for i := 0; i < DaysToProcess; i++ {
+		for i := 1; i <= DaysToProcess; i++ {
 			currentDate := nm.AddDate(0, 0, i)
 			dateStr := currentDate.Format("2006-01-02")
 			outputFile := filepath.Join(outDir, dateStr)
@@ -225,7 +227,14 @@ func main() {
 					continue
 				}
 
-				if stat, err := os.Stat(t.OutputFile); err == nil {
+				// CPU renderer writes <path>.bin; GPU renderer writes to <path> directly.
+				statPath := t.OutputFile
+				if _, err := os.Stat(statPath); err != nil {
+					if _, err := os.Stat(statPath + ".bin"); err == nil {
+						statPath = statPath + ".bin"
+					}
+				}
+				if stat, err := os.Stat(statPath); err == nil {
 					fmt.Printf("✓ [Worker %d] Generated %s (%.2f MB)\n", workerID, t.OutputFile, float64(stat.Size())/(1024*1024))
 					mu.Lock()
 					mapFiles = append(mapFiles, fmt.Sprintf("%s|%.2f", t.OutputFile, t.MoonAge))

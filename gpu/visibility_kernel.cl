@@ -218,10 +218,10 @@ __kernel void visibility_map(
 
     int before_new_moon = ((t_sun - nm_nearest) * (is_evening ? 1.0 : -1.0)) < 0.0;
 
-    // Early exits
+    // Early exits — bytes in memory (LE): R, G, B, A
     uint color = 0x00000000;
     if (lag_time < 0.0 && before_new_moon) {
-        color = 0x7F404040; // 'J'
+        color = 0x00000000; // 'J' — pre-conjunction + moonset before sunset, transparent
         if (draw_moon_line) color = 0xFFFFFFFF;
         image[gid] = color;
         return;
@@ -233,7 +233,7 @@ __kernel void visibility_map(
         return;
     }
     if (before_new_moon) {
-        color = 0x7F404040; // 'G'
+        color = 0x00000000; // 'G' — pre-conjunction, transparent
         if (draw_moon_line) color = 0xFFFFFFFF;
         image[gid] = color;
         return;
@@ -290,12 +290,13 @@ __kernel void visibility_map(
         else                     result = 'F';
     }
 
-    if      (result == 'A') color = 0x00CCCCFF; // RGBA — stbi_write_png writes bytes as R,G,B,A
-    else if (result == 'B') color = 0x00B3B3FF;
-    else if (result == 'C') color = 0xE600E6FF;
-    else if (result == 'D') color = 0xB300B3FF;
-    else if (result == 'E') color = 0xB300B3FF;
-    else                    color = 0x00000000;
+    // ABGR layout — bytes in memory (LE): R, G, B, A.  Matches CPU renderer.
+    if      (result == 'A') color = 0xFFCCCC00; // A: Cyan — easily visible
+    else if (result == 'B') color = 0xFFB3B300; // B: Darker cyan — perfect conditions
+    else if (result == 'C') color = 0xFF1AFFFF; // C: Light cyan — may need optical aid
+    else if (result == 'D') color = 0xFF00E6E6; // D: Bright cyan — will need optical aid
+    else if (result == 'E') color = 0xFF00B3B3; // E: Darker cyan — not visible w/o telescope
+    else                    color = 0x00000000; // F: Not visible — transparent
 
     if (draw_moon_line) color = 0xFFFFFFFF;
     image[gid] = color;
