@@ -49,19 +49,26 @@ double eq_to_az(double ra_hours, double dec_deg, double lat_rad, double lst_hour
     return az;
 }
 
-// Linear interpolation helper for ephemeris table lookup
-double interp(__global const double *table, double fractional_idx, int max_idx) {
-    int i0 = (int)floor(fractional_idx);
-    if (i0 < 0) i0 = 0;
-    if (i0 >= max_idx - 1) i0 = max_idx - 2;
-    double frac = fractional_idx - (double)i0;
-    return table[i0] + frac * (table[i0 + 1] - table[i0]);
+// Map a physical UT offset (days from base_time) to the Chebyshev abscissa
+// x ∈ [-1, +1] used for polynomial evaluation. The fit was computed over
+// [t_start, t_end] (typically [-1, +2] days from base_time).
+double ut_to_cheb_x(double ut_offset, double t_start, double t_end) {
+    double t_center   = 0.5 * (t_end + t_start);
+    double t_halfspan = 0.5 * (t_end - t_start);
+    return (ut_offset - t_center) / t_halfspan;
 }
 
-// Convert a UT offset (days from base_time) to an ephemeris table index.
-// The table covers [start_offset, start_offset + n_steps * step_days).
-double ut_to_index(double ut_offset, double start_offset, double step_days) {
-    return (ut_offset - start_offset) / step_days;
+// Evaluate sum_{j=0}^{N} c_j * T_j(x) via Clenshaw recurrence.
+// Stable for |x| <= 1 and ~N FMAs per call.
+double cheb_eval(__global const double *c, int N, double x) {
+    double two_x = 2.0 * x;
+    double b1 = 0.0, b2 = 0.0;
+    for (int j = N; j >= 1; j--) {
+        double bj = two_x * b1 - b2 + c[j];
+        b2 = b1;
+        b1 = bj;
+    }
+    return x * b1 - b2 + c[0];
 }
 
 // Binary search for the time when a body crosses the horizon (altitude = threshold).
@@ -69,9 +76,9 @@ double ut_to_index(double ut_offset, double start_offset, double step_days) {
 //           -1 = search for rising  (alt goes above threshold)
 // Returns the UT offset (days) of the crossing, or -9999 on failure.
 double search_rise_set(
-    __global const double *body_ra,
-    __global const double *body_dec,
-    int n_steps, double start_offset, double step_days,
+    __global const double *body_ra_c,
+    __global const double *body_dec_c,
+    int cheb_degree, double eph_t_start, double eph_t_end,
     double lat_rad, double longitude_deg, double gmst0,
     double threshold_rad, int is_setting,
     double search_start, double search_end)
@@ -85,9 +92,9 @@ double search_rise_set(
 
     for (int k = 0; k <= n_scan; k++) {
         double t = search_start + k * dt;
-        double idx = ut_to_index(t, start_offset, step_days);
-        double ra  = interp(body_ra,  idx, n_steps);
-        double dec = interp(body_dec, idx, n_steps);
+        double x = ut_to_cheb_x(t, eph_t_start, eph_t_end);
+        double ra  = cheb_eval(body_ra_c,  cheb_degree, x);
+        double dec = cheb_eval(body_dec_c, cheb_degree, x);
         double lst = local_sidereal_time(t, longitude_deg, gmst0);
         double alt = eq_to_alt(ra, dec, lat_rad, lst);
         double val = alt - threshold_rad;
@@ -116,9 +123,9 @@ double search_rise_set(
     // Refine with bisection (20 iterations → ~1e-6 day precision ≈ 0.1 second)
     for (int iter = 0; iter < 20; iter++) {
         double t_mid = 0.5 * (t_lo + t_hi);
-        double idx = ut_to_index(t_mid, start_offset, step_days);
-        double ra  = interp(body_ra,  idx, n_steps);
-        double dec = interp(body_dec, idx, n_steps);
+        double x = ut_to_cheb_x(t_mid, eph_t_start, eph_t_end);
+        double ra  = cheb_eval(body_ra_c,  cheb_degree, x);
+        double dec = cheb_eval(body_dec_c, cheb_degree, x);
         double lst = local_sidereal_time(t_mid, longitude_deg, gmst0);
         double alt = eq_to_alt(ra, dec, lat_rad, lst) - threshold_rad;
 
@@ -133,22 +140,21 @@ double search_rise_set(
 // ---------- main kernel ----------
 
 __kernel void visibility_map(
-    // Ephemeris tables (precomputed on CPU at fine time intervals)
-    __global const double *sun_ra,       // [n_steps] RA in hours
-    __global const double *sun_dec,      // [n_steps] Dec in degrees
-    __global const double *moon_ra,      // [n_steps] RA in hours
-    __global const double *moon_dec,     // [n_steps] Dec in degrees
-    // Moon physical parameters at each time step
-    __global const double *moon_sd,      // [n_steps] semi-diameter arcmin
-    __global const double *moon_elong,   // [n_steps] geocentric elongation deg
+    // Chebyshev coefficients for each ephemeris quantity (degree+1 doubles each)
+    __global const double *sun_ra_c,     // RA in hours
+    __global const double *sun_dec_c,    // Dec in degrees
+    __global const double *moon_ra_c,    // RA in hours
+    __global const double *moon_dec_c,   // Dec in degrees
+    __global const double *moon_sd_c,    // semi-diameter arcmin
+    __global const double *moon_elong_c, // geocentric elongation deg
     // Scalar parameters
     double gmst0,           // GMST at base_time (hours)
     double base_ut,         // base_time UT value (days)
     double new_moon_prev,   // UT offset of previous new moon
     double new_moon_next,   // UT offset of next new moon
-    double eph_start,       // start UT offset of ephemeris tables
-    double eph_step,        // time step in days
-    int    n_steps,         // number of ephemeris entries
+    double eph_t_start,     // start UT offset of Chebyshev fit window
+    double eph_t_end,       // end   UT offset of Chebyshev fit window
+    int    cheb_degree,     // polynomial degree (n_coeffs - 1)
     int    width,           // image width in pixels
     int    height,          // image height in pixels
     int    ppd_lon,         // pixels per degree longitude
@@ -194,10 +200,10 @@ __kernel void visibility_map(
 
     int setting = is_evening ? 1 : 0;
 
-    double t_sun = search_rise_set(sun_ra, sun_dec, n_steps, eph_start, eph_step,
+    double t_sun = search_rise_set(sun_ra_c, sun_dec_c, cheb_degree, eph_t_start, eph_t_end,
                                    lat_rad, longitude, gmst0, sun_thresh, setting,
                                    search_lo, search_hi);
-    double t_moon = search_rise_set(moon_ra, moon_dec, n_steps, eph_start, eph_step,
+    double t_moon = search_rise_set(moon_ra_c, moon_dec_c, cheb_degree, eph_t_start, eph_t_end,
                                     lat_rad, longitude, gmst0, moon_thresh, setting,
                                     search_lo, search_hi);
 
@@ -242,15 +248,15 @@ __kernel void visibility_map(
         return;
     }
 
-    // Compute astronomical parameters at best time
-    double idx_best = ut_to_index(t_best, eph_start, eph_step);
+    // Compute astronomical parameters at best time via Chebyshev evaluation.
+    double x_best = ut_to_cheb_x(t_best, eph_t_start, eph_t_end);
 
-    double s_ra  = interp(sun_ra,   idx_best, n_steps);
-    double s_dec = interp(sun_dec,  idx_best, n_steps);
-    double m_ra  = interp(moon_ra,  idx_best, n_steps);
-    double m_dec = interp(moon_dec, idx_best, n_steps);
-    double SD    = interp(moon_sd,  idx_best, n_steps);
-    double ARCL  = interp(moon_elong, idx_best, n_steps);
+    double s_ra  = cheb_eval(sun_ra_c,    cheb_degree, x_best);
+    double s_dec = cheb_eval(sun_dec_c,   cheb_degree, x_best);
+    double m_ra  = cheb_eval(moon_ra_c,   cheb_degree, x_best);
+    double m_dec = cheb_eval(moon_dec_c,  cheb_degree, x_best);
+    double SD    = cheb_eval(moon_sd_c,   cheb_degree, x_best);
+    double ARCL  = cheb_eval(moon_elong_c,cheb_degree, x_best);
 
     double lst_best = local_sidereal_time(t_best, longitude, gmst0);
 

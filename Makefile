@@ -78,9 +78,9 @@ $(CPU_BIN): cmd/visibility/visibility.cc thirdparty/astronomy.c
 
 gpu: $(GPU_BIN)
 
-$(GPU_BIN): gpu/gpu_render.c gpu/visibility_kernel.cl thirdparty/astronomy.c
+$(GPU_BIN): gpu/gpu_render.c gpu/chebyshev.c gpu/chebyshev.h gpu/visibility_kernel.cl thirdparty/astronomy.c
 	$(CC) $(GPU_CFLAGS) -o $@ \
-		gpu/gpu_render.c thirdparty/astronomy.c \
+		gpu/gpu_render.c gpu/chebyshev.c thirdparty/astronomy.c \
 		$(GPU_LDFLAGS)
 
 go: $(GO_BIN)

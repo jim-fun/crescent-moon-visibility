@@ -26,6 +26,7 @@
 #endif
 
 #include "thirdparty/astronomy.h"
+#include "gpu/chebyshev.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #pragma GCC diagnostic push
@@ -40,10 +41,10 @@
 #define PIXEL_PER_DEGREE_LAT 12
 #endif
 
-// Ephemeris table: 3 days at 30-second intervals = 8640 steps
-#define EPH_DAYS      3.0
-#define EPH_STEP_SEC  30.0
-#define EPH_N_STEPS   ((int)(EPH_DAYS * 86400.0 / EPH_STEP_SEC))
+// Chebyshev ephemeris window: 3 days centered on base_time (-1 to +2 days).
+// Sampled at CHEB_N_COEFFS GL nodes; each quantity fits in a degree-24 polynomial.
+#define EPH_T_START  (-1.0)
+#define EPH_T_END    (+2.0)
 
 static const int WIDTH  = 360 * PIXEL_PER_DEGREE_LON;
 static const int HEIGHT = 180 * PIXEL_PER_DEGREE_LAT;
@@ -106,37 +107,61 @@ int main(int argc, const char **argv) {
            is_yallop  ? "Yallop"  : "Odeh",
            argv[1], WIDTH, HEIGHT);
 
-    // ---- Phase 1: Precompute ephemeris on CPU ----
+    // ---- Phase 1: Sample astronomy library at Chebyshev nodes and fit polynomials ----
     struct timespec t0, t1;
     clock_gettime(CLOCK_MONOTONIC, &t0);
 
-    double eph_start = -1.0;  // start 1 day before base_time
-    double eph_step  = EPH_STEP_SEC / 86400.0;  // in days
+    // Sample at CHEB_N_COEFFS Chebyshev-Gauss-Lobatto nodes covering [EPH_T_START, EPH_T_END].
+    double node_times[CHEB_N_COEFFS];
+    cheb_gl_nodes_in_range(CHEB_DEGREE, EPH_T_START, EPH_T_END, node_times);
 
-    double *sun_ra    = (double *)malloc(EPH_N_STEPS * sizeof(double));
-    double *sun_dec   = (double *)malloc(EPH_N_STEPS * sizeof(double));
-    double *moon_ra   = (double *)malloc(EPH_N_STEPS * sizeof(double));
-    double *moon_dec  = (double *)malloc(EPH_N_STEPS * sizeof(double));
-    double *moon_sd   = (double *)malloc(EPH_N_STEPS * sizeof(double));
-    double *moon_elong = (double *)malloc(EPH_N_STEPS * sizeof(double));
+    double v_sun_ra   [CHEB_N_COEFFS];
+    double v_sun_dec  [CHEB_N_COEFFS];
+    double v_moon_ra  [CHEB_N_COEFFS];
+    double v_moon_dec [CHEB_N_COEFFS];
+    double v_moon_sd  [CHEB_N_COEFFS];
+    double v_moon_elong[CHEB_N_COEFFS];
 
     astro_observer_t geocentric = {0, 0, 0};
 
-    for (int i = 0; i < EPH_N_STEPS; i++) {
-        double offset = eph_start + i * eph_step;
-        astro_time_t t = Astronomy_AddDays(base_time, offset);
+    for (int k = 0; k <= CHEB_DEGREE; k++) {
+        astro_time_t t = Astronomy_AddDays(base_time, node_times[k]);
 
         astro_equatorial_t seq = Astronomy_Equator(BODY_SUN,  &t, geocentric, EQUATOR_OF_DATE, ABERRATION);
         astro_equatorial_t meq = Astronomy_Equator(BODY_MOON, &t, geocentric, EQUATOR_OF_DATE, ABERRATION);
         astro_libration_t  lib = Astronomy_Libration(t);
 
-        sun_ra[i]     = seq.ra;
-        sun_dec[i]    = seq.dec;
-        moon_ra[i]    = meq.ra;
-        moon_dec[i]   = meq.dec;
-        moon_sd[i]    = lib.diam_deg * 60.0 / 2.0;  // arcminutes
-        moon_elong[i] = Astronomy_Elongation(BODY_MOON, t).elongation;
+        v_sun_ra[k]     = seq.ra;
+        v_sun_dec[k]    = seq.dec;
+        v_moon_ra[k]    = meq.ra;
+        v_moon_dec[k]   = meq.dec;
+        v_moon_sd[k]    = lib.diam_deg * 60.0 / 2.0;
+        v_moon_elong[k] = Astronomy_Elongation(BODY_MOON, t).elongation;
     }
+
+    // RA is reported in [0, 24) — over a 3-day window the Moon's RA can wrap
+    // through 24h. Unwrap so the polynomial fit sees a smooth, monotone-ish
+    // function. (Sun RA changes too slowly to wrap in 3 days, but unwrap
+    // defensively as well.)
+    for (int k = 1; k <= CHEB_DEGREE; k++) {
+        while (v_moon_ra[k] - v_moon_ra[k-1] >  12.0) v_moon_ra[k] -= 24.0;
+        while (v_moon_ra[k] - v_moon_ra[k-1] < -12.0) v_moon_ra[k] += 24.0;
+        while (v_sun_ra[k]  - v_sun_ra[k-1]  >  12.0) v_sun_ra[k]  -= 24.0;
+        while (v_sun_ra[k]  - v_sun_ra[k-1]  < -12.0) v_sun_ra[k]  += 24.0;
+    }
+
+    double sun_ra_c    [CHEB_N_COEFFS];
+    double sun_dec_c   [CHEB_N_COEFFS];
+    double moon_ra_c   [CHEB_N_COEFFS];
+    double moon_dec_c  [CHEB_N_COEFFS];
+    double moon_sd_c   [CHEB_N_COEFFS];
+    double moon_elong_c[CHEB_N_COEFFS];
+    cheb_compute_coeffs(CHEB_DEGREE, v_sun_ra,    sun_ra_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_sun_dec,   sun_dec_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_moon_ra,   moon_ra_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_moon_dec,  moon_dec_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_moon_sd,   moon_sd_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_moon_elong,moon_elong_c);
 
     // Precompute new moon times
     astro_search_result_t nm_prev_r = Astronomy_SearchMoonPhase(0, base_time, -35);
@@ -149,7 +174,8 @@ int main(int argc, const char **argv) {
 
     clock_gettime(CLOCK_MONOTONIC, &t1);
     double precomp_ms = (t1.tv_sec - t0.tv_sec) * 1000.0 + (t1.tv_nsec - t0.tv_nsec) / 1e6;
-    printf("[GPU] Ephemeris precomputed (%d steps) in %.1f ms\n", EPH_N_STEPS, precomp_ms);
+    printf("[GPU] Chebyshev fit (degree %d, %d samples) in %.1f ms\n",
+           CHEB_DEGREE, CHEB_N_COEFFS, precomp_ms);
 
     // ---- Phase 2: Set up OpenCL ----
     clock_gettime(CLOCK_MONOTONIC, &t0);
@@ -198,36 +224,38 @@ int main(int argc, const char **argv) {
     check_cl(err, "clCreateKernel");
 
     // ---- Phase 3: Upload buffers ----
-    size_t eph_bytes = EPH_N_STEPS * sizeof(double);
+    size_t coeff_bytes = CHEB_N_COEFFS * sizeof(double);
     size_t img_bytes = WIDTH * HEIGHT * sizeof(cl_uint);
 
-    cl_mem d_sun_ra    = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, eph_bytes, sun_ra, &err);
-    cl_mem d_sun_dec   = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, eph_bytes, sun_dec, &err);
-    cl_mem d_moon_ra   = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, eph_bytes, moon_ra, &err);
-    cl_mem d_moon_dec  = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, eph_bytes, moon_dec, &err);
-    cl_mem d_moon_sd   = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, eph_bytes, moon_sd, &err);
-    cl_mem d_moon_elong = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, eph_bytes, moon_elong, &err);
+    cl_mem d_sun_ra_c    = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, sun_ra_c, &err);
+    cl_mem d_sun_dec_c   = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, sun_dec_c, &err);
+    cl_mem d_moon_ra_c   = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_ra_c, &err);
+    cl_mem d_moon_dec_c  = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_dec_c, &err);
+    cl_mem d_moon_sd_c   = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_sd_c, &err);
+    cl_mem d_moon_elong_c = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_elong_c, &err);
     cl_mem d_image     = clCreateBuffer(ctx, CL_MEM_WRITE_ONLY, img_bytes, NULL, &err);
     check_cl(err, "clCreateBuffer");
 
     // ---- Phase 4: Set kernel arguments and dispatch ----
     int w = WIDTH, h = HEIGHT;
     int ppd_lon = PIXEL_PER_DEGREE_LON, ppd_lat = PIXEL_PER_DEGREE_LAT;
+    double eph_t_start = EPH_T_START;
+    double eph_t_end   = EPH_T_END;
+    int    cheb_degree = CHEB_DEGREE;
 
-    clSetKernelArg(kernel,  0, sizeof(cl_mem), &d_sun_ra);
-    clSetKernelArg(kernel,  1, sizeof(cl_mem), &d_sun_dec);
-    clSetKernelArg(kernel,  2, sizeof(cl_mem), &d_moon_ra);
-    clSetKernelArg(kernel,  3, sizeof(cl_mem), &d_moon_dec);
-    clSetKernelArg(kernel,  4, sizeof(cl_mem), &d_moon_sd);
-    clSetKernelArg(kernel,  5, sizeof(cl_mem), &d_moon_elong);
+    clSetKernelArg(kernel,  0, sizeof(cl_mem), &d_sun_ra_c);
+    clSetKernelArg(kernel,  1, sizeof(cl_mem), &d_sun_dec_c);
+    clSetKernelArg(kernel,  2, sizeof(cl_mem), &d_moon_ra_c);
+    clSetKernelArg(kernel,  3, sizeof(cl_mem), &d_moon_dec_c);
+    clSetKernelArg(kernel,  4, sizeof(cl_mem), &d_moon_sd_c);
+    clSetKernelArg(kernel,  5, sizeof(cl_mem), &d_moon_elong_c);
     clSetKernelArg(kernel,  6, sizeof(double), &gmst0);
     clSetKernelArg(kernel,  7, sizeof(double), &base_time.ut);
     clSetKernelArg(kernel,  8, sizeof(double), &new_moon_prev);
     clSetKernelArg(kernel,  9, sizeof(double), &new_moon_next);
-    clSetKernelArg(kernel, 10, sizeof(double), &eph_start);
-    clSetKernelArg(kernel, 11, sizeof(double), &eph_step);
-    int n_steps = EPH_N_STEPS;
-    clSetKernelArg(kernel, 12, sizeof(int),    &n_steps);
+    clSetKernelArg(kernel, 10, sizeof(double), &eph_t_start);
+    clSetKernelArg(kernel, 11, sizeof(double), &eph_t_end);
+    clSetKernelArg(kernel, 12, sizeof(int),    &cheb_degree);
     clSetKernelArg(kernel, 13, sizeof(int),    &w);
     clSetKernelArg(kernel, 14, sizeof(int),    &h);
     clSetKernelArg(kernel, 15, sizeof(int),    &ppd_lon);
@@ -264,19 +292,18 @@ int main(int argc, const char **argv) {
     printf("[GPU] Wrote %s (%.2f MB)\n", argv[5], (WIDTH * HEIGHT * 4) / (1024.0 * 1024.0));
 
     // Cleanup
-    clReleaseMemObject(d_sun_ra);
-    clReleaseMemObject(d_sun_dec);
-    clReleaseMemObject(d_moon_ra);
-    clReleaseMemObject(d_moon_dec);
-    clReleaseMemObject(d_moon_sd);
-    clReleaseMemObject(d_moon_elong);
+    clReleaseMemObject(d_sun_ra_c);
+    clReleaseMemObject(d_sun_dec_c);
+    clReleaseMemObject(d_moon_ra_c);
+    clReleaseMemObject(d_moon_dec_c);
+    clReleaseMemObject(d_moon_sd_c);
+    clReleaseMemObject(d_moon_elong_c);
     clReleaseMemObject(d_image);
     clReleaseKernel(kernel);
     clReleaseProgram(program);
     clReleaseCommandQueue(queue);
     clReleaseContext(ctx);
-    free(sun_ra); free(sun_dec); free(moon_ra); free(moon_dec);
-    free(moon_sd); free(moon_elong); free(image); free(src);
+    free(image); free(src);
 
     return 0;
 }
