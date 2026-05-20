@@ -16,6 +16,7 @@
 #define RAD2DEG 57.29577951308232
 #define PI_VAL  3.14159265358979323846
 
+
 // ---------- helpers ----------
 
 // Compute local sidereal time (hours) for a given UT offset (days) and longitude (degrees).
@@ -141,12 +142,17 @@ double search_rise_set(
 
 __kernel void visibility_map(
     // Chebyshev coefficients for each ephemeris quantity (degree+1 doubles each)
-    __global const double *sun_ra_c,     // RA in hours
+    __global const double *sun_ra_c,     // RA in hours (geocentric, for sunset search)
     __global const double *sun_dec_c,    // Dec in degrees
-    __global const double *moon_ra_c,    // RA in hours
+    __global const double *moon_ra_c,    // RA in hours (geocentric, for moonset search)
     __global const double *moon_dec_c,   // Dec in degrees
     __global const double *moon_sd_c,    // semi-diameter arcmin
     __global const double *moon_elong_c, // geocentric elongation deg
+    // Moon's geocentric position vector in EQD (AU) — fitted X/Y/Z components.
+    // Used to apply per-pixel topocentric parallax via terra() at t_best.
+    __global const double *moon_x_c,
+    __global const double *moon_y_c,
+    __global const double *moon_z_c,
     // Scalar parameters
     double gmst0,           // GMST at base_time (hours)
     double base_ut,         // base_time UT value (days)
@@ -253,12 +259,23 @@ __kernel void visibility_map(
 
     double s_ra  = cheb_eval(sun_ra_c,    cheb_degree, x_best);
     double s_dec = cheb_eval(sun_dec_c,   cheb_degree, x_best);
-    double m_ra  = cheb_eval(moon_ra_c,   cheb_degree, x_best);
-    double m_dec = cheb_eval(moon_dec_c,  cheb_degree, x_best);
     double SD    = cheb_eval(moon_sd_c,   cheb_degree, x_best);
     double ARCL  = cheb_eval(moon_elong_c,cheb_degree, x_best);
 
     double lst_best = local_sidereal_time(t_best, longitude, gmst0);
+
+    // For Yallop the CPU uses GEOCENTRIC moon RA/Dec (visibility.cc:116-125 —
+    // Astronomy_GeoVector → EQD → EquatorFromVector → Astronomy_Horizon with
+    // observer lat/lon for the alt/az transform but *not* for parallax).
+    // Derive geocentric RA/Dec from the polynomial-fitted EQD position vector.
+    double moon_geo_x = cheb_eval(moon_x_c, cheb_degree, x_best);
+    double moon_geo_y = cheb_eval(moon_y_c, cheb_degree, x_best);
+    double moon_geo_z = cheb_eval(moon_z_c, cheb_degree, x_best);
+
+    double moon_geo_r = sqrt(moon_geo_x * moon_geo_x + moon_geo_y * moon_geo_y + moon_geo_z * moon_geo_z);
+    double m_dec = asin(moon_geo_z / moon_geo_r) * RAD2DEG;
+    double m_ra  = atan2(moon_geo_y, moon_geo_x) * RAD2DEG / 15.0;  // hours
+    if (m_ra < 0.0) m_ra += 24.0;
 
     double sun_alt  = eq_to_alt(s_ra, s_dec, lat_rad, lst_best);
     double sun_az   = eq_to_az(s_ra, s_dec, lat_rad, lst_best, sun_alt);

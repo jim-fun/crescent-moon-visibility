@@ -124,6 +124,14 @@ int main(int argc, const char **argv) {
 
     astro_observer_t geocentric = {0, 0, 0};
 
+    // Additional vectors: the Moon's geocentric position in EQD (AU, x/y/z).
+    // The GPU kernel will subtract the per-pixel observer position (via terra())
+    // from this vector to get the topocentric apparent position — the missing
+    // ~1 classification step of accuracy comes from this parallax correction.
+    double v_moon_x[CHEB_N_COEFFS];
+    double v_moon_y[CHEB_N_COEFFS];
+    double v_moon_z[CHEB_N_COEFFS];
+
     for (int k = 0; k <= CHEB_DEGREE; k++) {
         astro_time_t t = Astronomy_AddDays(base_time, node_times[k]);
 
@@ -137,6 +145,14 @@ int main(int argc, const char **argv) {
         v_moon_dec[k]   = meq.dec;
         v_moon_sd[k]    = lib.diam_deg * 60.0 / 2.0;
         v_moon_elong[k] = Astronomy_Elongation(BODY_MOON, t).elongation;
+
+        // Moon's geocentric position vector — in EQJ from GeoVector, rotate to EQD.
+        astro_vector_t   geomoon_eqj = Astronomy_GeoVector(BODY_MOON, t, ABERRATION);
+        astro_rotation_t rot_eqj_eqd = Astronomy_Rotation_EQJ_EQD(&t);
+        astro_vector_t   geomoon_eqd = Astronomy_RotateVector(rot_eqj_eqd, geomoon_eqj);
+        v_moon_x[k] = geomoon_eqd.x;
+        v_moon_y[k] = geomoon_eqd.y;
+        v_moon_z[k] = geomoon_eqd.z;
     }
 
     // RA is reported in [0, 24) — over a 3-day window the Moon's RA can wrap
@@ -156,12 +172,18 @@ int main(int argc, const char **argv) {
     double moon_dec_c  [CHEB_N_COEFFS];
     double moon_sd_c   [CHEB_N_COEFFS];
     double moon_elong_c[CHEB_N_COEFFS];
+    double moon_x_c    [CHEB_N_COEFFS];
+    double moon_y_c    [CHEB_N_COEFFS];
+    double moon_z_c    [CHEB_N_COEFFS];
     cheb_compute_coeffs(CHEB_DEGREE, v_sun_ra,    sun_ra_c);
     cheb_compute_coeffs(CHEB_DEGREE, v_sun_dec,   sun_dec_c);
     cheb_compute_coeffs(CHEB_DEGREE, v_moon_ra,   moon_ra_c);
     cheb_compute_coeffs(CHEB_DEGREE, v_moon_dec,  moon_dec_c);
     cheb_compute_coeffs(CHEB_DEGREE, v_moon_sd,   moon_sd_c);
     cheb_compute_coeffs(CHEB_DEGREE, v_moon_elong,moon_elong_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_moon_x,    moon_x_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_moon_y,    moon_y_c);
+    cheb_compute_coeffs(CHEB_DEGREE, v_moon_z,    moon_z_c);
 
     // Precompute new moon times
     astro_search_result_t nm_prev_r = Astronomy_SearchMoonPhase(0, base_time, -35);
@@ -233,6 +255,9 @@ int main(int argc, const char **argv) {
     cl_mem d_moon_dec_c  = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_dec_c, &err);
     cl_mem d_moon_sd_c   = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_sd_c, &err);
     cl_mem d_moon_elong_c = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_elong_c, &err);
+    cl_mem d_moon_x_c    = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_x_c, &err);
+    cl_mem d_moon_y_c    = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_y_c, &err);
+    cl_mem d_moon_z_c    = clCreateBuffer(ctx, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, coeff_bytes, moon_z_c, &err);
     cl_mem d_image     = clCreateBuffer(ctx, CL_MEM_WRITE_ONLY, img_bytes, NULL, &err);
     check_cl(err, "clCreateBuffer");
 
@@ -249,20 +274,23 @@ int main(int argc, const char **argv) {
     clSetKernelArg(kernel,  3, sizeof(cl_mem), &d_moon_dec_c);
     clSetKernelArg(kernel,  4, sizeof(cl_mem), &d_moon_sd_c);
     clSetKernelArg(kernel,  5, sizeof(cl_mem), &d_moon_elong_c);
-    clSetKernelArg(kernel,  6, sizeof(double), &gmst0);
-    clSetKernelArg(kernel,  7, sizeof(double), &base_time.ut);
-    clSetKernelArg(kernel,  8, sizeof(double), &new_moon_prev);
-    clSetKernelArg(kernel,  9, sizeof(double), &new_moon_next);
-    clSetKernelArg(kernel, 10, sizeof(double), &eph_t_start);
-    clSetKernelArg(kernel, 11, sizeof(double), &eph_t_end);
-    clSetKernelArg(kernel, 12, sizeof(int),    &cheb_degree);
-    clSetKernelArg(kernel, 13, sizeof(int),    &w);
-    clSetKernelArg(kernel, 14, sizeof(int),    &h);
-    clSetKernelArg(kernel, 15, sizeof(int),    &ppd_lon);
-    clSetKernelArg(kernel, 16, sizeof(int),    &ppd_lat);
-    clSetKernelArg(kernel, 17, sizeof(int),    &is_evening);
-    clSetKernelArg(kernel, 18, sizeof(int),    &is_yallop);
-    clSetKernelArg(kernel, 19, sizeof(cl_mem), &d_image);
+    clSetKernelArg(kernel,  6, sizeof(cl_mem), &d_moon_x_c);
+    clSetKernelArg(kernel,  7, sizeof(cl_mem), &d_moon_y_c);
+    clSetKernelArg(kernel,  8, sizeof(cl_mem), &d_moon_z_c);
+    clSetKernelArg(kernel,  9, sizeof(double), &gmst0);
+    clSetKernelArg(kernel, 10, sizeof(double), &base_time.ut);
+    clSetKernelArg(kernel, 11, sizeof(double), &new_moon_prev);
+    clSetKernelArg(kernel, 12, sizeof(double), &new_moon_next);
+    clSetKernelArg(kernel, 13, sizeof(double), &eph_t_start);
+    clSetKernelArg(kernel, 14, sizeof(double), &eph_t_end);
+    clSetKernelArg(kernel, 15, sizeof(int),    &cheb_degree);
+    clSetKernelArg(kernel, 16, sizeof(int),    &w);
+    clSetKernelArg(kernel, 17, sizeof(int),    &h);
+    clSetKernelArg(kernel, 18, sizeof(int),    &ppd_lon);
+    clSetKernelArg(kernel, 19, sizeof(int),    &ppd_lat);
+    clSetKernelArg(kernel, 20, sizeof(int),    &is_evening);
+    clSetKernelArg(kernel, 21, sizeof(int),    &is_yallop);
+    clSetKernelArg(kernel, 22, sizeof(cl_mem), &d_image);
 
     size_t global_work_size = (size_t)WIDTH * HEIGHT;
     // Round up to multiple of 256 for efficiency
@@ -298,6 +326,9 @@ int main(int argc, const char **argv) {
     clReleaseMemObject(d_moon_dec_c);
     clReleaseMemObject(d_moon_sd_c);
     clReleaseMemObject(d_moon_elong_c);
+    clReleaseMemObject(d_moon_x_c);
+    clReleaseMemObject(d_moon_y_c);
+    clReleaseMemObject(d_moon_z_c);
     clReleaseMemObject(d_image);
     clReleaseKernel(kernel);
     clReleaseProgram(program);
