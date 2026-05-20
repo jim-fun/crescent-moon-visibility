@@ -187,15 +187,31 @@ func main() {
 	}
 	fmt.Printf("Output Directory: %s | Workers: %d | Renderer: %s\n", outDir, maxWorkers, rendererBin)
 
-	// Build the task list: for each new moon, generate maps for N consecutive days.
+	// Build the task list: for each new moon, walk forward day-by-day and pick
+	// the first DaysToProcess days where the crescent is at least 16 h old at a
+	// reference observation moment (18:00 UTC). This way an early-morning
+	// conjunction (~02 UTC) still yields a useful day-of-conjunction map (~16 h),
+	// and a late-night conjunction (~22 UTC) correctly skips day +1 where the
+	// crescent would only be ~20 h old somewhere unhelpful and instead emits
+	// days +2..+4.
+	const minMoonAgeHours = 16.0
+	const referenceHourUTC = 18
+
 	var tasks []task
 	for _, nm := range allMoons {
-		for i := 1; i <= DaysToProcess; i++ {
-			currentDate := nm.AddDate(0, 0, i)
-			dateStr := currentDate.Format("2006-01-02")
+		mapsGenerated := 0
+		for d := 0; d <= 4 && mapsGenerated < DaysToProcess; d++ {
+			midnight := time.Date(nm.Year(), nm.Month(), nm.Day(), 0, 0, 0, 0, time.UTC).AddDate(0, 0, d)
+			referenceEvening := midnight.Add(referenceHourUTC * time.Hour)
+			hoursSinceConjunction := referenceEvening.Sub(nm).Hours()
+			if hoursSinceConjunction < minMoonAgeHours {
+				continue
+			}
+			dateStr := midnight.Format("2006-01-02")
 			outputFile := filepath.Join(outDir, dateStr)
-			moonAge := currentDate.Sub(nm).Hours() / 24.0
+			moonAge := hoursSinceConjunction / 24.0
 			tasks = append(tasks, task{DateStr: dateStr, OutputFile: outputFile, MoonAge: moonAge})
+			mapsGenerated++
 		}
 	}
 

@@ -13,7 +13,9 @@ import "time"
 
 // NewMoonsInYear returns the dates of all astronomical new moons in the given
 // calendar year, computed via the Astronomy Engine's lunar phase search.
-// Results are truncated to midnight UTC of the day of each new moon.
+// The full hour/minute/second of conjunction is preserved so callers can
+// reason about exact moon age at any observation moment (the orchestrator
+// uses this to skip evenings where the crescent would be < 16 h old).
 func NewMoonsInYear(year int) []time.Time {
 	var moons []time.Time
 	startTime := C.Astronomy_MakeTime(C.int(year), 1, 1, 0, 0, 0)
@@ -26,8 +28,12 @@ func NewMoonsInYear(year int) []time.Time {
 		if int(utc.year) != year {
 			break
 		}
-		moonDate := time.Date(int(utc.year), time.Month(utc.month), int(utc.day), 0, 0, 0, 0, time.UTC)
-		moons = append(moons, moonDate)
+		moonTime := time.Date(
+			int(utc.year), time.Month(utc.month), int(utc.day),
+			int(utc.hour), int(utc.minute), int(float64(utc.second)),
+			0, time.UTC,
+		)
+		moons = append(moons, moonTime)
 		startTime = C.Astronomy_AddDays(result.time, 20)
 	}
 	return moons

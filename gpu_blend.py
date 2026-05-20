@@ -131,10 +131,15 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
         ("#FF0000", "● First naked-eye visibility"),
         ("#0000FF", "● First telescope visibility"),
     ]
+    # Draw markers as native vector geometry rather than Unicode glyphs so they
+    # render identically regardless of the available font's coverage.
     for hex_col, text in entries:
-        marker = "●" if text.startswith("●") else "■"
-        label  = text[2:] if text.startswith("●") else text
-        draw.text((3100, y), marker, font=font_item, fill=hex_col)
+        is_circle = text.startswith("●")
+        label = text[2:] if is_circle else text
+        if is_circle:
+            draw.ellipse([3100, y + 2, 3118, y + 20], fill=hex_col)
+        else:
+            draw.rectangle([3100, y + 2, 3118, y + 20], fill=hex_col)
         draw.text((3135, y), label, font=font_item, fill=(0, 0, 0))
         y += 32
 
