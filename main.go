@@ -188,13 +188,12 @@ func main() {
 	fmt.Printf("Output Directory: %s | Workers: %d | Renderer: %s\n", outDir, maxWorkers, rendererBin)
 
 	// Build the task list: for each new moon, walk forward day-by-day and pick
-	// the first DaysToProcess days where the crescent is at least 16 h old at a
-	// reference observation moment (18:00 UTC). This way an early-morning
-	// conjunction (~02 UTC) still yields a useful day-of-conjunction map (~16 h),
-	// and a late-night conjunction (~22 UTC) correctly skips day +1 where the
-	// crescent would only be ~20 h old somewhere unhelpful and instead emits
-	// days +2..+4.
-	const minMoonAgeHours = 16.0
+	// the first DaysToProcess days where the crescent is at least 12 h old at a
+	// reference observation moment (18:00 UTC). 12 h captures the extreme young
+	// crescents (record sightings are around 13–15 h) while still skipping the
+	// physically impossible same-day cases where conjunction happened after the
+	// reference moment.
+	const minMoonAgeHours = 12.0
 	const referenceHourUTC = 18
 
 	var tasks []task
