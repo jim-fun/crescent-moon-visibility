@@ -108,30 +108,34 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     draw = ImageDraw.Draw(pil_img, 'RGB')
 
     # Legend background
-    draw.rectangle([3100, 1820, 3820, 2180], fill=(255, 255, 255))
+    draw.rectangle([3080, 1780, 3820, 2150], fill=(255, 255, 255))
 
     font_large = _find_font(size=36, weight="bold")
-    font_title = _find_font(size=26)
-    font_item = _find_font(size=22)
+    font_title = _find_font(size=22)
+    font_item  = _find_font(size=20)
 
     date_str = os.path.basename(base_name)
-    draw.text((3120, 1840), date_str, font=font_large, fill=(0, 0, 0))
-    draw.text((3120, 1885), "Visibility Zones:", font=font_title, fill=(0, 0, 0))
+    draw.text((3100, 1790), date_str, font=font_large, fill=(0, 0, 0))
+    draw.text((3100, 1835), "Yallop visibility (Q):", font=font_title, fill=(0, 0, 0))
 
-    y = 1938
-    # Visibility zones with enhanced colors (80% blend for better distinction)
-    colors = [
-        ("#00CCCC", "A: Easily visible"),
-        ("#00B3B3", "B: Perfect conditions"),
-        ("#1AFFFF", "C: Optical aid"),
-        ("#00E6E6", "D: More optical aid"),
-        ("#00A0A0", "E: Not visible/telescope"),
+    # Colors here mirror the renderer's actual output (visibility.cc:223-242).
+    # 'C', 'D', 'E' are yellow/olive (not cyan as legacy comments suggested).
+    y = 1870
+    entries = [
+        ("#00CCCC", "A: Easily visible (naked eye)"),
+        ("#00B3B3", "B: Visible, perfect conditions"),
+        ("#FFFF1A", "C: May need optical aid"),
+        ("#E6E600", "D: Will need optical aid"),
+        ("#B3B300", "E: Telescope only"),
+        ("#FF0000", "● First naked-eye visibility"),
+        ("#0000FF", "● First telescope visibility"),
     ]
-
-    for hex_col, text in colors:
-        draw.text((3120, y), "■", font=font_item, fill=hex_col)
-        draw.text((3160, y), text, font=font_item, fill=(0, 0, 0))
-        y += 35
+    for hex_col, text in entries:
+        marker = "●" if text.startswith("●") else "■"
+        label  = text[2:] if text.startswith("●") else text
+        draw.text((3100, y), marker, font=font_item, fill=hex_col)
+        draw.text((3135, y), label, font=font_item, fill=(0, 0, 0))
+        y += 32
 
     # Save as WEBP with high quality for better compression
     webp_output = base_name + ".webp"
