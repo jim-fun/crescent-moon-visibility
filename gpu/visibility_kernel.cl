@@ -184,10 +184,13 @@ __kernel void visibility_map(
     // Moon threshold: approximate (ignoring parallax for rise/set search)
     double moon_thresh = 0.125 * DEG2RAD;
 
-    // Search window: ±0.75 days around lon-adjusted time
-    double search_center = lon_offset;
-    double search_lo = search_center - 0.75;
-    double search_hi = search_center + 0.75;
+    // Search window: forward 1 day from longitude-adjusted base. This matches
+    // the CPU renderer's Astronomy_SearchRiseSet(time, 1) call exactly. A
+    // symmetric ±0.75-day window would otherwise pick up the *previous*
+    // day's sunset (the first sign change in the window) and shift the
+    // entire computation 24 h backwards.
+    double search_lo = lon_offset;
+    double search_hi = lon_offset + 1.0;
 
     int setting = is_evening ? 1 : 0;
 
