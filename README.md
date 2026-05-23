@@ -57,6 +57,12 @@ If OpenCL is unavailable, the Makefile still builds CPU + Go components:
 make cpu && make go
 ```
 
+### Platform notes
+
+- **Apple Silicon (M1/M2/M3/M4):** the kernel uses double-precision math, which Metal-backed OpenCL on Apple Silicon does **not** expose. The GPU binary detects this at startup and emits a clear error — use the CPU renderer (the default) on those machines.
+- **macOS OpenMP:** Apple Clang doesn't accept `-fopenmp` directly. Install Homebrew's libomp (`brew install libomp`) and `make` will auto-detect it. If libomp is missing, the CPU renderer still builds but runs single-threaded (you'll get a `make` warning).
+- **Linux:** GCC ships with OpenMP support; no extra setup needed.
+
 ## Usage
 
 ```bash

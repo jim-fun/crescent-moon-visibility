@@ -225,6 +225,21 @@ int main(int argc, const char **argv) {
     clGetDeviceInfo(device, CL_DEVICE_NAME, sizeof(dev_name), dev_name, NULL);
     printf("[GPU] Using device: %s\n", dev_name);
 
+    // The kernel uses double-precision throughout (time arithmetic, RA/Dec
+    // accumulation). On Apple Silicon, Metal-backed OpenCL exposes no FP64,
+    // so cl_khr_fp64 is absent and the kernel fails to build. Detect this
+    // before attempting kernel compile and emit a clear message.
+    cl_device_fp_config fp64_cfg = 0;
+    clGetDeviceInfo(device, CL_DEVICE_DOUBLE_FP_CONFIG, sizeof(fp64_cfg), &fp64_cfg, NULL);
+    if (fp64_cfg == 0) {
+        fprintf(stderr,
+            "[GPU] ERROR: Device '%s' does not support double-precision (FP64).\n"
+            "      This is expected on Apple Silicon (M1/M2/M3/M4 via Metal).\n"
+            "      Run without -gpu to use the CPU renderer instead.\n",
+            dev_name);
+        return 2;
+    }
+
     cl_context ctx = clCreateContext(NULL, 1, &device, NULL, NULL, &err);
     check_cl(err, "clCreateContext");
 

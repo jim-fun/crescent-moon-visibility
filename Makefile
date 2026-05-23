@@ -16,17 +16,27 @@
 CC       ?= gcc
 CFLAGS   := -O3 -Wall -Wextra -fno-exceptions
 LDFLAGS  := -lm -I.
-CPU_CFLAGS  := $(CFLAGS) -fopenmp -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12
+CPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12
 CPU_LDFLAGS  := $(LDFLAGS)
 GPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12
 
-# Platform detection for OpenCL
+# Platform detection for OpenCL and OpenMP
 UNAME_S := $(shell uname -s)
 GPU_LDFLAGS := $(LDFLAGS)
 ifeq ($(UNAME_S),Darwin)
   GPU_LDFLAGS += -framework OpenCL
+  # Apple Clang doesn't accept -fopenmp directly. Use Homebrew's libomp
+  # (brew install libomp) when available; otherwise build single-threaded.
+  OMP_PREFIX := $(shell brew --prefix libomp 2>/dev/null)
+  ifneq ($(OMP_PREFIX),)
+    CPU_CFLAGS  += -Xpreprocessor -fopenmp -I$(OMP_PREFIX)/include
+    CPU_LDFLAGS += -L$(OMP_PREFIX)/lib -lomp
+  else
+    $(warning [macOS] libomp not found via Homebrew. CPU renderer will be single-threaded. Install with: brew install libomp)
+  endif
 else
   GPU_LDFLAGS += -lOpenCL
+  CPU_CFLAGS  += -fopenmp
 endif
 
 GPU_BIN  := gpu_visibility.out

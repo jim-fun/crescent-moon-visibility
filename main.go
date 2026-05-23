@@ -237,6 +237,10 @@ func main() {
 			defer wg.Done()
 			for t := range taskCh {
 				cmd := exec.Command(rendererBin, t.DateStr, "map", TimeType, Method, t.OutputFile)
+				// Forward the renderer's stderr so build/runtime errors (e.g. FP64
+				// missing on Apple Silicon, kernel compile failures) are visible
+				// instead of being collapsed into a bare "exit status 1".
+				cmd.Stderr = os.Stderr
 				if err := cmd.Run(); err != nil {
 					fmt.Printf("✗ [Worker %d] Failed %s: %v\n", workerID, t.DateStr, err)
 					continue
