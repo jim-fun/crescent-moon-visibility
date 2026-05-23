@@ -1,7 +1,26 @@
+# Build artifacts
 *.out
-*.png
 *.exe
-.venv
-.claude
+*.o
 crescent_maps
-.ipynb_checkpoints
+
+# Generated map output (raw RGBA bins / WEBP / per-run output dirs)
+*.bin
+*.webp
+output_maps/
+maps_*/
+estimates/
+test/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editor / tooling
+.ipynb_checkpoints/
+.claude/
+.DS_Store
+
+# NOTE: *.png is intentionally not globbed because map_nasa.png is tracked.
+# Generated PNG overlays live inside the ignored output directories above.

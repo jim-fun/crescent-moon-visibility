@@ -1,14 +1,17 @@
 // gpu_render.c — OpenCL host for GPU-accelerated crescent moon visibility maps.
 //
 // This program replaces visibility.out for the "map" mode. It:
-//   1. Precomputes dense ephemeris tables using the full-precision Astronomy Engine (CPU)
-//   2. Uploads the tables to GPU via OpenCL
-//   3. Dispatches the visibility_kernel.cl kernel across all pixels in parallel
-//   4. Reads back the image and writes a PNG
+//   1. Samples the full-precision Astronomy Engine at Chebyshev nodes (CPU)
+//   2. Fits each ephemeris quantity with a degree-24 polynomial
+//   3. Uploads the (small) coefficient arrays to GPU via OpenCL
+//   4. Dispatches visibility_kernel.cl across all pixels in parallel
+//   5. Reads back the image and writes a PNG
 //
-// Build:
-//   Linux:  gcc -O3 -o gpu_visibility.out gpu/gpu_render.c thirdparty/astronomy.c -lm -lOpenCL -I.
-//   macOS:  gcc -O3 -o gpu_visibility.out gpu/gpu_render.c thirdparty/astronomy.c -lm -framework OpenCL -I.
+// Build (preferred via `make gpu`, which auto-detects OpenCL paths):
+//   Linux:  gcc -O3 -o gpu_visibility.out gpu/gpu_render.c gpu/chebyshev.c \
+//                  thirdparty/astronomy.c -lm -lOpenCL -I.
+//   macOS:  gcc -O3 -o gpu_visibility.out gpu/gpu_render.c gpu/chebyshev.c \
+//                  thirdparty/astronomy.c -lm -framework OpenCL -I.
 //
 // Usage (same CLI as visibility.out for map mode):
 //   ./gpu_visibility.out 2026-01-18 map evening yallop output.png
@@ -125,9 +128,11 @@ int main(int argc, const char **argv) {
     astro_observer_t geocentric = {0, 0, 0};
 
     // Additional vectors: the Moon's geocentric position in EQD (AU, x/y/z).
-    // The GPU kernel will subtract the per-pixel observer position (via terra())
-    // from this vector to get the topocentric apparent position — the missing
-    // ~1 classification step of accuracy comes from this parallax correction.
+    // The GPU kernel derives RA/Dec from this 3-D vector instead of from
+    // Astronomy_Equator(observer={0,0,0}) — which would return topocentric
+    // values for an observer on the equator at Greenwich, not geocentric.
+    // This matches what visibility.cc:116-125 does for the Yallop ARCV and
+    // closes the final 7 % classification gap to the CPU.
     double v_moon_x[CHEB_N_COEFFS];
     double v_moon_y[CHEB_N_COEFFS];
     double v_moon_z[CHEB_N_COEFFS];
