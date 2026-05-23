@@ -234,7 +234,14 @@ int main(int argc, const char **argv) {
     cl_program program = clCreateProgramWithSource(ctx, 1, (const char **)&src, &src_len, &err);
     check_cl(err, "clCreateProgramWithSource");
 
-    err = clBuildProgram(program, 1, &device, "-cl-fast-relaxed-math", NULL, NULL);
+    // Build options:
+    //   -cl-fast-relaxed-math        allow non-IEEE-strict math (we don't depend on signed zero / NaN semantics)
+    //   -cl-mad-enable               permit MAD/FMA fusion of separate * and + ops
+    //   -cl-no-signed-zeros          allow +0 and -0 to be treated identically (we never test for sign)
+    //   -cl-unsafe-math-optimizations enable algebraic rewrites (a/b * c == a * c/b etc.)
+    const char *build_opts = "-cl-fast-relaxed-math -cl-mad-enable "
+                             "-cl-no-signed-zeros -cl-unsafe-math-optimizations";
+    err = clBuildProgram(program, 1, &device, build_opts, NULL, NULL);
     if (err != CL_SUCCESS) {
         char log[16384];
         clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, sizeof(log), log, NULL);
