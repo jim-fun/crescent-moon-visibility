@@ -104,19 +104,27 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 ## Completed
 
 - ~~Latitude Capping~~ — Capped at ±60° in `visibility.cc` and OpenCL kernel render loops
-- ~~Moon Age Display~~ — Moon age shown in legend via Go → Python pipeline
-- ~~Before Conjunction Color Coding~~ — Category 'G' and 'J' now render as semi-transparent dark gray
+- ~~Moon Age Display~~ — Moon age threaded through Go → Python pipeline
+- ~~Before Conjunction Color Coding~~ — Categories `G` / `J` now render transparent so the base map shows through
 - ~~GPU Acceleration~~ — OpenCL compute kernel in `gpu/visibility_kernel.cl` with `gpu/gpu_render.c` host
-  - Cross-platform support: macOS (Metal/OpenCL), NVIDIA (CUDA/OpenCL), AMD (ROCm/OpenCL), Intel GPU
+  - Cross-platform: macOS (Metal/OpenCL), NVIDIA (CUDA driver's OpenCL), AMD (ROCm), Intel GPU Compute Runtime
   - GPU binary auto-selected via `-gpu` flag in orchestrator
   - GPU blending via OpenCV OpenCL T-API in `gpu_blend.py`
-- ~~Cross-platform Makefile~~ — Auto-detects platform, OpenCL headers, and ROCm/CUDA paths
+- ~~Chebyshev Polynomial Ephemeris~~ — Replaced the 8 640-step dense ephemeris with degree-24 Chebyshev fits in `__constant` GPU memory. ~125 doubles total vs ~410 KB before.
+- ~~Geocentric Vector Path for Yallop ARCV~~ — Fitted moon's 3-D EQD geocentric vector and derived RA/Dec on the GPU, matching CPU's `Astronomy_GeoVector` + EQD rotation. 100 % classification agreement.
+- ~~GPU Kernel Optimization~~ — `native_sin`/`native_cos`, reduced coarse scan (200→32), bisection (20→12), additional build flags (`-cl-mad-enable`, etc.). ~4× kernel speedup at identical accuracy.
+- ~~24h Date Offset Fix~~ — GPU search uses forward-only 1-day window from longitude-adjusted base (matches CPU's `Astronomy_SearchRiseSet(time, 1)`).
+- ~~Diamond Markers~~ — Naked-eye (red) and telescope (blue) markers drawn as 22-pixel diamonds with a 3-pixel black outline for 4K visibility.
+- ~~Vector Legend~~ — `gpu_blend.py` uses `draw.rectangle` / `draw.ellipse` instead of Unicode `■`/`●` glyphs (font-independent rendering).
+- ~~Dynamic Day Selection~~ — Orchestrator emits maps only when the crescent is ≥ 12 h old at 18:00 UTC; new moon times preserved at full hour/minute/second precision.
+- ~~WEBP Output~~ — Quality-98 WEBP at 60 % blend strength; ~2 MB per map vs ~9 MB PNG.
+- ~~Cross-platform Makefile~~ — Auto-detects OpenCL headers and library paths (Debian/Fedora/Arch/ROCm/CUDA) and OpenMP support (`libomp` via Homebrew on macOS).
 - ~~Caching and Memoization~~ — New moon dates cached in Go orchestrator (`newMoonCache`)
 - ~~Refactoring~~ — CGO bindings extracted to `internal/astro`, C++ renderer moved to `cmd/visibility/`
-- ~~Unit Testing~~ — 8 tests in `main_test.go` covering parseYears, astronomy, caching
-- ~~Documentation~~ — Inline docs added to `main.go`, `internal/astro/astro.go`, `gpu_blend.py`
+- ~~Unit Testing~~ — Tests in `main_test.go` covering parseYears, astronomy, caching
+- ~~Documentation~~ — Inline docs in `main.go`, `internal/astro/astro.go`, `gpu_blend.py`, `gpu/gpu_render.c`, `gpu/visibility_kernel.cl`
 
-**Last Updated:** May 17, 2026
+**Last Updated:** May 23, 2026
 
 ## How to Contribute
 
