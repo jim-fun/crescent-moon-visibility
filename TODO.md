@@ -2,6 +2,41 @@
 
 This document tracks planned enhancements and features for the Crescent Moon Visibility Maps Generator.
 
+## High Priority Features
+
+### 0. Apple Silicon GPU Support via FP32 + Double-Double Time
+- **Task**: Add a single-precision OpenCL kernel path so the GPU renderer
+  works on Apple Silicon (M1/M2/M3/M4), whose Metal-backed OpenCL has no
+  hardware FP64. Today those machines fall back to the CPU renderer
+  (~76 s for 3 maps on M4 Pro vs an expected ~3 s on GPU).
+- **Approach**:
+  - Author a sibling kernel (e.g. `gpu/visibility_kernel_fp32.cl`) that uses
+    `float` for position/trig math but represents the per-pixel time as a
+    *double-double* pair of floats (`t_hi`, `t_lo`).
+  - Time arithmetic (sunset finding, Chebyshev `x` mapping, moon-age
+    indicator) all goes through tiny DD helpers (`dd_add`, `dd_mul_d`,
+    `dd_to_float`). This captures the precision-sensitive accumulation
+    without paying the cost of full DD on every multiply.
+  - In `gpu/gpu_render.c`, query `CL_DEVICE_DOUBLE_FP_CONFIG` (already done
+    today for the friendly error message) and, when zero, transparently
+    load the FP32 kernel instead of bailing out.
+  - Chebyshev coefficients on the CPU side are computed in double, then
+    truncated to float pairs (hi + (orig - hi)) before upload.
+- **Expected outcome**:
+  - Apple Silicon: ~3 s per 3 maps (≈25× faster than CPU on M4 Pro).
+  - Per-pixel match with the CPU reference: 96–97 % (vs the current 97 %
+    on the FP64 path — the DD time arithmetic preserves the boundary
+    behaviour well; the remaining ULP-level boundary noise is unchanged).
+  - x86/Linux/NVIDIA/AMD users see no change — the existing FP64 kernel
+    stays the default whenever FP64 is supported.
+- **Effort estimate**: ~3 days (kernel rewrite + DD helpers + dispatch
+  logic + regression test on both Apple Silicon and an FP64 device).
+- **Acceptance criteria**:
+  - `make gpu` succeeds on macOS Apple Silicon.
+  - `./crescent_maps -gpu -years 2027 -months 1` produces 3 maps on
+    M-series Macs with > 95 % per-pixel agreement against the CPU output.
+  - No regression in match rate (≥ 96.96 % per-pixel) on an FP64 device.
+
 ## Medium Priority Features
 
 ### 1. Additional Visibility Criteria
