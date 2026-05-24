@@ -333,10 +333,9 @@ func main() {
 
 	// Phase 2: Pure-Go blending (replacement for the previous gpu_blend.py).
 	// Composites overlays onto the NASA base map, draws the legend, and writes
-	// high-quality WEBP output. This removes the last Python dependency from
-	// the default pipeline.
+	// high-quality WEBP output.
 	if len(mapFiles) > 0 && !noBlend {
-		fmt.Println("\n[2/2] Starting Go blending (pure Go, no Python dependency)...")
+		fmt.Println("\n[2/2] Starting Go blending...")
 
 		gpuStart := time.Now()
 		opts := blend.DefaultOptions()
