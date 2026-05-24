@@ -45,6 +45,11 @@ type BlendOptions struct {
 	Alpha float64
 }
 
+// CriterionName is surfaced in the legend. This is the first step toward
+// making the visibility criterion configurable (per agentic review 2026-05).
+// Default remains "Yallop 1997" for backward compatibility and proven accuracy.
+var CriterionName = "Yallop 1997"
+
 // DefaultOptions returns sensible defaults matching historical behavior.
 func DefaultOptions() BlendOptions {
 	return BlendOptions{
@@ -79,8 +84,12 @@ func ProcessFiles(files []string, opts BlendOptions) error {
 	for _, entry := range files {
 		parts := strings.Split(entry, "|")
 		overlayPath := parts[0]
+		moonAge := 0.0
+		if len(parts) > 1 {
+			fmt.Sscanf(parts[1], "%f", &moonAge)
+		}
 
-		if err := processOne(overlayPath, baseResized, opts); err != nil {
+		if err := processOne(overlayPath, baseResized, opts, moonAge); err != nil {
 			fmt.Printf("✗ blend failed for %s: %v\n", overlayPath, err)
 			// Continue with other files (matching old Python behavior)
 		}
@@ -89,7 +98,7 @@ func ProcessFiles(files []string, opts BlendOptions) error {
 	return nil
 }
 
-func processOne(overlayPath string, baseImg image.Image, opts BlendOptions) error {
+func processOne(overlayPath string, baseImg image.Image, opts BlendOptions, moonAge float64) error {
 	overlay, cleanup, err := loadOverlay(overlayPath)
 	if err != nil {
 		return err
@@ -109,8 +118,21 @@ func processOne(overlayPath string, baseImg image.Image, opts BlendOptions) erro
 	// Perform 60% alpha blend
 	blended := blendImages(baseImg, overlayResized, opts.Alpha)
 
-	// Draw legend
-	finalImg := drawLegend(blended, filepath.Base(strings.TrimSuffix(overlayPath, filepath.Ext(overlayPath))))
+	// --- New: Draw first-visibility diamonds on the map (works for both CPU and GPU) ---
+	if nakedX, nakedY, teleX, teleY := findFirstVisibilityDiamonds(overlayResized); nakedX != -1 || teleX != -1 {
+		if nakedX != -1 && nakedY != -1 {
+			// More visible diamonds on the map
+			drawDiamond(blended, nakedX, nakedY, 10, color.RGBA{0, 0, 0, 255})   // thick black outline
+			drawDiamond(blended, nakedX, nakedY, 7, color.RGBA{255, 0, 0, 255})   // red fill
+		}
+		if teleX != -1 && teleY != -1 {
+			drawDiamond(blended, teleX, teleY, 10, color.RGBA{0, 0, 0, 255})   // thick black outline
+			drawDiamond(blended, teleX, teleY, 7, color.RGBA{0, 0, 255, 255})   // blue fill
+		}
+	}
+
+	// Draw legend with moon age
+	finalImg := drawLegend(blended, filepath.Base(strings.TrimSuffix(overlayPath, filepath.Ext(overlayPath))), moonAge)
 
 	// Write WEBP (quality 98 equivalent)
 	outPath := strings.TrimSuffix(overlayPath, filepath.Ext(overlayPath)) + ".webp"
@@ -288,14 +310,88 @@ func blendImages(base, overlay image.Image, alpha float64) *image.RGBA {
 	return dst
 }
 
-// --- Legend drawing (simplified but functional version) ---
+// drawDiamond draws a small filled diamond (rotated square) centered at (cx, cy)
+// with the given size (half-diagonal) and color.
+func drawDiamond(img *image.RGBA, cx, cy, size int, col color.Color) {
+	for dy := -size; dy <= size; dy++ {
+		absDY := dy
+		if absDY < 0 {
+			absDY = -absDY
+		}
+		for dx := -(size - absDY); dx <= (size - absDY); dx++ {
+			x := cx + dx
+			y := cy + dy
+			if x >= 0 && x < img.Bounds().Dx() && y >= 0 && y < img.Bounds().Dy() {
+				img.Set(x, y, col)
+			}
+		}
+	}
+}
 
-func drawLegend(img *image.RGBA, dateStr string) *image.RGBA {
-	// Legend background rectangle (bottom-right, matching Python layout)
+// findFirstVisibilityDiamonds scans the classification overlay (resized) and returns
+// approximate positions for the first naked-eye (A/B) and first telescope (C/D)
+// visibility markers. It uses the easternmost (rightmost) qualifying pixel as a
+// practical proxy. Returns -1,-1 if none found.
+func findFirstVisibilityDiamonds(overlay image.Image) (nakedX, nakedY, teleX, teleY int) {
+	bounds := overlay.Bounds()
+	nakedX, nakedY = -1, -1
+	teleX, teleY = -1, -1
+
+	// Colors from the renderers (approximate; we check for non-transparent cyan/yellowish)
+	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+		for x := bounds.Max.X - 1; x >= bounds.Min.X; x-- { // scan right to left to find easternmost first
+			r, g, b, a := overlay.At(x, y).RGBA()
+			if a < 0x8000 {
+				continue // transparent / no visibility
+			}
+
+			// Improved heuristic for both CPU and GPU renderers
+			// A/B tend to be cyan (low red, high green+blue)
+			// C/D tend to be yellowish (high red+green, lower blue)
+			isAB := (r < 0x6000 && g > 0x7000 && b > 0x7000)
+			isCD := (r > 0x7000 && g > 0x7000 && b < 0x6000)
+
+			if isAB && nakedX == -1 {
+				nakedX, nakedY = x, y
+			}
+			if isCD && teleX == -1 {
+				teleX, teleY = x, y
+			}
+
+			if nakedX != -1 && teleX != -1 {
+				return
+			}
+		}
+	}
+	return
+}
+
+// --- Legend drawing (improved with proper diamonds) ---
+
+func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
+	// Legend background rectangle (bottom-right)
 	legendRect := image.Rect(3080, 1780, 3820, 2150)
 	draw.Draw(img, legendRect, &image.Uniform{color.White}, image.Point{}, draw.Src)
 
-	// Basic font (we can improve with embedded TTF later)
+	// Thin dark border for definition (big aesthetic win)
+	borderCol := color.RGBA{60, 60, 60, 255}
+	// Top
+	for x := legendRect.Min.X; x < legendRect.Max.X; x++ {
+		img.Set(x, legendRect.Min.Y, borderCol)
+	}
+	// Bottom
+	for x := legendRect.Min.X; x < legendRect.Max.X; x++ {
+		img.Set(x, legendRect.Max.Y-1, borderCol)
+	}
+	// Left
+	for y := legendRect.Min.Y; y < legendRect.Max.Y; y++ {
+		img.Set(legendRect.Min.X, y, borderCol)
+	}
+	// Right
+	for y := legendRect.Min.Y; y < legendRect.Max.Y; y++ {
+		img.Set(legendRect.Max.X-1, y, borderCol)
+	}
+
 	face := basicfont.Face7x13
 	d := &font.Drawer{
 		Dst:  img,
@@ -303,37 +399,74 @@ func drawLegend(img *image.RGBA, dateStr string) *image.RGBA {
 		Face: face,
 	}
 
-	// Date
-	d.Dot = fixed.P(3100, 1805)
+	// === Header: Date + Moon Age ===
+	headerY := 1798
+	d.Dot = fixed.P(3100, headerY)
 	d.DrawString(dateStr)
 
-	// Title
-	d.Dot = fixed.P(3100, 1835)
-	d.DrawString("Yallop visibility (Q):")
-
-	entries := []struct {
-		col   color.Color
-		label string
-	}{
-		{color.RGBA{0, 204, 204, 255}, "A: Easily visible (naked eye)"},
-		{color.RGBA{0, 179, 179, 255}, "B: Visible, perfect conditions"},
-		{color.RGBA{255, 255, 26, 255}, "C: May need optical aid"},
-		{color.RGBA{230, 230, 0, 255}, "D: Will need optical aid"},
-		{color.RGBA{179, 179, 0, 255}, "E: Telescope only"},
-		{color.RGBA{255, 0, 0, 255}, "First naked-eye visibility"},
-		{color.RGBA{0, 0, 255, 255}, "First telescope visibility"},
+	if moonAge > 0 {
+		ageStr := fmt.Sprintf("  |  Moon age: %.2f days", moonAge)
+		d.Dot = fixed.P(3100 + 95, headerY)
+		d.DrawString(ageStr)
 	}
 
-	y := 1870
+	// Subtle separator line under header
+	sepY := 1820
+	for x := 3100; x < 3810; x++ {
+		img.Set(x, sepY, color.RGBA{180, 180, 180, 255})
+	}
+
+	// Title
+	d.Dot = fixed.P(3100, 1838)
+	d.DrawString("Yallop visibility (Q):")
+
+	// Criterion label (early step toward pluggable criteria per agentic review)
+	d.Dot = fixed.P(3100, 1852)
+	d.DrawString("(" + CriterionName + ")")
+
+	entries := []struct {
+		col       color.Color
+		label     string
+		isDiamond bool
+	}{
+		{color.RGBA{0, 204, 204, 255}, "A: Easily visible (naked eye)", false},
+		{color.RGBA{0, 179, 179, 255}, "B: Visible, perfect conditions", false},
+		{color.RGBA{255, 255, 26, 255}, "C: May need optical aid", false},
+		{color.RGBA{230, 230, 0, 255}, "D: Will need optical aid", false},
+		{color.RGBA{179, 179, 0, 255}, "E: Telescope only", false},
+		{color.RGBA{255, 0, 0, 255}, "First naked-eye visibility", true},
+		{color.RGBA{0, 0, 255, 255}, "First telescope visibility", true},
+	}
+
+	y := 1878
 	for _, e := range entries {
-		// Draw colored square/ellipse
-		colRect := image.Rect(3100, y+2, 3118, y+18)
-		draw.Draw(img, colRect, &image.Uniform{e.col}, image.Point{}, draw.Src)
+		swatchX := 3105
+		swatchY := y + 2
+
+		if e.isDiamond {
+			// More prominent diamond for first-visibility markers
+			drawDiamond(img, swatchX+10, swatchY+9, 10, color.RGBA{0, 0, 0, 255}) // black outline
+			drawDiamond(img, swatchX+10, swatchY+9, 8, e.col)                    // colored fill
+		} else {
+			// Consistent, slightly larger swatches with clean border
+			colRect := image.Rect(swatchX, swatchY, swatchX+20, swatchY+18)
+			draw.Draw(img, colRect, &image.Uniform{e.col}, image.Point{}, draw.Src)
+
+			border := color.RGBA{30, 30, 30, 200}
+			// Top
+			draw.Draw(img, image.Rect(swatchX, swatchY, swatchX+20, swatchY+1), &image.Uniform{border}, image.Point{}, draw.Src)
+			// Bottom
+			draw.Draw(img, image.Rect(swatchX, swatchY+17, swatchX+20, swatchY+18), &image.Uniform{border}, image.Point{}, draw.Src)
+			// Left
+			draw.Draw(img, image.Rect(swatchX, swatchY, swatchX+1, swatchY+18), &image.Uniform{border}, image.Point{}, draw.Src)
+			// Right
+			draw.Draw(img, image.Rect(swatchX+19, swatchY, swatchX+20, swatchY+18), &image.Uniform{border}, image.Point{}, draw.Src)
+		}
 
 		// Label
-		d.Dot = fixed.P(3135, y+15)
+		d.Dot = fixed.P(3140, y+15)
 		d.DrawString(e.label)
-		y += 26
+		y += 30
 	}
 
 	return img
