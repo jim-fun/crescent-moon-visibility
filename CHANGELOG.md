@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-05-25
+
+### Changed
+- **Release process & CI modernization**:
+  - Release workflow restricted to **Linux amd64 only**. macOS (Intel + Apple Silicon) builds are now fully user-driven via `make` for optimal OpenCL/Metal compatibility.
+  - Fixed invalid GitHub Actions expression syntax (`${{ github.ref_name#v }}`) that was causing workflow validation failures. Added a proper `Compute version without 'v' prefix` step.
+  - Improved release notes body with clearer Linux quick-start and explicit macOS build instructions.
+- Overall release engineering now produces cleaner, more maintainable artifacts focused on the primary supported platform (Linux amd64) while keeping the project fully buildable everywhere via the Makefile.
+
+### Maintenance
+- Updated documentation (README, workflow comments) to reflect the new Linux-first release policy.
+- Version bump and release parity preparation for both Gitea and GitHub.
+
 ## [0.4.2] - 2026-05-25
 
 ### Changed
