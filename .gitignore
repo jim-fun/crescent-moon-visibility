@@ -37,3 +37,4 @@ __pycache__/
 # GITHUB_MIGRATION.md
 # scripts/agentic-review.sh
 # scripts/agents/
+.agentic-review/
