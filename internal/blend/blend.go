@@ -160,18 +160,28 @@ func processOne(overlayPath string, baseImg image.Image, opts BlendOptions, moon
 	// overlay's visibility-zone colors (cyan / yellow). Done before the blend.
 	nakedX, nakedY, teleX, teleY := findFirstVisibilityDiamonds(overlayResized)
 
-	// The C++ CPU renderer bakes filled red/blue diamonds directly into the
-	// overlay at its own (time-accurate) first-visibility points. Those baked
-	// positions don't match the points we detect here, and near the antimeridian
-	// they wrap to the opposite image edge — so a per-point clear can't reliably
-	// catch them. Since the *only* strongly red/blue pixels in any overlay are
-	// these baked diamonds (the A–E zones are cyan/yellow), strip all of them
-	// across the whole overlay before blending. This is a no-op for GPU overlays
-	// (which bake nothing) and guarantees a single diamond per point on CPU.
+	// The C++ CPU renderer bakes large filled red/blue diamonds (OUTER_SIZE=22
+	// Manhattan + black ring) directly into the overlay. Baked positions can be
+	// offset from the cyan/yellow "first" pixels we detect, and resize + alpha
+	// blend can leave tint. We therefore:
+	// 1. Explicitly clear a generous radius around the *detected draw positions*.
+	// 2. Run aggressive global strip (relaxed thresholds + neighborhood).
+	// 3. After blend, strip the blended result again before drawing our clean
+	//    outlined diamonds. This guarantees exactly one diamond per type on CPU.
+	if nakedX != -1 && nakedY != -1 {
+		clearNeighborhood(overlayResized, nakedX, nakedY, 32)
+	}
+	if teleX != -1 && teleY != -1 {
+		clearNeighborhood(overlayResized, teleX, teleY, 32)
+	}
+
 	stripBakedDiamonds(overlayResized)
 
 	// Perform 60% alpha blend (baked diamonds, if any, now removed).
 	blended := blendImages(baseImg, overlayResized, opts.Alpha)
+
+	// Final safety: catch any reddish/bluish tint that survived alpha blend.
+	stripBakedDiamonds(blended)
 
 	// Draw a single, consistent diamond per point for BOTH renderers.
 	if nakedX != -1 && nakedY != -1 {
@@ -380,6 +390,21 @@ func drawDiamond(img *image.RGBA, cx, cy, size int, col color.Color) {
 	}
 }
 
+// clearNeighborhood zeros a square neighborhood (for deduplication of baked
+// CPU diamonds that may be slightly offset from the detected first-vis points).
+func clearNeighborhood(img *image.RGBA, cx, cy, radius int) {
+	bounds := img.Bounds()
+	for dy := -radius; dy <= radius; dy++ {
+		for dx := -radius; dx <= radius; dx++ {
+			x := cx + dx
+			y := cy + dy
+			if x >= bounds.Min.X && x < bounds.Max.X && y >= bounds.Min.Y && y < bounds.Max.Y {
+				img.Set(x, y, color.RGBA{0, 0, 0, 0})
+			}
+		}
+	}
+}
+
 // findFirstVisibilityDiamonds scans the classification overlay (resized) and returns
 // the easternmost positions for first naked-eye (A/B) and first telescope (C/D) visibility.
 // It uses a more robust color-distance approach to handle small variations between
@@ -472,20 +497,44 @@ func formatDateForLegend(dateStr string) string {
 // point for both renderers. It clears every strongly red or strongly blue pixel
 // across the whole overlay (setting it fully transparent).
 //
-// This is safe because the only red/blue content in an overlay is the baked
-// diamonds: the visibility zones A–E are cyan/yellow, never red or blue. GPU
-// overlays bake nothing, so this is effectively a no-op for them.
+// This version is intentionally aggressive (relaxed thresholds + small
+// neighborhood clear) to catch anti-aliased edges, resize artifacts, and the
+// large (OUTER_SIZE=22) baked diamonds from the C++ renderer. The only red/blue
+// content in any overlay is these baked diamonds (A–E zones are cyan/yellow).
+// GPU overlays bake nothing, so this is a no-op for them.
 func stripBakedDiamonds(img *image.RGBA) {
 	pix := img.Pix
+	w := img.Bounds().Dx()
+	h := img.Bounds().Dy()
 	for i := 0; i+3 < len(pix); i += 4 {
 		r, g, b, a := pix[i], pix[i+1], pix[i+2], pix[i+3]
-		if a < 0x60 { // skip near-transparent pixels (anti-aliased edges still caught below)
+		if a < 0x30 {
 			continue
 		}
-		strongRed := r > 160 && g < 140 && b < 140
-		strongBlue := b > 160 && r < 140 && g < 140
+		// Relaxed thresholds + neighborhood to catch anti-aliased baked diamonds
+		// (the C++ draws a large Manhattan diamond with 3px black ring).
+		strongRed := r > 135 && g < 160 && b < 160
+		strongBlue := b > 135 && r < 160 && g < 160
 		if strongRed || strongBlue {
-			pix[i], pix[i+1], pix[i+2], pix[i+3] = 0, 0, 0, 0
+			// Zero a small cross neighborhood (helps with blended/anti-aliased edges)
+			off := i / 4
+			x := off % w
+			y := off / w
+			for dy := -2; dy <= 2; dy++ {
+				for dx := -2; dx <= 2; dx++ {
+					nx := x + dx
+					ny := y + dy
+					if nx >= 0 && nx < w && ny >= 0 && ny < h {
+						nidx := (ny*w + nx) * 4
+						if nidx+3 < len(pix) {
+							pix[nidx+0] = 0
+							pix[nidx+1] = 0
+							pix[nidx+2] = 0
+							pix[nidx+3] = 0
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -493,15 +542,16 @@ func stripBakedDiamonds(img *image.RGBA) {
 // --- Legend drawing (improved with proper diamonds) ---
 
 func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
-	// Legend background rectangle (bottom-right). Geometry constants keep
-	// padding consistent for every element below.
+	// Legend background rectangle (bottom-right). Tighter geometry to reduce
+	// excessive white space while preserving the two-column layout, large
+	// 44pt/30pt fonts, breathing room, and overall aesthetics the user liked.
 	const (
-		legendL = 2720
-		legendT = 1520
-		legendR = 3830
-		legendB = 2150
-		padL    = 30 // inner padding from left edge
-		padR    = 30 // inner padding from right edge
+		legendL = 2820
+		legendT = 1620
+		legendR = 3790
+		legendB = 2075
+		padL    = 22 // inner padding from left edge
+		padR    = 22 // inner padding from right edge
 	)
 	legendRect := image.Rect(legendL, legendT, legendR, legendB)
 	drawstd.Draw(img, legendRect, &image.Uniform{color.White}, image.Point{}, drawstd.Src)
@@ -525,7 +575,7 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	innerR := legendR - padR
 
 	// === Header row: date on the left, moon age right-aligned ===
-	headerY := legendT + 50
+	headerY := legendT + 38
 	headerDrawer.Dot = fixed.P(innerL, headerY)
 	headerDrawer.DrawString(formatDateForLegend(dateStr))
 
@@ -537,13 +587,13 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	}
 
 	// Subtle separator line under header
-	sepY := headerY + 30
+	sepY := headerY + 24
 	for x := innerL; x < innerR; x++ {
 		img.Set(x, sepY, color.RGBA{180, 180, 180, 255})
 	}
 
 	// Title + criterion row (criterion right-aligned to balance the title)
-	titleY := sepY + 50
+	titleY := sepY + 36
 	headerDrawer.Dot = fixed.P(innerL, titleY)
 	headerDrawer.DrawString("Visibility")
 
@@ -555,7 +605,7 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	// === Two-column layout for legend items ===
 	// Left column: A–E (5 rows). Right column: 2 diamonds — vertically
 	// centered against the left column so the right side doesn't look top-heavy.
-	const rowH = 50
+	const rowH = 40
 	leftEntries := []struct {
 		col   color.Color
 		label string
@@ -574,23 +624,23 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 		{color.RGBA{0, 0, 255, 255}, "First telescope visibility"},
 	}
 
-	itemsTopY := titleY + 40
+	itemsTopY := titleY + 28
 	leftColX := innerL
-	rightColX := legendL + (legendR-legendL)/2 + 20
+	rightColX := legendL + (legendR-legendL)/2 + 16
 
 	// Left column (A–E)
 	for i, e := range leftEntries {
 		y := itemsTopY + i*rowH
-		colRect := image.Rect(leftColX, y, leftColX+28, y+24)
+		colRect := image.Rect(leftColX, y, leftColX+24, y+20)
 		drawstd.Draw(img, colRect, &image.Uniform{e.col}, image.Point{}, drawstd.Src)
 
 		border := color.RGBA{30, 30, 30, 200}
-		drawstd.Draw(img, image.Rect(leftColX, y, leftColX+28, y+1), &image.Uniform{border}, image.Point{}, drawstd.Src)
-		drawstd.Draw(img, image.Rect(leftColX, y+23, leftColX+28, y+24), &image.Uniform{border}, image.Point{}, drawstd.Src)
-		drawstd.Draw(img, image.Rect(leftColX, y, leftColX+1, y+24), &image.Uniform{border}, image.Point{}, drawstd.Src)
-		drawstd.Draw(img, image.Rect(leftColX+27, y, leftColX+28, y+24), &image.Uniform{border}, image.Point{}, drawstd.Src)
+		drawstd.Draw(img, image.Rect(leftColX, y, leftColX+24, y+1), &image.Uniform{border}, image.Point{}, drawstd.Src)
+		drawstd.Draw(img, image.Rect(leftColX, y+19, leftColX+24, y+20), &image.Uniform{border}, image.Point{}, drawstd.Src)
+		drawstd.Draw(img, image.Rect(leftColX, y, leftColX+1, y+20), &image.Uniform{border}, image.Point{}, drawstd.Src)
+		drawstd.Draw(img, image.Rect(leftColX+23, y, leftColX+24, y+20), &image.Uniform{border}, image.Point{}, drawstd.Src)
 
-		labelDrawer.Dot = fixed.P(leftColX+40, y+20)
+		labelDrawer.Dot = fixed.P(leftColX+32, y+17)
 		labelDrawer.DrawString(e.label)
 	}
 
@@ -599,17 +649,17 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	rightStartY := itemsTopY + (len(leftEntries)-len(rightEntries))*rowH/2
 	for i, e := range rightEntries {
 		y := rightStartY + i*rowH
-		drawDiamond(img, rightColX+14, y+12, 14, color.RGBA{0, 0, 0, 255})
-		drawDiamond(img, rightColX+14, y+12, 11, e.col)
+		drawDiamond(img, rightColX+12, y+10, 12, color.RGBA{0, 0, 0, 255})
+		drawDiamond(img, rightColX+12, y+10, 9, e.col)
 
-		labelDrawer.Dot = fixed.P(rightColX+40, y+20)
+		labelDrawer.Dot = fixed.P(rightColX+32, y+17)
 		labelDrawer.DrawString(e.label)
 	}
 
 	// Git repo reference, right-aligned inside the box using real text metrics.
 	repoText := "github.com/jim-fun/crescent-moon-visibility"
 	repoW := labelDrawer.MeasureString(repoText).Ceil()
-	repoY := legendB - 20
+	repoY := legendB - 16
 	labelDrawer.Dot = fixed.P(innerR-repoW, repoY)
 	labelDrawer.DrawString(repoText)
 
