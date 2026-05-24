@@ -71,6 +71,29 @@ def process_file(output_file, base_umat, moon_age, ones_umat):
     b = rgba_arr[:, :, 2]
     a = rgba_arr[:, :, 3]
 
+    # Skip blending if the overlay has no visibility classifications at all.
+    # Some young-crescent dates pass the orchestrator's pre-render illumination
+    # threshold (because the moon has reached 0.2% illumination somewhere on
+    # Earth at sunset) but still render with zero Yallop A-E pixels because the
+    # geometry (declination, observer latitudes) gives every visible-side
+    # observer either an 'F' (value < -0.293) or an 'I' (moonset before sunset).
+    # Writing a "blank" map with just the base photo and a legend is misleading.
+    A, B, C, D, E = (0, 204, 204), (0, 179, 179), (255, 255, 26), (230, 230, 0), (179, 179, 0)
+    visible_px = (
+        ((r == A[0]) & (g == A[1]) & (b == A[2]) & (a == 255)).sum() +
+        ((r == B[0]) & (g == B[1]) & (b == B[2]) & (a == 255)).sum() +
+        ((r == C[0]) & (g == C[1]) & (b == C[2]) & (a == 255)).sum() +
+        ((r == D[0]) & (g == D[1]) & (b == D[2]) & (a == 255)).sum() +
+        ((r == E[0]) & (g == E[1]) & (b == E[2]) & (a == 255)).sum()
+    )
+    if visible_px < 100:
+        print(f"[skip] {os.path.basename(base_name)}: no visibility zones ({visible_px} px) — overlay too young to render")
+        if os.path.exists(bin_path):
+            os.remove(bin_path)
+        elif os.path.exists(base_name) and base_name != base_name + ".webp":
+            os.remove(base_name)
+        return
+
     # Resize on CPU then upload to GPU (use LANCZOS for smooth edges)
     overlay_resized = overlay_pil.resize((3840, 2160), PILImage.LANCZOS)
     overlay_arr = np.array(overlay_resized)
