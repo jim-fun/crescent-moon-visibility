@@ -405,6 +405,55 @@ func clearNeighborhood(img *image.RGBA, cx, cy, radius int) {
 	}
 }
 
+// drawFilledCircle fills a disk using a simple Euclidean distance test.
+func drawFilledCircle(img *image.RGBA, cx, cy, radius int, col color.Color) {
+	for dy := -radius; dy <= radius; dy++ {
+		for dx := -radius; dx <= radius; dx++ {
+			if dx*dx+dy*dy <= radius*radius {
+				x := cx + dx
+				y := cy + dy
+				if x >= 0 && x < img.Bounds().Dx() && y >= 0 && y < img.Bounds().Dy() {
+					img.Set(x, y, col)
+				}
+			}
+		}
+	}
+}
+
+// drawRoundedRect fills a rectangle with rounded corners.
+// It draws the straight body with rectangles then adds four quarter-circles.
+func drawRoundedRect(img *image.RGBA, r image.Rectangle, radius int, col color.Color) {
+	if radius <= 0 {
+		drawstd.Draw(img, r, &image.Uniform{col}, image.Point{}, drawstd.Src)
+		return
+	}
+
+	w := r.Dx()
+	h := r.Dy()
+	if radius > w/2 {
+		radius = w / 2
+	}
+	if radius > h/2 {
+		radius = h / 2
+	}
+
+	// Main horizontal body (full height in the middle)
+	drawstd.Draw(img, image.Rect(r.Min.X+radius, r.Min.Y, r.Max.X-radius, r.Max.Y),
+		&image.Uniform{col}, image.Point{}, drawstd.Src)
+
+	// Vertical side strips (the straight parts above/below the corner circles)
+	drawstd.Draw(img, image.Rect(r.Min.X, r.Min.Y+radius, r.Min.X+radius, r.Max.Y-radius),
+		&image.Uniform{col}, image.Point{}, drawstd.Src)
+	drawstd.Draw(img, image.Rect(r.Max.X-radius, r.Min.Y+radius, r.Max.X, r.Max.Y-radius),
+		&image.Uniform{col}, image.Point{}, drawstd.Src)
+
+	// Four corner disks
+	drawFilledCircle(img, r.Min.X+radius, r.Min.Y+radius, radius, col)
+	drawFilledCircle(img, r.Max.X-radius-1, r.Min.Y+radius, radius, col)
+	drawFilledCircle(img, r.Min.X+radius, r.Max.Y-radius-1, radius, col)
+	drawFilledCircle(img, r.Max.X-radius-1, r.Max.Y-radius-1, radius, col)
+}
+
 // findFirstVisibilityDiamonds scans the classification overlay (resized) and returns
 // the easternmost positions for first naked-eye (A/B) and first telescope (C/D) visibility.
 // It uses a more robust color-distance approach to handle small variations between
@@ -554,18 +603,19 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 		padR    = 22 // inner padding from right edge
 	)
 	legendRect := image.Rect(legendL, legendT, legendR, legendB)
-	drawstd.Draw(img, legendRect, &image.Uniform{color.White}, image.Point{}, drawstd.Src)
 
-	// Thin dark border for definition (big aesthetic win)
+	// Rounded corners give a modern, polished look while keeping the legend
+	// compact and easy to read.
+	const cornerRadius = 16
+
 	borderCol := color.RGBA{60, 60, 60, 255}
-	for x := legendRect.Min.X; x < legendRect.Max.X; x++ {
-		img.Set(x, legendRect.Min.Y, borderCol)
-		img.Set(x, legendRect.Max.Y-1, borderCol)
-	}
-	for y := legendRect.Min.Y; y < legendRect.Max.Y; y++ {
-		img.Set(legendRect.Min.X, y, borderCol)
-		img.Set(legendRect.Max.X-1, y, borderCol)
-	}
+
+	// Draw the dark rounded border first, then the inner white rounded area
+	// inset by 1px to produce a clean 1-pixel rounded border.
+	drawRoundedRect(img, legendRect, cornerRadius, borderCol)
+
+	innerRect := image.Rect(legendL+1, legendT+1, legendR-1, legendB-1)
+	drawRoundedRect(img, innerRect, cornerRadius-1, color.White)
 
 	initFonts()
 	headerDrawer := &font.Drawer{Dst: img, Src: image.Black, Face: headerFace}
