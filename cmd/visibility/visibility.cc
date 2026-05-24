@@ -314,7 +314,9 @@ int main(int argc, const char **argv)
 {
     if (argc >= 2 && (!strcmp(argv[1], "-version") || !strcmp(argv[1], "--version")))
     {
-#ifdef VERSION
+#ifdef VERSION_STR
+        printf("visibility (CPU renderer) version %s\n", VERSION_STR);
+#elif defined(VERSION)
         printf("visibility (CPU renderer) version %s\n", VERSION);
 #else
         printf("visibility (CPU renderer) version unknown\n");
