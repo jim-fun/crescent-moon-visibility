@@ -7,6 +7,7 @@
 // images to the pure-Go blending package (internal/blend) that composites
 // them onto the NASA base map and writes high-quality WEBP output.
 //
+//
 // Supported GPU backends (auto-detected by OpenCL):
 //   - macOS (Apple Silicon): Metal/OpenCL with automatic FP32 + double-double
 //     time kernel (visibility_kernel_fp32.cl) when FP64 is unavailable.
@@ -33,6 +34,12 @@ import (
 
 	"github.com/jim-fun/crescent-moon-visibility/internal/astro"
 	"github.com/jim-fun/crescent-moon-visibility/internal/blend"
+)
+
+// Version and build information are injected at build time via -ldflags.
+var (
+	version   = "dev"
+	buildDate = "unknown"
 )
 
 const (
@@ -116,7 +123,9 @@ func main() {
 	var maxWorkers int
 	var useGPU bool
 	var noBlend bool
+	var showVersion bool
 
+	flag.BoolVar(&showVersion, "version", false, "Print version and build date, then exit")
 	flag.StringVar(&yearsStr, "years", "", "Comma-separated list of years (e.g., 2027,2028)")
 	flag.StringVar(&monthsStr, "months", "", "Comma-separated list of months to process (e.g., 1,2 for Jan/Feb; 1-12) — overrides year range when set")
 	flag.IntVar(&startYear, "start", 2027, "Start year (if -years is not set)")
@@ -126,6 +135,11 @@ func main() {
 	flag.BoolVar(&useGPU, "gpu", false, "Use GPU renderer (bin/gpu_visibility.out) instead of CPU (bin/visibility.out)")
 	flag.BoolVar(&noBlend, "noblend", false, "Skip GPU blending step — useful when data/map_nasa.png or OpenCV dependencies are unavailable")
 	flag.Parse()
+
+	if showVersion {
+		fmt.Printf("crescent_maps version %s (built %s)\n", version, buildDate)
+		return
+	}
 
 	years := parseYears(yearsStr, startYear, endYear)
 	if len(years) == 0 {

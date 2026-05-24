@@ -85,6 +85,9 @@ make cpu && make go
 
 # Render overlays only, skip the blending pass (useful when OpenCV is unavailable)
 ./crescent_maps -years 2027 -noblend
+
+# Show version information
+./crescent_maps -version
 ```
 
 ### CLI Flags
@@ -99,6 +102,7 @@ make cpu && make go
 | `-workers` | Parallel worker count for the renderer                        | `4`       |
 | `-gpu`     | Use GPU renderer instead of CPU                               | `false`   |
 | `-noblend` | Skip GPU blending (writes raw overlays only)                  | `false`   |
+| `-version` | Print version and build date, then exit                       | `false`   |
 
 ### Day selection
 

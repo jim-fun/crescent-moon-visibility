@@ -48,6 +48,11 @@ GPU_BIN  := $(BIN_DIR)/gpu_visibility.out
 CPU_BIN  := $(BIN_DIR)/visibility.out
 GO_BIN   := $(BIN_DIR)/crescent_maps
 
+# Versioning (injected via ldflags)
+VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
+DATE    ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+LDFLAGS := -ldflags "-X main.version=$(VERSION) -X main.buildDate=$(DATE)"
+
 # Check for OpenCL dev headers
 GPU_SUPPORTED := no
 ifeq ($(UNAME_S),Darwin)
@@ -101,7 +106,7 @@ $(GPU_BIN): gpu/gpu_render.c gpu/chebyshev.c gpu/chebyshev.h gpu/visibility_kern
 go: $(GO_BIN)
 
 $(GO_BIN): main.go internal/astro/astro.go go.mod | $(BIN_DIR)
-	go build -o $@ .
+	go build $(LDFLAGS) -o $@ .
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
