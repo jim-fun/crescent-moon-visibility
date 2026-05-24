@@ -188,27 +188,30 @@ func main() {
 	fmt.Printf("Output Directory: %s | Workers: %d | Renderer: %s\n", outDir, maxWorkers, rendererBin)
 
 	// Build the task list: for each new moon, walk forward day-by-day and pick
-	// the first DaysToProcess days where the crescent is at least 12 h old at a
-	// reference observation moment (18:00 UTC). 12 h captures the extreme young
-	// crescents (record sightings are around 13–15 h) while still skipping the
-	// physically impossible same-day cases where conjunction happened after the
-	// reference moment.
-	const minMoonAgeHours = 12.0
-	const referenceHourUTC = 18
+	// the first DaysToProcess days where the Moon will reach at least
+	// MinIlluminationFraction by the end of that UTC day. 0.4 % illumination
+	// corresponds to ~7.25° elongation ≈ 13.4 h after conjunction — below the
+	// faintest known naked-eye crescent sightings, but firmly above the
+	// physically uninteresting "barely-past-conjunction" range. Anywhere on
+	// Earth that has its sunset during day D will see at least that much
+	// illumination at some point, so the criterion is "anywhere-on-Earth-on-D".
+	const MinIlluminationFraction = 0.004
 
 	var tasks []task
 	for _, nm := range allMoons {
 		mapsGenerated := 0
 		for d := 0; d <= 4 && mapsGenerated < DaysToProcess; d++ {
 			midnight := time.Date(nm.Year(), nm.Month(), nm.Day(), 0, 0, 0, 0, time.UTC).AddDate(0, 0, d)
-			referenceEvening := midnight.Add(referenceHourUTC * time.Hour)
-			hoursSinceConjunction := referenceEvening.Sub(nm).Hours()
-			if hoursSinceConjunction < minMoonAgeHours {
+			endOfDay := midnight.AddDate(0, 0, 1)
+			if astro.MoonIlluminationFraction(endOfDay) < MinIlluminationFraction {
 				continue
 			}
 			dateStr := midnight.Format("2006-01-02")
 			outputFile := filepath.Join(outDir, dateStr)
-			moonAge := hoursSinceConjunction / 24.0
+			// Report the mid-day moon age (12:00 UTC) so the legend's value is
+			// representative of the whole day rather than its end.
+			midDay := midnight.Add(12 * time.Hour)
+			moonAge := midDay.Sub(nm).Hours() / 24.0
 			tasks = append(tasks, task{DateStr: dateStr, OutputFile: outputFile, MoonAge: moonAge})
 			mapsGenerated++
 		}
