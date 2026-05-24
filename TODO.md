@@ -32,6 +32,7 @@ These items are the current focus because they most directly strengthen the proj
   From agentic review of TODO prioritization on 2026-05-24.
 
 - [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline
+  (See also the new `docs/visibility-criteria-comparison.md` for Yallop vs Odeh formula details and additional observational data sources.)
   Rationale: HMNAO publishes official predictions using (a version of) the Yallop method. Comparing our maps against their published tables for the same dates provides an independent implementation check and increases credibility.
   Ties to Core Principles: Strong Verifiability & Reproducibility + Accuracy First. Helps prove our Chebyshev + rise/set + Yallop logic produces equivalent results to the official source.
   Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables. Document any systematic differences in first-visibility longitude or category boundaries.

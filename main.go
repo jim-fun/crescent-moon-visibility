@@ -336,7 +336,7 @@ func main() {
 	// high-quality WEBP output. This removes the last Python dependency from
 	// the default pipeline.
 	if len(mapFiles) > 0 && !noBlend {
-		fmt.Println("\n[2/2] Starting Go blending (pure Go, no Python dependency)...")
+		fmt.Println("\n[2/2] Starting Go blending...")
 
 		gpuStart := time.Now()
 		opts := blend.DefaultOptions()
