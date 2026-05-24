@@ -10,6 +10,7 @@ crescent_maps
 *.webp
 output_maps/
 maps_*/
+outmaps/
 estimates/
 test/
 
