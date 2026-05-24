@@ -66,7 +66,7 @@ jobs:
             crescent_maps-*
             visibility-*
             checksums-*.txt
-          retention-days: 7
+          retention-days: 14
 
   release:
     needs: build
@@ -112,19 +112,31 @@ jobs:
           body: |
             ## Crescent Moon Visibility Maps Generator ${{ github.ref_name }}
 
-            ### Downloads
+            High-performance crescent moon visibility maps using a mixed-language architecture: Go orchestrator (CGO + Astronomy Engine), dual C++ / OpenCL renderers (CPU reference in double + GPU with Chebyshev ephemeris + FP32+double-double for Apple Silicon), and pure-Go blending (no Python in default path). See the **[Architecture section](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#architecture)** and **[Performance & Accuracy](https://github.com/jim-fun/crescent-moon-visibility/blob/main/docs/performance-accuracy.md)** for design rationale and ~96.97 % fidelity guarantees.
+
+            ### Downloads (Pre-built Artifacts)
 
             | File | Description |
             |------|-------------|
-            | `crescent_maps-*` | Main Go orchestrator (recommended) |
-            | `visibility-*` | CPU reference renderer |
+            | `crescent_maps-*` | **Main Go orchestrator** (recommended for all users; includes version reporting for bundled renderers) |
+            | `visibility-*` | CPU reference renderer (pure double C++ + OpenMP; built best-effort on release runners) |
 
-            **Note:** The GPU renderer (`gpu_visibility.out`) has platform-specific OpenCL dependencies. It is best built locally with `make gpu`.
+            **Important:** The GPU renderer (`gpu_visibility.out`) has platform-specific OpenCL / driver dependencies and is **not included** in GitHub releases. Build it locally with `make gpu` (or `make` for everything) after cloning. Full instructions: [README § GPU dependency installation](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#gpu-dependency-installation).
 
-            ### Verifying Downloads
+            **Quick start from release (Linux/macOS example):**
+            ```bash
+            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent_maps-${{ github.ref_name#v }}-linux-amd64   # (adjust suffix)
+            chmod +x crescent_maps-*
+            sudo mv crescent_maps-* /usr/local/bin/crescent_maps
+            crescent_maps -version
+            crescent_maps -help
+            # For a map: crescent_maps -start 2027 -end 2027   # CPU; add -gpu after local GPU build
+            ```
 
-            1. Download `checksums.txt` and the corresponding signature files.
-            2. Verify the signature:
+            ### Verifying Downloads (Supply-Chain Security)
+
+            1. Download `checksums.txt`, `checksums.txt.sig`, and `checksums.txt.pem`.
+            2. Verify the Cosign keyless signature (GitHub OIDC):
 
             ```bash
             cosign verify-blob checksums.txt \
@@ -134,11 +146,15 @@ jobs:
               --certificate-oidc-issuer https://token.actions.githubusercontent.com
             ```
 
-            Then verify individual files:
+            Then verify artifacts:
             ```bash
             sha256sum -c checksums.txt
             ```
 
-            See the [README](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md) for full installation and usage instructions.
+            Full release process, pre-release support (`-rc`, `-beta`), and Makefile helpers: see [README § Release Process](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#release-process) and `scripts/release.sh`.
+
+            See [CHANGELOG.md](https://github.com/jim-fun/crescent-moon-visibility/blob/main/CHANGELOG.md) for detailed history and the **[crescent-moon-visibility-engineering skill](https://github.com/jim-fun/crescent-moon-visibility/blob/main/.grok/skills/crescent-moon-visibility-engineering/SKILL.md)** (internal) for architectural patterns.
+
+            **License:** MIT (see attached LICENSE).
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -36,7 +36,7 @@ make clean        # Remove build artifacts from bin/
 
 ### Prerequisites
 
-- Go 1.22+
+- Go 1.22+ (module declares go 1.25; recent releases recommended)
 - C/C++ compiler with OpenMP (or `libomp` on macOS via Homebrew)
 - Python 3 + OpenCV/Pillow/numpy (only needed if you want to run the legacy `gpu_blend.py` — no longer required for normal use)
 - OpenCL headers/libraries (optional but recommended for GPU path)

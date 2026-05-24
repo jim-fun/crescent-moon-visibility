@@ -26,3 +26,5 @@ __pycache__/
 # NOTE: *.png is intentionally not globbed globally.
 # The base map lives in data/map_nasa.png (tracked).
 # All generated output PNGs live inside ignored directories (output_maps/, etc.).
+
+**/.ipynb_checkpoints/

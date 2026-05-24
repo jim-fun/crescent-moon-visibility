@@ -4,23 +4,38 @@ A high-performance application for generating accurate crescent moon visibility 
 
 ## Architecture
 
-The project is orchestrated entirely in **Go**, with a dual rendering path and a final GPU blending pass:
+The project uses a carefully engineered **mixed-language architecture** for performance, portability, and long-term accuracy:
 
-- **Go Orchestrator (`main.go`)** — Manages CLI flags, computes new-moon times via CGO into the Astronomy Engine, dynamically selects the right calendar days based on a moon-age threshold, and fans tasks out to parallel workers.
-- **CPU Renderer (`cmd/visibility/visibility.cc`)** — OpenMP-parallel C++ pixel renderer (`visibility.out`). Reference implementation; produces the canonical output.
-- **GPU Renderer (`gpu/gpu_render.c` + `gpu/visibility_kernel.cl` and `gpu/visibility_kernel_fp32.cl`)** — OpenCL host + kernels (`gpu_visibility.out`). Uses Chebyshev polynomial ephemeris fits in `__constant` memory.
-  - Two kernels for maximum compatibility and accuracy:
-    - `visibility_kernel.cl`: Full double-precision (FP64) path on devices that support it (NVIDIA, AMD, Intel, macOS Intel, etc.).
-    - `visibility_kernel_fp32.cl`: FP32 + double-double (DD) compensated time path for devices without reliable FP64 (Apple Silicon M1/M2/M3/M4 via Metal-backed OpenCL, and other float-only OpenCL implementations).
-  - Both paths deliver ~96.97–97 % per-pixel match vs the CPU reference while preserving Yallop classification boundaries for visual sighting predictions.
-  - Platforms: macOS (Metal/OpenCL), Linux/NVIDIA (CUDA OpenCL), Linux/AMD (ROCm), Linux/Intel (Compute Runtime). See [docs/performance-accuracy.md](docs/performance-accuracy.md) for detailed benchmarks and accuracy data.
-- **GPU Blending (`internal/blend`)** — Pure-Go compositing of the visibility overlay onto the NASA base map (60% alpha), legend rendering, and high-quality WEBP output. The legacy `gpu_blend.py` is no longer required for the default pipeline.
+- **Go Orchestrator (`main.go` + `internal/astro`)**: The single entry point and coordination layer. Handles CLI, CGO bindings to the Astronomy Engine (thirdparty/astronomy.c) for precise new-moon and illumination calculations, dynamic day selection via illumination-fraction test (see below), task fan-out to parallel workers, renderer dispatch (CPU or GPU binary), and orchestration of the final blend. Version info injected via ldflags from the canonical `VERSION` file. New-moon caching avoids redundant CGO calls.
+
+- **CPU Reference Renderer (`cmd/visibility/visibility.cc`)**: Pure double-precision C++ implementation using OpenMP. This is the *ground truth* for all accuracy claims. It implements the full Yallop (default) and Odeh visibility criteria, rise/set searches, geocentric vector handling for ARCV, best-time (4/9 lag) rule, moon-age line drawing, and first-visibility diamond markers (red/blue). Outputs raw RGBA .bin files. Any change to visibility math must be mirrored here first.
+
+- **GPU Renderer (`gpu/gpu_render.c` host + kernels)**: High-performance OpenCL path (`gpu_visibility.out`).
+  - **Chebyshev polynomial ephemeris** (`gpu/chebyshev.c/h` + degree-24 fits in `__constant` memory): Replaces a large dense table (~410 KB) with ~125 doubles of coefficients per quantity. CPU-side double-precision fit (via Astronomy Engine samples); GPU evaluates the polynomial per-pixel at the exact local sunset time. Delivers ~1e-12 rad accuracy, far below decision thresholds.
+  - **Dual kernels for FP64 / FP32 compatibility**:
+    - `visibility_kernel.cl`: Full `double` + native math on devices reporting `cl_khr_fp64`.
+    - `visibility_kernel_fp32.cl`: `float` + `native_sin`/`native_cos` everywhere *except* a compensated double-double (`float2` hi+lo) accumulator *exclusively for the critical search time `t`* (coarse 32-step scan + 12-iter bisection, lag, t_best, G/J logic, moon-age lines). All other quantities (Chebyshev coeffs rounded to float, RA/Dec, alts, ARCV, W, Yallop Q) stay in float. This is the key design choice that unlocks Apple Silicon (Metal-backed OpenCL has no FP64) while preserving boundary fidelity.
+  - Host (`gpu_render.c`) queries `CL_DEVICE_DOUBLE_FP_CONFIG` once and loads the appropriate kernel + coeff buffer sizes transparently. No user-visible difference on FP64 hardware.
+  - Result: both paths achieve **~96.97–97 % exact per-pixel RGBA match** vs the CPU double reference (residuals are expected ULP noise at Yallop cubic thresholds). See the authoritative **[Performance and Accuracy](docs/performance-accuracy.md)** for methodology, M4 Pro numbers (~80 ms kernel), boundary analysis, and why only time needed DD (not Chebyshev coeffs).
+
+- **Pure-Go Blending (`internal/blend`)**: Self-contained replacement (since 2026) for the legacy `scripts/legacy/gpu_blend.py`. Loads CPU .bin or GPU PNG overlays, early-skip on insufficient visibility (A–E pixels), 60 % alpha composite onto NASA base map (`data/map_nasa.png`), vector legend (colors + first-vis markers), high-quality WEBP (quality 98) output. Eliminates all Python runtime deps for the default pipeline. Moon-age value is threaded through but legend display remains a remaining polish item (see TODO.md).
+
+**Why this design?** (documented in skill + perf doc)
+- **Reference first**: CPU C++ double is the arbiter; GPU is a high-fidelity accelerator.
+- **FP32+DD minimalism**: Full double everywhere on GPU was impossible on Apple Silicon; DD only on the accumulator that actually accumulates error in the horizon search is sufficient and cheap (~few dozen extra ops/pixel).
+- **Chebyshev**: GPU-friendly (small constant mem, fast eval, no interp error of prior dense tables).
+- **Pure Go blend**: Portability, zero external runtime for end-users, easier distribution and testing.
+- **OpenCL + CGO**: Maximum cross-platform GPU reach (Metal, CUDA, ROCm, Compute Runtime) with one codebase; Astronomy Engine reused via C/C++.
+
+The `crescent-moon-visibility-engineering` skill captures these patterns for similar scientific/mixed-language projects. All paths (CPU/GPU) produce overlays suitable for visual sighting predictions because classification + t_best agree with the reference at the 0.1° map resolution used for naked-eye (A/B red diamond) and telescope (C/D blue diamond) first-visibility markers.
+
+See `Makefile` for build orchestration, `.github/workflows/release.yml` + `scripts/release.sh` for release engineering, and `docs/performance-accuracy.md` for the full accuracy story and numerical rationale.
 
 ## Setup & Installation
 
 ### Prerequisites
 
-1. **Go** 1.22+
+1. **Go** 1.22+ (the `go.mod` declares `go 1.25`; builds have been validated on recent Go releases)
 2. **C/C++ Compiler** (GCC or Clang with OpenMP support; macOS needs `brew install libomp`)
 3. **OpenCL SDK** (optional — only needed for the GPU renderer)
 
@@ -108,7 +123,7 @@ make cpu && make go
 
 For each new moon the orchestrator emits **3 maps**, walking forward day-by-day from the conjunction. It only includes days where the Moon reaches at least **0.2 % illumination** at the *latest sunset anywhere on Earth* for that calendar day (sampled at D+1 06:00 UTC to cover observers near the date line). 
 
-This modern illumination-based rule (implemented in `main.go:201`) is more robust than a simple hour-age cutoff, captures record-young crescents under excellent conditions, and still excludes physically impossible same-day cases. The exact new-moon times are preserved at full sub-second precision from the Astronomy Engine. See the code and [PERFORMANCE_AND_ACCURACY.md](PERFORMANCE_AND_ACCURACY.md) for the scientific rationale.
+This modern illumination-based rule (implemented in `main.go:201`) is more robust than a simple hour-age cutoff, captures record-young crescents under excellent conditions, and still excludes physically impossible same-day cases. The exact new-moon times are preserved at full sub-second precision from the Astronomy Engine. See the code and [Performance and Accuracy](docs/performance-accuracy.md) for the scientific rationale.
 
 ## Output
 
@@ -177,24 +192,25 @@ The GPU renderer (both kernels) matches the CPU's classification counts to a ver
 
 ## Installation from GitHub Releases
 
-Pre-built binaries are available on the [Releases](https://github.com/jim-fun/crescent-moon-visibility/releases) page.
+Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on the [Releases](https://github.com/jim-fun/crescent-moon-visibility/releases) page. These are produced by the automated workflow (multi-platform, checksums + Cosign keyless signing).
 
-Download the appropriate `crescent_maps` binary for your platform, make it executable, and place it in your `PATH`.
+**Recommended:** Download the `crescent_maps-*` orchestrator for your OS/arch (e.g. `linux-amd64`, `darwin-arm64`). The CPU renderer (`visibility-*`) is also attached for reference/validation use.
 
-Example (Linux/macOS):
+**GPU renderer note:** Not pre-built (OpenCL is highly platform-dependent). After installing the orchestrator, clone the repo and run `make gpu` (or full `make`) on your target machine for `-gpu` support. See [GPU dependency installation](#gpu-dependency-installation) and the detailed mixed-language [Architecture](#architecture) section above.
 
-```bash
-curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.2.0/crescent_maps-v0.2.0-linux-amd64
-chmod +x crescent_maps-v0.2.0-linux-amd64
-sudo mv crescent_maps-v0.2.0-linux-amd64 /usr/local/bin/crescent_maps
-```
-
-Then run:
+Example (Linux/macOS, adjust tag and suffix for your release):
 
 ```bash
-crescent_maps -version
+curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.2.1/crescent_maps-v0.2.1-linux-amd64
+chmod +x crescent_maps-v0.2.1-linux-amd64
+sudo mv crescent_maps-v0.2.1-linux-amd64 /usr/local/bin/crescent_maps
+crescent_maps -version   # reports orchestrator + attempts to query bundled renderers
 crescent_maps -help
 ```
+
+See the expanded release notes on each GitHub Release page (includes architecture summary, verification steps, and links to CHANGELOG + Performance & Accuracy doc) for the authoritative post-release instructions. The workflow attaches LICENSE and README for offline use.
+
+Full release engineering details (including pre-releases via `make release-rc`, Cosign verification, and `scripts/release.sh`): see the [Release Process](#release-process) section below.
 
 ## Release Process
 
@@ -269,4 +285,4 @@ See `internal/blend/blend_test.go` and `main_test.go` for the test implementatio
 
 ## License
 
-MIT License. Copyright (c) 2023 @ebraminio and @hidp123.
+MIT License. Copyright (c) 2022-present @ebraminio and @hidp123. (See LICENSE and COPYING for full text.)
