@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-05-25
+
+### Added
+- `.github/SECURITY.md` (GitHub security policy and vulnerability reporting guidelines).
+- CodeQL static analysis workflow (`.github/workflows/codeql.yml`) for Go and C++ code, running on pushes to main/dev, pull requests, and weekly schedule.
+
+### Fixed
+- Release workflow (`release.yml`): Fixed artifact download so built binaries, checksums, and signatures are correctly attached to GitHub Releases. Added missing `checkout` step and corrected `download-artifact` configuration (removed `path: artifacts` + `merge-multiple: true`).
+- Made release file globs explicit for the current Linux-amd64-only build matrix.
+
 ## [0.5.0] - 2026-05-25
 
 ### Changed
