@@ -20,8 +20,10 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/chai2010/webp"
+	"github.com/jim-fun/crescent-moon-visibility/internal/astro"
 	xdraw "golang.org/x/image/draw"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/opentype"
@@ -40,6 +42,7 @@ var interRegularTTF []byte
 var (
 	headerFace font.Face
 	labelFace  font.Face
+	markerFace font.Face
 	fontOnce   sync.Once
 )
 
@@ -68,6 +71,16 @@ func initFonts() {
 		})
 		if err != nil {
 			panic("failed to create Inter label face: " + err.Error())
+		}
+
+		// Smaller size for map markers/hour labels
+		markerFace, err = opentype.NewFace(f, &opentype.FaceOptions{
+			Size:    24,
+			DPI:     72,
+			Hinting: font.HintingFull,
+		})
+		if err != nil {
+			panic("failed to create Inter marker face: " + err.Error())
 		}
 	})
 }
@@ -174,8 +187,18 @@ func processOne(overlayPath string, baseImg image.Image, opts BlendOptions, moon
 		drawDiamond(blended, teleX, teleY, 9, color.RGBA{0, 0, 255, 255}) // blue fill
 	}
 
+	// Parse date from file name to determine precise hour markers
+	dateStr := strings.TrimSuffix(filepath.Base(overlayPath), filepath.Ext(overlayPath))
+	mapDate, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		mapDate = time.Now()
+	}
+
+	// Draw hour markers for moon-age lines
+	drawHourMarkers(blended, overlay, mapDate)
+
 	// Draw legend with moon age
-	finalImg := drawLegend(blended, filepath.Base(strings.TrimSuffix(overlayPath, filepath.Ext(overlayPath))), moonAge)
+	finalImg := drawLegend(blended, dateStr, moonAge)
 
 	// Write WEBP (quality 98 equivalent)
 	outPath := strings.TrimSuffix(overlayPath, filepath.Ext(overlayPath)) + ".webp"
@@ -513,13 +536,12 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	// Legend background rectangle (bottom-right). Tighter geometry to reduce
 	// excessive white space while preserving the two-column layout, large
 	// 44pt/30pt fonts, breathing room, and overall aesthetics the user liked.
-	// Increased padding/border by 13px all around the text to prevent it
-	// from feeling too close to the edges.
+	// Margin from image borders set to exactly 20px (legendR = 3820, legendB = 2140).
 	const (
-		legendL = 2790
-		legendT = 1600
-		legendR = 3790
-		legendB = 2090
+		legendL = 2820
+		legendT = 1635
+		legendR = 3820
+		legendB = 2140
 		padL    = 35 // inner padding from left edge (was 22)
 		padR    = 35 // inner padding from right edge (was 22)
 	)
@@ -595,7 +617,7 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 		{color.RGBA{0, 0, 255, 255}, "First telescope visibility"},
 	}
 
-	itemsTopY := titleY + 28
+	itemsTopY := titleY + 43
 	leftColX := innerL
 	rightColX := legendL + (legendR-legendL)/2 + 16
 
@@ -645,4 +667,99 @@ func encodeWEBP(img image.Image, path string, quality int) error {
 		return err
 	}
 	return os.WriteFile(path, buf.Bytes(), 0644)
+}
+
+// drawHourMarkers scans the raw overlay for pure white pixels (moon-age lines),
+// uses the Astronomy Engine to identify their exact hours at local sunset,
+// and draws drop-shadowed hour labels (e.g. "12h") at the top-most point of each line.
+func drawHourMarkers(img *image.RGBA, rawOverlay image.Image, mapDate time.Time) {
+	bounds := rawOverlay.Bounds()
+	wRaw, hRaw := bounds.Dx(), bounds.Dy()
+	if wRaw == 0 || hRaw == 0 {
+		return
+	}
+
+	type point struct {
+		x, y int
+	}
+	topPoints := make(map[int]point)
+	pixelCounts := make(map[int]int)
+
+	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+		for x := bounds.Min.X; x < bounds.Max.X; x++ {
+			r, g, b, a := rawOverlay.At(x, y).RGBA()
+			r8, g8, b8, a8 := uint8(r>>8), uint8(g>>8), uint8(b>>8), uint8(a>>8)
+			if a8 > 250 && r8 == 255 && g8 == 255 && b8 == 255 {
+				// Linear mapping to longitude [-180, 180] and latitude [-90, 90]
+				lon := (float64(x-bounds.Min.X)/float64(wRaw))*360.0 - 180.0
+				lat := 90.0 - (float64(y-bounds.Min.Y)/float64(hRaw))*180.0
+
+				// Calculate exact moon age in hours
+				ageHrs := astro.GetMoonAgeHours(lat, lon, mapDate)
+				if ageHrs < 0 {
+					continue
+				}
+
+				hour := int(math.Round(ageHrs))
+				pixelCounts[hour]++
+
+				curr, exists := topPoints[hour]
+				if !exists || y < curr.y {
+					topPoints[hour] = point{x: x, y: y}
+				}
+			}
+		}
+	}
+
+	initFonts()
+	drawer := &font.Drawer{
+		Dst:  img,
+		Src:  image.NewUniform(color.RGBA{240, 240, 240, 255}), // Elegant off-white
+		Face: markerFace,
+	}
+
+	for hour, pt := range topPoints {
+		// Filter out noise/isolated pixels
+		if pixelCounts[hour] < 15 {
+			continue
+		}
+
+		// Scale the coordinates to the target image dimensions (3840 x 2160)
+		targetX := int(float64(pt.x-bounds.Min.X) * (float64(TargetWidth) / float64(wRaw)))
+		targetY := int(float64(pt.y-bounds.Min.Y) * (float64(TargetHeight) / float64(hRaw)))
+
+		// Label text
+		label := fmt.Sprintf("%dh", hour)
+		labelW := drawer.MeasureString(label).Ceil()
+
+		// Position: center horizontally above the top point
+		drawX := targetX - labelW/2
+		if drawX < 10 {
+			drawX = 10
+		}
+		if drawX+labelW > TargetWidth-10 {
+			drawX = TargetWidth - 10 - labelW
+		}
+
+		// Draw a solid dark outline/drop-shadow first to ensure excellent readability
+		shadowDrawer := &font.Drawer{
+			Dst:  img,
+			Src:  image.NewUniform(color.RGBA{0, 0, 0, 220}),
+			Face: markerFace,
+		}
+
+		for dx := -2; dx <= 2; dx++ {
+			for dy := -2; dy <= 2; dy++ {
+				if dx == 0 && dy == 0 {
+					continue
+				}
+				shadowDrawer.Dot = fixed.P(drawX+dx, targetY+dy)
+				shadowDrawer.DrawString(label)
+			}
+		}
+
+		// Draw the main text
+		drawer.Dot = fixed.P(drawX, targetY)
+		drawer.DrawString(label)
+	}
 }

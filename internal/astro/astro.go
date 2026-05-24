@@ -53,3 +53,41 @@ func NewMoonsInYear(year int) []time.Time {
 	}
 	return moons
 }
+
+// GetMoonAgeHours calculates the exact moon age in hours at the best-time of visibility
+// for the given latitude, longitude, and base date.
+func GetMoonAgeHours(latitude, longitude float64, t time.Time) float64 {
+	ct := C.Astronomy_MakeTime(
+		C.int(t.Year()), C.int(t.Month()), C.int(t.Day()),
+		C.int(12), C.int(0), C.double(0), // Use noon UTC as base_time
+	)
+	// Base time adjusted by longitude
+	baseTime := C.Astronomy_AddDays(ct, C.double(-longitude/360.0))
+	observer := C.astro_observer_t{
+		latitude:  C.double(latitude),
+		longitude: C.double(longitude),
+		height:    C.double(0),
+	}
+	sunset := C.Astronomy_SearchRiseSet(C.BODY_SUN, observer, C.DIRECTION_SET, baseTime, 1)
+	moonset := C.Astronomy_SearchRiseSet(C.BODY_MOON, observer, C.DIRECTION_SET, baseTime, 1)
+	if sunset.status != C.ASTRO_SUCCESS || moonset.status != C.ASTRO_SUCCESS {
+		return -1.0
+	}
+	lagTime := (moonset.time.ut - sunset.time.ut)
+	var bestTime C.astro_time_t
+	if lagTime < 0 {
+		bestTime = sunset.time
+	} else {
+		bestTime = C.Astronomy_AddDays(sunset.time, C.double(lagTime*4.0/9.0))
+	}
+	newMoonPrev := C.Astronomy_SearchMoonPhase(0, sunset.time, -35).time
+	newMoonNext := C.Astronomy_SearchMoonPhase(0, sunset.time, 35).time
+	var nmNearest C.astro_time_t
+	if (sunset.time.ut - newMoonPrev.ut) <= (newMoonNext.ut - sunset.time.ut) {
+		nmNearest = newMoonPrev
+	} else {
+		nmNearest = newMoonNext
+	}
+	return float64(bestTime.ut-nmNearest.ut) * 24.0
+}
+
