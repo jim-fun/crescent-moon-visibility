@@ -1,5 +1,10 @@
 # Crescent Moon Visibility Maps Generator
 
+[![Go Version](https://img.shields.io/badge/Go-1.22+-00ADD8?logo=go)](https://go.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Latest Release](https://img.shields.io/github/v/release/jim-fun/crescent-moon-visibility)](https://github.com/jim-fun/crescent-moon-visibility/releases)
+[![Build](https://img.shields.io/github/actions/workflow/status/jim-fun/crescent-moon-visibility/release.yml)](https://github.com/jim-fun/crescent-moon-visibility/actions)
+
 A high-performance application for generating accurate crescent moon visibility maps using astronomical calculations. This tool implements well-established visibility criteria (Yallop and Odeh) to predict when and where the new crescent moon will be visible to observers around the world.
 
 ## Architecture
@@ -201,9 +206,9 @@ Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on
 Example (Linux/macOS, adjust tag and suffix for your release):
 
 ```bash
-curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.2.1/crescent_maps-0.2.1-linux-amd64
-chmod +x crescent_maps-0.2.1-linux-amd64
-sudo mv crescent_maps-0.2.1-linux-amd64 /usr/local/bin/crescent_maps
+curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.3.0/crescent_maps-0.3.0-linux-amd64
+chmod +x crescent_maps-0.3.0-linux-amd64
+sudo mv crescent_maps-0.3.0-linux-amd64 /usr/local/bin/crescent_maps
 crescent_maps -version   # reports orchestrator + attempts to query bundled renderers
 crescent_maps -help
 ```
@@ -212,7 +217,7 @@ See the expanded release notes on each GitHub Release page (includes architectur
 
 Full release engineering details (including pre-releases via `make release-rc`, Cosign verification, and `scripts/release.sh`): see the [Release Process](#release-process) section below.
 
-For important changes, the project uses a structured **Agentic Workflow** (Improvement → Validation → Security Review → Judge). The **Judge** serves as the final guardian of the project's Core Principles (especially Accuracy First and Performance with Integrity). See `AGENTIC_WORKFLOW.md`.
+Significant engineering changes are developed under a structured review process that strongly enforces the project's Core Principles, with **Accuracy First** as the non-negotiable priority.
 
 ## Release Process
 
