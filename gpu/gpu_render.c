@@ -104,6 +104,15 @@ static void check_cl(cl_int err, const char *msg) {
 }
 
 int main(int argc, const char **argv) {
+    if (argc >= 2 && (!strcmp(argv[1], "-version") || !strcmp(argv[1], "--version"))) {
+#ifdef VERSION
+        printf("gpu_visibility (GPU renderer) version %s\n", VERSION);
+#else
+        printf("gpu_visibility (GPU renderer) version unknown\n");
+#endif
+        return 0;
+    }
+
     if (argc < 6) {
         printf("Usage: %s YYYY-MM-DD map <evening|morning> <yallop|odeh> output.png\n", argv[0]);
         return 1;

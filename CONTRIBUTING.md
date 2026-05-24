@@ -52,6 +52,10 @@ The core pipeline is now pure Go + CGO (the final Python component was removed i
 - `bin/` — Compiled outputs (populated by `make`)
 - `docs/` — Detailed technical documentation
 
+## Releases
+
+Releases are automated via GitHub Actions on `v*` tags. See the [Release Process](#release-process) section in the README.
+
 ## Adding New Features or Fixing Bugs
 
 - Visibility criteria, new map projections, better accuracy, performance improvements, and documentation are all welcome.

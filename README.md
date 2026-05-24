@@ -175,6 +175,82 @@ See the dedicated **[Performance and Accuracy](docs/performance-accuracy.md)** d
 
 The GPU renderer (both kernels) matches the CPU's classification counts to a very high degree. Full-year runs that previously took ~95 s on CPU now complete in well under 10 s on modern Apple Silicon GPUs when using `-gpu`.
 
+## Installation from GitHub Releases
+
+Pre-built binaries are available on the [Releases](https://github.com/jim-fun/crescent-moon-visibility/releases) page.
+
+Download the appropriate `crescent_maps` binary for your platform, make it executable, and place it in your `PATH`.
+
+Example (Linux/macOS):
+
+```bash
+curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.2.0/crescent_maps-v0.2.0-linux-amd64
+chmod +x crescent_maps-v0.2.0-linux-amd64
+sudo mv crescent_maps-v0.2.0-linux-amd64 /usr/local/bin/crescent_maps
+```
+
+Then run:
+
+```bash
+crescent_maps -version
+crescent_maps -help
+```
+
+## Release Process
+
+### Preparing a Release
+
+Use the convenient make targets:
+
+```bash
+make release-patch          # Patch release (e.g. 0.2.0 → 0.2.1)
+make release-minor          # Minor release (0.2.0 → 0.3.0)
+make release-major          # Major release
+
+# Pre-releases
+make release-rc             # Next release candidate (0.2.0 → 0.2.1-rc.1)
+make release-beta           # Beta release
+```
+
+For full control (including custom pre-release versions):
+
+```bash
+./scripts/release.sh patch --rc
+./scripts/release.sh minor --beta
+./scripts/release.sh 0.3.0-rc.2
+```
+
+Then push the tag:
+
+```bash
+git push origin main --tags
+```
+
+### What the Release Workflow Does
+
+The GitHub Actions workflow (`.github/workflows/release.yml`) will:
+
+- Build the Go orchestrator (`crescent_maps`) for Linux amd64, macOS arm64, and macOS amd64
+- Build the CPU reference renderer where possible
+- Generate a combined `checksums.txt` for all release artifacts
+- Sign `checksums.txt` using **Cosign (keyless)** via GitHub OIDC
+- Create a GitHub Release (marked as pre-release for `rc`/`beta`/`alpha` tags)
+- Attach binaries + checksums + signatures
+
+### Verifying a Release
+
+```bash
+# Download checksums.txt and checksums.txt.sig + .pem from the release
+
+cosign verify-blob checksums.txt \
+  --signature checksums.txt.sig \
+  --certificate checksums.txt.pem \
+  --certificate-identity-regexp 'https://github.com/jim-fun/crescent-moon-visibility' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+```
+
+See `.github/workflows/release.yml` for the full implementation.
+
 ## Testing & Validation
 
 The project includes automated tests for both code correctness and output accuracy:

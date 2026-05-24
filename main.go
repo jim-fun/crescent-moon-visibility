@@ -138,6 +138,29 @@ func main() {
 
 	if showVersion {
 		fmt.Printf("crescent_maps version %s (built %s)\n", version, buildDate)
+
+		// Try to report versions of the bundled renderers
+		fmt.Println("Bundled renderers:")
+		for _, name := range []string{"visibility.out", "gpu_visibility.out"} {
+			found := false
+			for _, dir := range []string{"bin", "."} {
+				path := filepath.Join(dir, name)
+				if _, err := os.Stat(path); err == nil {
+					cmd := exec.Command(path, "-version")
+					out, err := cmd.Output()
+					if err == nil {
+						fmt.Printf("  %-20s %s", name+":", string(out))
+					} else {
+						fmt.Printf("  %-20s (version query failed)\n", name+":")
+					}
+					found = true
+					break
+				}
+			}
+			if !found {
+				fmt.Printf("  %-20s (not found)\n", name+":")
+			}
+		}
 		return
 	}
 

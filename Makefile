@@ -20,9 +20,9 @@
 CC       ?= gcc
 CFLAGS   := -O3 -Wall -Wextra -fno-exceptions
 LDFLAGS  := -lm -I.
-CPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12
+CPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION=\"$(VERSION)\"
 CPU_LDFLAGS  := $(LDFLAGS)
-GPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12
+GPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION=\"$(VERSION)\"
 
 # Platform detection for OpenCL and OpenMP
 UNAME_S := $(shell uname -s)
@@ -49,7 +49,8 @@ CPU_BIN  := $(BIN_DIR)/visibility.out
 GO_BIN   := $(BIN_DIR)/crescent_maps
 
 # Versioning (injected via ldflags)
-VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
+# Primary source is VERSION file; falls back to git describe for dev builds.
+VERSION ?= $(shell cat VERSION 2>/dev/null || git describe --tags --always --dirty 2>/dev/null || echo "dev")
 DATE    ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 LDFLAGS := -ldflags "-X main.version=$(VERSION) -X main.buildDate=$(DATE)"
 
@@ -121,3 +122,41 @@ test:
 # Run the expensive renderer accuracy comparison (requires built renderers)
 test-accuracy:
 	RUN_ACCURACY_TEST=1 go test -v -run TestRendererAccuracy . -count=1
+
+# === Release targets ===
+
+.PHONY: release release-patch release-minor release-major release-rc release-beta
+
+release:
+	@echo "Use one of the following:"
+	@echo "  make release-patch          # 0.2.0 → 0.2.1"
+	@echo "  make release-minor          # 0.2.0 → 0.3.0"
+	@echo "  make release-major          # 0.2.0 → 1.0.0"
+	@echo "  make release-rc             # 0.2.0 → 0.2.1-rc.1"
+	@echo "  make release-beta           # 0.2.0 → 0.2.1-beta.1"
+	@echo ""
+	@echo "Or use the script directly for full control:"
+	@echo "  ./scripts/release.sh patch --rc"
+
+release-patch:
+	@./scripts/release.sh patch
+
+release-minor:
+	@./scripts/release.sh minor
+
+release-major:
+	@./scripts/release.sh major
+
+release-rc:
+	@./scripts/release.sh patch --rc
+
+release-beta:
+	@./scripts/release.sh patch --beta
+
+# Create release artifacts locally (useful for testing before tagging)
+dist:
+	@echo "Building release artifacts for version $(shell cat VERSION)"
+	@mkdir -p dist
+	@CGO_ENABLED=1 go build -ldflags "-X main.version=$(shell cat VERSION) -X main.buildDate=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")" -o dist/crescent_maps .
+	@echo "Built dist/crescent_maps"
+	@echo "Note: CPU/GPU renderers can be built with 'make cpu' and 'make gpu'"

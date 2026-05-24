@@ -312,6 +312,16 @@ static void render(uint32_t *image, astro_time_t base_time)
 
 int main(int argc, const char **argv)
 {
+    if (argc >= 2 && (!strcmp(argv[1], "-version") || !strcmp(argv[1], "--version")))
+    {
+#ifdef VERSION
+        printf("visibility (CPU renderer) version %s\n", VERSION);
+#else
+        printf("visibility (CPU renderer) version unknown\n");
+#endif
+        return 0;
+    }
+
     if (argc == 1)
     {
         printf("Run like this:\n"
