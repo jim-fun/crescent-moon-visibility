@@ -288,8 +288,9 @@ See `internal/blend/blend_test.go` and `main_test.go` for the test implementatio
 - **Original authors:** [@ebraminio](https://github.com/ebraminio), [@hidp123](https://github.com/hidp123)
 - **Astronomy Engine:** Don Cross — [cosinekitty/astronomy](https://github.com/cosinekitty/astronomy/)
 - **STB Image Write:** Sean Barrett
-- **Architecture revamp:** Go orchestrator, Chebyshev GPU ephemeris, dual OpenCL kernels (FP64 + FP32+DD for Apple Silicon), OpenCL/OpenCV cross-platform pipeline (2026)
+- **Architecture revamp (2026):** Go orchestrator, Chebyshev GPU ephemeris, dual OpenCL kernels (FP64 + FP32+DD for Apple Silicon), pure-Go blending, release engineering, documentation, and clean public GitHub mirror — [@jim-fun](https://github.com/jim-fun)
 
 ## License
 
-MIT License. Copyright (c) 2022-present @ebraminio and @hidp123. (See LICENSE and COPYING for full text.)
+MIT License. Copyright (c) 2022-present @ebraminio and @hidp123.  
+Substantial 2026 revamp and ongoing maintenance: Copyright (c) @jim-fun. (See LICENSE and COPYING for full text.)
