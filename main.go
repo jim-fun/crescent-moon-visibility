@@ -188,22 +188,25 @@ func main() {
 	fmt.Printf("Output Directory: %s | Workers: %d | Renderer: %s\n", outDir, maxWorkers, rendererBin)
 
 	// Build the task list: for each new moon, walk forward day-by-day and pick
-	// the first DaysToProcess days where the Moon will reach at least
-	// MinIlluminationFraction by the end of that UTC day. 0.4 % illumination
-	// corresponds to ~7.25° elongation ≈ 13.4 h after conjunction — below the
-	// faintest known naked-eye crescent sightings, but firmly above the
-	// physically uninteresting "barely-past-conjunction" range. Anywhere on
-	// Earth that has its sunset during day D will see at least that much
-	// illumination at some point, so the criterion is "anywhere-on-Earth-on-D".
-	const MinIlluminationFraction = 0.004
+	// the first DaysToProcess days where the Moon will be at least
+	// MinIlluminationFraction illuminated at the *latest* sunset anywhere on
+	// UTC day D — observers near the date line on the west side see their
+	// sunset at roughly D+1 06:00 UTC, so that's the natural sample point for
+	// an "anywhere on Earth" criterion.
+	//
+	// 0.2 % illumination corresponds to ~5.1° elongation ≈ 9.5 h moon age,
+	// below the typical aided-naked-eye threshold (~12-13 h) but in the range
+	// where well-equipped observers in clear desert air have claimed sightings.
+	// Below this the visibility map would be entirely empty everywhere.
+	const MinIlluminationFraction = 0.002
 
 	var tasks []task
 	for _, nm := range allMoons {
 		mapsGenerated := 0
 		for d := 0; d <= 4 && mapsGenerated < DaysToProcess; d++ {
 			midnight := time.Date(nm.Year(), nm.Month(), nm.Day(), 0, 0, 0, 0, time.UTC).AddDate(0, 0, d)
-			endOfDay := midnight.AddDate(0, 0, 1)
-			if astro.MoonIlluminationFraction(endOfDay) < MinIlluminationFraction {
+			latestSunset := midnight.AddDate(0, 0, 1).Add(6 * time.Hour) // D+1 06:00 UTC
+			if astro.MoonIlluminationFraction(latestSunset) < MinIlluminationFraction {
 				continue
 			}
 			dateStr := midnight.Format("2006-01-02")
