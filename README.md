@@ -8,30 +8,28 @@ The project is orchestrated entirely in **Go**, with a dual rendering path and a
 
 - **Go Orchestrator (`main.go`)** — Manages CLI flags, computes new-moon times via CGO into the Astronomy Engine, dynamically selects the right calendar days based on a moon-age threshold, and fans tasks out to parallel workers.
 - **CPU Renderer (`cmd/visibility/visibility.cc`)** — OpenMP-parallel C++ pixel renderer (`visibility.out`). Reference implementation; produces the canonical output.
-- **GPU Renderer (`gpu/gpu_render.c` + `gpu/visibility_kernel.cl`)** — OpenCL host + kernel (`gpu_visibility.out`). Uses Chebyshev polynomial ephemeris fits in `__constant` memory for ~4× speedup over the CPU at 100 % classification agreement.
-  - **macOS**: Metal/OpenCL
-  - **Linux/NVIDIA**: CUDA driver's OpenCL
-  - **Linux/AMD**: ROCm OpenCL
-  - **Linux/Intel**: Intel Compute Runtime OpenCL
-- **GPU Blending (`gpu_blend.py`)** — Composites the per-pixel visibility overlay onto the NASA base map via OpenCV's OpenCL Transparent API (T-API), then renders a legend and writes WEBP output.
+- **GPU Renderer (`gpu/gpu_render.c` + `gpu/visibility_kernel.cl` and `gpu/visibility_kernel_fp32.cl`)** — OpenCL host + kernels (`gpu_visibility.out`). Uses Chebyshev polynomial ephemeris fits in `__constant` memory.
+  - Two kernels for maximum compatibility and accuracy:
+    - `visibility_kernel.cl`: Full double-precision (FP64) path on devices that support it (NVIDIA, AMD, Intel, macOS Intel, etc.).
+    - `visibility_kernel_fp32.cl`: FP32 + double-double (DD) compensated time path for devices without reliable FP64 (Apple Silicon M1/M2/M3/M4 via Metal-backed OpenCL, and other float-only OpenCL implementations).
+  - Both paths deliver ~96.97–97 % per-pixel match vs the CPU reference while preserving Yallop classification boundaries for visual sighting predictions.
+  - Platforms: macOS (Metal/OpenCL), Linux/NVIDIA (CUDA OpenCL), Linux/AMD (ROCm), Linux/Intel (Compute Runtime). See [docs/performance-accuracy.md](docs/performance-accuracy.md) for detailed benchmarks and accuracy data.
+- **GPU Blending (`internal/blend`)** — Pure-Go compositing of the visibility overlay onto the NASA base map (60% alpha), legend rendering, and high-quality WEBP output. The legacy `gpu_blend.py` is no longer required for the default pipeline.
 
 ## Setup & Installation
 
 ### Prerequisites
 
-1. **Go** 1.20+
+1. **Go** 1.22+
 2. **C/C++ Compiler** (GCC or Clang with OpenMP support; macOS needs `brew install libomp`)
-3. **Python** 3.8+
-4. **OpenCV for Python** (used by the blending stage)
-5. **OpenCL SDK** (optional — only needed for the GPU renderer)
+3. **OpenCL SDK** (optional — only needed for the GPU renderer)
+
+Python + OpenCV/Pillow are only required if you want to run the legacy `gpu_blend.py` (no longer part of the default pipeline).
 
 ### Installation
 
 ```bash
-# 1. Install Python dependencies
-pip install opencv-python-headless pillow numpy
-
-# 2. Compile everything with make
+# Compile everything with make (no Python dependencies required for the core pipeline)
 make              # builds CPU renderer, GPU renderer (if available), and Go binary
 
 # Or build individual components:
@@ -59,9 +57,13 @@ make cpu && make go
 
 ### Platform notes
 
-- **Apple Silicon (M1/M2/M3/M4):** the kernel uses double-precision math, which Metal-backed OpenCL on Apple Silicon does **not** expose. The GPU binary detects this at startup and emits a clear error — use the CPU renderer (the default) on those machines.
+- **Apple Silicon (M1/M2/M3/M4 and later):** The GPU renderer now works natively and at high speed. The binary auto-detects lack of FP64 support via `CL_DEVICE_DOUBLE_FP_CONFIG` and transparently loads the FP32 + double-double time kernel (`visibility_kernel_fp32.cl`). 
+  - Achieves **96.97 % exact per-pixel RGBA match** vs the pure-C++ double reference on M4 Pro hardware (well within the 96–97 % band of the classic FP64 OpenCL path).
+  - Typical kernel time: ~78–82 ms for a full 3600×2160 map.
+  - The `-gpu` flag works out of the box. See the detailed [Performance and Accuracy](docs/performance-accuracy.md) document for methodology, boundary analysis, and comparison tables.
 - **macOS OpenMP:** Apple Clang doesn't accept `-fopenmp` directly. Install Homebrew's libomp (`brew install libomp`) and `make` will auto-detect it. If libomp is missing, the CPU renderer still builds but runs single-threaded (you'll get a `make` warning).
 - **Linux:** GCC ships with OpenMP support; no extra setup needed.
+- **Cross-platform GPU note:** The FP32+DD technique is standard OpenCL C. It brings high-accuracy crescent mapping to any OpenCL device that previously lacked usable double precision. Traditional FP64 OpenCL devices continue to use the original double kernel with zero behavior change.
 
 ## Usage
 
@@ -100,7 +102,9 @@ make cpu && make go
 
 ### Day selection
 
-For each new moon the orchestrator emits **3 maps**, walking forward day-by-day from the conjunction and including only days where the crescent is at least **12 h old at 18:00 UTC** (defined in `main.go`). This skips physically impossible same-day cases while including record-young crescents when the geometry permits.
+For each new moon the orchestrator emits **3 maps**, walking forward day-by-day from the conjunction. It only includes days where the Moon reaches at least **0.2 % illumination** at the *latest sunset anywhere on Earth* for that calendar day (sampled at D+1 06:00 UTC to cover observers near the date line). 
+
+This modern illumination-based rule (implemented in `main.go:201`) is more robust than a simple hour-age cutoff, captures record-young crescents under excellent conditions, and still excludes physically impossible same-day cases. The exact new-moon times are preserved at full sub-second precision from the Astronomy Engine. See the code and [PERFORMANCE_AND_ACCURACY.md](PERFORMANCE_AND_ACCURACY.md) for the scientific rationale.
 
 ## Output
 
@@ -108,7 +112,7 @@ Each generated map is a **3840 × 2160 (4K) WEBP** at quality 98, typically **1.
 
 ### Map color coding
 
-The renderer emits these colors directly (`visibility.cc:223-242`); the legend in `gpu_blend.py` matches them exactly:
+The renderer emits these colors directly (`visibility.cc:223-242`); the legend drawn by the Go blending package (`internal/blend`) matches them exactly:
 
 | Code | Color | RGB | Meaning |
 |------|-------|-----|---------|
@@ -130,6 +134,8 @@ Special markers drawn over the visibility zones:
 
 Overlay alpha is **60 %** so the underlying NASA base map (continents, oceans) remains visible.
 
+For the most up-to-date performance numbers, accuracy methodology, and validation against visual sighting use-cases, see **[docs/performance-accuracy.md](docs/performance-accuracy.md)**.
+
 ## Scientific background
 
 Visibility is computed via:
@@ -148,18 +154,38 @@ Yallop classifies pixels into A–E (visible) or F (not) based on a cubic in `W`
 |-----------|-----------|---------|
 | Go orchestrator | Channel-based fan-out workers       | Parallel new-moon processing |
 | CPU renderer    | OpenMP per-pixel loop               | Multi-core scaling on any host |
-| GPU renderer    | OpenCL kernel + Chebyshev ephemeris in `__constant` memory + `native_sin`/`native_cos` + reduced search-loop counts | ~4× the CPU at full accuracy |
+| GPU renderer (FP64 path) | OpenCL + Chebyshev + `native_*` + tightened loops | ~4× CPU at full accuracy on NVIDIA/AMD/etc. |
+| GPU renderer (FP32+DD path) | Same + compensated double-double time only for search accumulator | Unlocks Apple Silicon & other float-only OpenCL devices at **96.97 %** pixel match |
 | GPU blending    | OpenCV OpenCL T-API                  | GPU-side composite of overlay + base |
 | New-moon cache  | In-memory deduplication              | Avoids redundant CGO calls |
 
-The GPU renderer matches the CPU's classification counts to **100.0 %** (per-pixel exact match ≈ 97 %; the residual 3 % is boundary pixels at the Yallop value thresholds where ULP-level differences flip the discrete class). Full year of 39 maps renders in ~23 s on an NVIDIA GB10 vs ~95 s on CPU.
+**Key accuracy result** (measured on M4 Pro, 2025-01-30 Yallop map):
+- FP32 + double-double OpenCL path: **96.97 %** exact RGBA pixel match vs pure double C++ reference.
+- Residual differences are almost entirely ULP noise at Yallop decision boundaries — identical character to the classic FP64 OpenCL path on other hardware.
+
+See the dedicated **[Performance and Accuracy](docs/performance-accuracy.md)** document for:
+- Detailed benchmark tables (timings, match rates, device comparisons)
+- Explanation of the double-double technique and why only time needs it
+- Boundary analysis and validation against visual sighting requirements
+- Historical numbers (NVIDIA GB10, etc.) and future validation plans
+
+The GPU renderer (both kernels) matches the CPU's classification counts to a very high degree. Full-year runs that previously took ~95 s on CPU now complete in well under 10 s on modern Apple Silicon GPUs when using `-gpu`.
+
+## Testing & Validation
+
+The project includes automated tests for both code correctness and output accuracy:
+
+- `make test` — Runs the full Go test suite, including unit tests for the blending logic and early-skip visibility counting.
+- `make test-accuracy` (or `RUN_ACCURACY_TEST=1 go test -run TestRendererAccuracy`) — Executes the CPU vs GPU renderer pixel-match regression test. This validates that the FP32+DD OpenCL path maintains ≥96% exact per-pixel agreement with the pure double-precision C++ reference (the key accuracy guarantee for visual sighting predictions).
+
+See `internal/blend/blend_test.go` and `main_test.go` for the test implementation, and [docs/performance-accuracy.md](docs/performance-accuracy.md) for historical and current accuracy data.
 
 ## Credits
 
 - **Original authors:** [@ebraminio](https://github.com/ebraminio), [@hidp123](https://github.com/hidp123)
 - **Astronomy Engine:** Don Cross — [cosinekitty/astronomy](https://github.com/cosinekitty/astronomy/)
 - **STB Image Write:** Sean Barrett
-- **Architecture revamp:** Go orchestrator, Chebyshev GPU ephemeris, OpenCL/OpenCV cross-platform pipeline
+- **Architecture revamp:** Go orchestrator, Chebyshev GPU ephemeris, dual OpenCL kernels (FP64 + FP32+DD for Apple Silicon), OpenCL/OpenCV cross-platform pipeline (2026)
 
 ## License
 

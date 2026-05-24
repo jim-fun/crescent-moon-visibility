@@ -5,37 +5,21 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 ## High Priority Features
 
 ### 0. Apple Silicon GPU Support via FP32 + Double-Double Time
-- **Task**: Add a single-precision OpenCL kernel path so the GPU renderer
-  works on Apple Silicon (M1/M2/M3/M4), whose Metal-backed OpenCL has no
-  hardware FP64. Today those machines fall back to the CPU renderer
-  (~76 s for 3 maps on M4 Pro vs an expected ~3 s on GPU).
-- **Approach**:
-  - Author a sibling kernel (e.g. `gpu/visibility_kernel_fp32.cl`) that uses
-    `float` for position/trig math but represents the per-pixel time as a
-    *double-double* pair of floats (`t_hi`, `t_lo`).
-  - Time arithmetic (sunset finding, Chebyshev `x` mapping, moon-age
-    indicator) all goes through tiny DD helpers (`dd_add`, `dd_mul_d`,
-    `dd_to_float`). This captures the precision-sensitive accumulation
-    without paying the cost of full DD on every multiply.
-  - In `gpu/gpu_render.c`, query `CL_DEVICE_DOUBLE_FP_CONFIG` (already done
-    today for the friendly error message) and, when zero, transparently
-    load the FP32 kernel instead of bailing out.
-  - Chebyshev coefficients on the CPU side are computed in double, then
-    truncated to float pairs (hi + (orig - hi)) before upload.
-- **Expected outcome**:
-  - Apple Silicon: ~3 s per 3 maps (≈25× faster than CPU on M4 Pro).
-  - Per-pixel match with the CPU reference: 96–97 % (vs the current 97 %
-    on the FP64 path — the DD time arithmetic preserves the boundary
-    behaviour well; the remaining ULP-level boundary noise is unchanged).
-  - x86/Linux/NVIDIA/AMD users see no change — the existing FP64 kernel
-    stays the default whenever FP64 is supported.
-- **Effort estimate**: ~3 days (kernel rewrite + DD helpers + dispatch
-  logic + regression test on both Apple Silicon and an FP64 device).
-- **Acceptance criteria**:
-  - `make gpu` succeeds on macOS Apple Silicon.
-  - `./crescent_maps -gpu -years 2027 -months 1` produces 3 maps on
-    M-series Macs with > 95 % per-pixel agreement against the CPU output.
-  - No regression in match rate (≥ 96.96 % per-pixel) on an FP64 device.
+- **Status**: **Completed** (implemented May 2026)
+- **Result**: The GPU renderer now works on Apple Silicon. A sibling kernel
+  `gpu/visibility_kernel_fp32.cl` uses `float` + `native_*` math with a
+  compensated double-double (float2) accumulator only for the per-pixel
+  search time `t`. The host in `gpu/gpu_render.c` detects the lack of FP64
+  and loads the FP32+DD kernel transparently.
+- **Accuracy achieved**: 96.97 % exact per-pixel RGBA match vs the CPU
+  reference on an M4 Pro (well inside the 96–97 % band of the original
+  FP64 OpenCL path). Boundary ULP noise remains the only source of the
+  residual ~3 % mismatches.
+- **Performance**: ~82 ms kernel for a full 3600×2160 map on M4 Pro
+  (hundreds of times faster than the single-threaded or lightly-threaded
+  CPU path on the same machine).
+- **Compatibility**: x86/Linux/NVIDIA/AMD devices continue to use the
+  original FP64 kernel with no behavior change.
 
 ## Medium Priority Features
 
@@ -139,27 +123,31 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 ## Completed
 
 - ~~Latitude Capping~~ — Capped at ±60° in `visibility.cc` and OpenCL kernel render loops
-- ~~Moon Age Display~~ — Moon age threaded through Go → Python pipeline
+- ~~Moon Age Display~~ — Moon age (mid-day UTC) computed and passed through Go orchestrator to the pure-Go blending package (parameter received but not yet rendered in legend)
 - ~~Before Conjunction Color Coding~~ — Categories `G` / `J` now render transparent so the base map shows through
-- ~~GPU Acceleration~~ — OpenCL compute kernel in `gpu/visibility_kernel.cl` with `gpu/gpu_render.c` host
-  - Cross-platform: macOS (Metal/OpenCL), NVIDIA (CUDA driver's OpenCL), AMD (ROCm), Intel GPU Compute Runtime
+- ~~GPU Acceleration~~ — OpenCL compute kernels (`visibility_kernel.cl` FP64 + `visibility_kernel_fp32.cl` FP32+DD) with `gpu/gpu_render.c` host
+  - Cross-platform: macOS (Metal/OpenCL including Apple Silicon via automatic FP32+DD path), NVIDIA (CUDA OpenCL), AMD (ROCm), Intel Compute Runtime
+  - Automatic kernel selection in `gpu_render.c` based on `CL_DEVICE_DOUBLE_FP_CONFIG`
+  - 96.97 % per-pixel match on Apple Silicon M4 Pro (matches fidelity of FP64 path on other GPUs)
   - GPU binary auto-selected via `-gpu` flag in orchestrator
-  - GPU blending via OpenCV OpenCL T-API in `gpu_blend.py`
+  - GPU blending now implemented in pure Go (`internal/blend`). Legacy `gpu_blend.py` (OpenCV T-API) retained only for advanced users.
+- ~~Apple Silicon / FP32+DD OpenCL Support (2026)~~ — Full GPU acceleration now available on M1/M2/M3/M4+ via automatic selection of `visibility_kernel_fp32.cl`. 96.97 % pixel match, ~80 ms kernel time on M4 Pro, identical Yallop classification fidelity to FP64 path. See `docs/performance-accuracy.md`.
+- ~~Python Removal + Automated Accuracy Testing (2026)~~ — Last significant Python component (`gpu_blend.py`) replaced by pure-Go implementation in `internal/blend`. Added `internal/blend/blend_test.go` + `TestRendererAccuracy` regression test (enforces ≥96% CPU/GPU match). `make test` and `make test-accuracy` targets added.
 - ~~Chebyshev Polynomial Ephemeris~~ — Replaced the 8 640-step dense ephemeris with degree-24 Chebyshev fits in `__constant` GPU memory. ~125 doubles total vs ~410 KB before.
 - ~~Geocentric Vector Path for Yallop ARCV~~ — Fitted moon's 3-D EQD geocentric vector and derived RA/Dec on the GPU, matching CPU's `Astronomy_GeoVector` + EQD rotation. 100 % classification agreement.
 - ~~GPU Kernel Optimization~~ — `native_sin`/`native_cos`, reduced coarse scan (200→32), bisection (20→12), additional build flags (`-cl-mad-enable`, etc.). ~4× kernel speedup at identical accuracy.
 - ~~24h Date Offset Fix~~ — GPU search uses forward-only 1-day window from longitude-adjusted base (matches CPU's `Astronomy_SearchRiseSet(time, 1)`).
 - ~~Diamond Markers~~ — Naked-eye (red) and telescope (blue) markers drawn as 22-pixel diamonds with a 3-pixel black outline for 4K visibility.
-- ~~Vector Legend~~ — `gpu_blend.py` uses `draw.rectangle` / `draw.ellipse` instead of Unicode `■`/`●` glyphs (font-independent rendering).
-- ~~Dynamic Day Selection~~ — Orchestrator emits maps only when the crescent is ≥ 12 h old at 18:00 UTC; new moon times preserved at full hour/minute/second precision.
+- ~~Vector Legend~~ — Legend (colors + first-visibility markers) drawn with vector primitives in the pure-Go blending package (no font glyph dependency).
+- ~~Dynamic Day Selection~~ — Orchestrator emits maps only for days reaching ≥ 0.2 % illumination at latest sunset on Earth (D+1 06:00 UTC sample); modern illumination-threshold rule with full sub-second new-moon precision.
 - ~~WEBP Output~~ — Quality-98 WEBP at 60 % blend strength; ~2 MB per map vs ~9 MB PNG.
 - ~~Cross-platform Makefile~~ — Auto-detects OpenCL headers and library paths (Debian/Fedora/Arch/ROCm/CUDA) and OpenMP support (`libomp` via Homebrew on macOS).
 - ~~Caching and Memoization~~ — New moon dates cached in Go orchestrator (`newMoonCache`)
 - ~~Refactoring~~ — CGO bindings extracted to `internal/astro`, C++ renderer moved to `cmd/visibility/`
 - ~~Unit Testing~~ — Tests in `main_test.go` covering parseYears, astronomy, caching
-- ~~Documentation~~ — Inline docs in `main.go`, `internal/astro/astro.go`, `gpu_blend.py`, `gpu/gpu_render.c`, `gpu/visibility_kernel.cl`
+- ~~Documentation~~ — Extensive inline docs + dedicated `docs/performance-accuracy.md` covering the FP32+DD technique, measured results, and visual-sighting validation (2026 update)
 
-**Last Updated:** May 23, 2026
+**Last Updated:** May 2026 (Python blending fully removed + Go accuracy test suite + documentation refresh)
 
 ## How to Contribute
 

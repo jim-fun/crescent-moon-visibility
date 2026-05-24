@@ -1,3 +1,10 @@
+# gpu_blend.py — Legacy OpenCV + PIL blending script
+#
+# NOTE: This file is retained only for advanced users who specifically want
+# the original OpenCV T-API GPU blending behavior.
+# The default pipeline (since 2026) uses the pure-Go implementation in
+# `internal/blend`, which removes all Python runtime dependencies.
+
 import sys
 import os
 import cv2
@@ -187,11 +194,15 @@ if __name__ == "__main__":
     else:
         print("GPU Acceleration not available, falling back to highly optimized CPU.")
 
-    # Search for base map in multiple locations
+    # Search for base map in multiple locations (supports both old root location
+    # and the new organized data/ directory).
     base_map_paths = [
         'map_nasa.png',
+        'data/map_nasa.png',
         os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'map_nasa.png'),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'map_nasa.png'),
         os.path.join(os.path.dirname(os.path.abspath(__file__)), 'map_nasa.png'),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'map_nasa.png'),
     ]
     base = None
     for p in base_map_paths:
@@ -200,7 +211,7 @@ if __name__ == "__main__":
             print(f"[GPU] Base map loaded from: {p} ({base.shape[1]}x{base.shape[0]})")
             break
     if base is None:
-        print(f"Could not find map_nasa.png in: {base_map_paths}")
+        print(f"Could not find map_nasa.png in any of: {base_map_paths}")
         sys.exit(1)
 
     # Pre-load base map to GPU memory

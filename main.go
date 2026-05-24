@@ -4,19 +4,24 @@
 // across configurable year ranges. It uses the Astronomy Engine (via CGO in
 // internal/astro) to compute new moon dates, dispatches parallel CPU workers
 // to run the C++ renderer (visibility.out), and then hands off all generated
-// images to a GPU-accelerated Python blending script (gpu_blend.py) that
-// composites them onto a NASA base map using OpenCV's OpenCL Transparent API.
+// images to the pure-Go blending package (internal/blend) that composites
+// them onto the NASA base map and writes high-quality WEBP output.
 //
 // Supported GPU backends (auto-detected by OpenCL):
-//   - macOS: Metal/OpenCL
-//   - Linux/NVIDIA: CUDA via OpenCL
-//   - Linux/AMD: ROCm via OpenCL
-//   - Linux/Intel: Intel GPU Compute Runtime via OpenCL
+//   - macOS (Apple Silicon): Metal/OpenCL with automatic FP32 + double-double
+//     time kernel (visibility_kernel_fp32.cl) when FP64 is unavailable.
+//   - macOS (Intel): Metal/OpenCL (FP64 path when available)
+//   - Linux/NVIDIA: CUDA via OpenCL (FP64)
+//   - Linux/AMD: ROCm via OpenCL (FP64)
+//   - Linux/Intel: Intel Compute Runtime via OpenCL (FP64 when present)
+// The host (`gpu/gpu_render.c`) selects the appropriate kernel for maximum
+// accuracy and compatibility. Both paths target ~97 % per-pixel fidelity.
 package main
 
 import (
 	"flag"
 	"fmt"
+	_ "image/png"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -27,6 +32,7 @@ import (
 	"time"
 
 	"github.com/jim-fun/crescent-moon-visibility/internal/astro"
+	"github.com/jim-fun/crescent-moon-visibility/internal/blend"
 )
 
 const (
@@ -117,8 +123,8 @@ func main() {
 	flag.IntVar(&endYear, "end", 2027, "End year (inclusive)")
 	flag.StringVar(&outDir, "out", "output_maps", "Output directory for the generated maps")
 	flag.IntVar(&maxWorkers, "workers", 4, "Number of parallel workers for CPU generation")
-	flag.BoolVar(&useGPU, "gpu", false, "Use GPU renderer (gpu_visibility.out) instead of CPU (visibility.out)")
-	flag.BoolVar(&noBlend, "noblend", false, "Skip GPU blending step — useful when map_nasa.png or OpenCV dependencies are unavailable")
+	flag.BoolVar(&useGPU, "gpu", false, "Use GPU renderer (bin/gpu_visibility.out) instead of CPU (bin/visibility.out)")
+	flag.BoolVar(&noBlend, "noblend", false, "Skip GPU blending step — useful when data/map_nasa.png or OpenCV dependencies are unavailable")
 	flag.Parse()
 
 	years := parseYears(yearsStr, startYear, endYear)
@@ -130,17 +136,29 @@ func main() {
 	// Determine renderer: GPU binary if available and -gpu flag, otherwise CPU.
 	var rendererBin string
 	if useGPU {
-		gpuBin := "./gpu_visibility.out"
-		if _, err := os.Stat(gpuBin); err == nil {
-			rendererBin = gpuBin
-		} else {
-			fmt.Printf("[warn] -gpu requested but %s not found — falling back to CPU renderer\n", gpuBin)
-			rendererBin = "./visibility.out"
+		// Prefer bin/ (new organized layout), then fall back to legacy root location
+		candidates := []string{"bin/gpu_visibility.out", "./gpu_visibility.out"}
+		for _, c := range candidates {
+			if _, err := os.Stat(c); err == nil {
+				rendererBin = c
+				break
+			}
+		}
+		if rendererBin == "" {
+			fmt.Printf("[warn] -gpu requested but no gpu_visibility.out found (tried bin/ and root) — falling back to CPU renderer\n")
+			rendererBin = "bin/visibility.out"
 		}
 	} else {
-		rendererBin = "./visibility.out"
-		if _, err := os.Stat(rendererBin); err != nil {
-			fmt.Printf("[warn] %s not found — run 'make cpu' to build the CPU renderer\n", rendererBin)
+		// Prefer bin/, then legacy root
+		candidates := []string{"bin/visibility.out", "./visibility.out"}
+		for _, c := range candidates {
+			if _, err := os.Stat(c); err == nil {
+				rendererBin = c
+				break
+			}
+		}
+		if rendererBin == "" {
+			fmt.Printf("[warn] %s not found — run 'make cpu' to build the CPU renderer\n", "bin/visibility.out or ./visibility.out")
 			return
 		}
 	}
@@ -243,9 +261,9 @@ func main() {
 			defer wg.Done()
 			for t := range taskCh {
 				cmd := exec.Command(rendererBin, t.DateStr, "map", TimeType, Method, t.OutputFile)
-				// Forward the renderer's stderr so build/runtime errors (e.g. FP64
-				// missing on Apple Silicon, kernel compile failures) are visible
-				// instead of being collapsed into a bare "exit status 1".
+				// Forward the renderer's stderr so build/runtime errors (e.g. kernel
+				// compile failures) are visible instead of being collapsed into a
+				// bare "exit status 1". (Apple Silicon now works via the FP32+DD kernel.)
 				cmd.Stderr = os.Stderr
 				if err := cmd.Run(); err != nil {
 					fmt.Printf("✗ [Worker %d] Failed %s: %v\n", workerID, t.DateStr, err)
@@ -276,22 +294,21 @@ func main() {
 	}
 	fmt.Printf("=> %s generation complete in %.2fs.\n", rendererName, time.Since(cpuStartTime).Seconds())
 
-	// Phase 2: GPU-accelerated batch blending via OpenCV OpenCL T-API.
-	// All generated PNGs are passed to gpu_blend.py in a single invocation
-	// to amortise GPU context setup and base-map loading costs.
+	// Phase 2: Pure-Go blending (replacement for the previous gpu_blend.py).
+	// Composites overlays onto the NASA base map, draws the legend, and writes
+	// high-quality WEBP output. This removes the last Python dependency from
+	// the default pipeline.
 	if len(mapFiles) > 0 && !noBlend {
-		fmt.Println("\n[2/2] Starting universal GPU batch blending (macOS Metal / AMD ROCm / NVIDIA CUDA)...")
-
-		args := append([]string{"gpu_blend.py"}, mapFiles...)
-		cmd := exec.Command("python3", args...)
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
+		fmt.Println("\n[2/2] Starting Go blending (pure Go, no Python dependency)...")
 
 		gpuStart := time.Now()
-		if err := cmd.Run(); err != nil {
-			fmt.Printf("✗ GPU blending failed: %v\n", err)
+		opts := blend.DefaultOptions()
+		opts.OutputDir = outDir
+
+		if err := blend.ProcessFiles(mapFiles, opts); err != nil {
+			fmt.Printf("✗ Blending failed: %v\n", err)
 		} else {
-			fmt.Printf("=> GPU blending complete in %.2fs.\n", time.Since(gpuStart).Seconds())
+			fmt.Printf("=> Blending complete in %.2fs.\n", time.Since(gpuStart).Seconds())
 		}
 	}
 

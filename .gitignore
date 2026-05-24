@@ -1,4 +1,5 @@
-# Build artifacts
+# Build artifacts (now centralized in bin/)
+bin/
 *.out
 *.exe
 *.o
@@ -22,5 +23,6 @@ __pycache__/
 .claude/
 .DS_Store
 
-# NOTE: *.png is intentionally not globbed because map_nasa.png is tracked.
-# Generated PNG overlays live inside the ignored output directories above.
+# NOTE: *.png is intentionally not globbed globally.
+# The base map lives in data/map_nasa.png (tracked).
+# All generated output PNGs live inside ignored directories (output_maps/, etc.).

@@ -3,15 +3,19 @@
 # Cross-platform compilation of CPU renderer, GPU renderer, and Go orchestrator.
 #
 # Platforms:
-#   macOS  — clang/llvm, -framework OpenCL (Apple OpenCL / Metal backend)
+#   macOS  — clang/llvm, -framework OpenCL (Apple OpenCL / Metal backend).
+#            Apple Silicon (M1+) automatically uses the FP32+DD kernel when
+#            FP64 is unavailable (see gpu/visibility_kernel_fp32.cl).
 #   Linux  — gcc/clang, -lOpenCL (AMD ROCm / NVIDIA CUDA / Intel GPU)
 #
 # Usage:
-#   make              # Build everything (CPU + GPU + Go, GPU if headers available)
-#   make gpu          # Build gpu_visibility.out
-#   make cpu          # Build visibility.out (CPU)
-#   make go           # Build crescent_maps (Go orchestrator)
-#   make clean        # Remove all build artifacts
+#   make              # Build everything into bin/ (CPU + GPU + Go)
+#   make gpu          # Build bin/gpu_visibility.out
+#   make cpu          # Build bin/visibility.out (CPU)
+#   make go           # Build bin/crescent_maps (Go orchestrator)
+#   make clean        # Remove all build artifacts from bin/
+#
+# All compiled outputs are placed in bin/ to keep the project root clean.
 
 CC       ?= gcc
 CFLAGS   := -O3 -Wall -Wextra -fno-exceptions
@@ -39,9 +43,10 @@ else
   CPU_CFLAGS  += -fopenmp
 endif
 
-GPU_BIN  := gpu_visibility.out
-CPU_BIN  := visibility.out
-GO_BIN   := crescent_maps
+BIN_DIR  := bin
+GPU_BIN  := $(BIN_DIR)/gpu_visibility.out
+CPU_BIN  := $(BIN_DIR)/visibility.out
+GO_BIN   := $(BIN_DIR)/crescent_maps
 
 # Check for OpenCL dev headers
 GPU_SUPPORTED := no
@@ -68,19 +73,19 @@ else
   endif
 endif
 
-.PHONY: all cpu gpu go clean
+.PHONY: all cpu gpu go clean test
 
 all: $(CPU_BIN) $(GO_BIN)
 ifneq ($(GPU_SUPPORTED),yes)
 	@echo "[warn] OpenCL dev headers not found — GPU renderer skipped (CPU + Go built OK)"
 else
-	@echo "[gpu] Building gpu_visibility.out ..."
+	@echo "[gpu] Building $(GPU_BIN) ..."
 	$(MAKE) gpu
 endif
 
 cpu: $(CPU_BIN)
 
-$(CPU_BIN): cmd/visibility/visibility.cc thirdparty/astronomy.c
+$(CPU_BIN): cmd/visibility/visibility.cc thirdparty/astronomy.c | $(BIN_DIR)
 	g++ $(CPU_CFLAGS) -o $@ \
 		-I. \
 		cmd/visibility/visibility.cc thirdparty/astronomy.c \
@@ -88,15 +93,26 @@ $(CPU_BIN): cmd/visibility/visibility.cc thirdparty/astronomy.c
 
 gpu: $(GPU_BIN)
 
-$(GPU_BIN): gpu/gpu_render.c gpu/chebyshev.c gpu/chebyshev.h gpu/visibility_kernel.cl thirdparty/astronomy.c
+$(GPU_BIN): gpu/gpu_render.c gpu/chebyshev.c gpu/chebyshev.h gpu/visibility_kernel.cl thirdparty/astronomy.c | $(BIN_DIR)
 	$(CC) $(GPU_CFLAGS) -o $@ \
 		gpu/gpu_render.c gpu/chebyshev.c thirdparty/astronomy.c \
 		$(GPU_LDFLAGS)
 
 go: $(GO_BIN)
 
-$(GO_BIN): main.go internal/astro/astro.go go.mod
+$(GO_BIN): main.go internal/astro/astro.go go.mod | $(BIN_DIR)
 	go build -o $@ .
+
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
 clean:
 	rm -f $(CPU_BIN) $(GPU_BIN) $(GO_BIN)
+	-rmdir $(BIN_DIR) 2>/dev/null || true
+
+test:
+	go test ./... -count=1
+
+# Run the expensive renderer accuracy comparison (requires built renderers)
+test-accuracy:
+	RUN_ACCURACY_TEST=1 go test -v -run TestRendererAccuracy . -count=1
