@@ -134,7 +134,7 @@ validate-icop:
 release:
 	@echo "Use one of the following (current VERSION: $(shell cat VERSION 2>/dev/null || echo '?')):"
 	@echo "  make release-patch          # e.g. 0.2.0 → 0.2.1"
-	@echo "  make release-minor          # e.g. 0.2.0 → 0.3.0"
+	@echo "  make release-minor          # e.g. 0.3.0 → 0.4.0"
 	@echo "  make release-major          # e.g. 0.2.0 → 1.0.0"
 	@echo "  make release-rc             # e.g. 0.2.0 → 0.2.1-rc.1"
 	@echo "  make release-beta           # e.g. 0.2.0 → 0.2.1-beta.1"

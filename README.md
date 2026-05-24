@@ -206,9 +206,9 @@ Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on
 Example (Linux/macOS, adjust tag and suffix for your release):
 
 ```bash
-curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.3.0/crescent_maps-0.3.0-linux-amd64
-chmod +x crescent_maps-0.3.0-linux-amd64
-sudo mv crescent_maps-0.3.0-linux-amd64 /usr/local/bin/crescent_maps
+curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.4.0/crescent_maps-0.4.0-linux-amd64
+chmod +x crescent_maps-0.4.0-linux-amd64
+sudo mv crescent_maps-0.4.0-linux-amd64 /usr/local/bin/crescent_maps
 crescent_maps -version   # reports orchestrator + attempts to query bundled renderers
 crescent_maps -help
 ```
@@ -227,7 +227,7 @@ Use the convenient make targets:
 
 ```bash
 make release-patch          # Patch release (e.g. 0.2.0 → 0.2.1)
-make release-minor          # Minor release (0.2.0 → 0.3.0)
+make release-minor          # Minor release (0.3.0 → 0.4.0)
 make release-major          # Major release
 
 # Pre-releases
@@ -240,7 +240,7 @@ For full control (including custom pre-release versions):
 ```bash
 ./scripts/release.sh patch --rc
 ./scripts/release.sh minor --beta
-./scripts/release.sh 0.3.0-rc.2
+./scripts/release.sh 0.4.0-rc.1
 ```
 
 Then push the tag:

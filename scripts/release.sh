@@ -7,7 +7,7 @@
 #
 # Usage examples:
 #   ./scripts/release.sh patch           # 0.2.0 → 0.2.1  (see current VERSION file)
-#   ./scripts/release.sh minor           # 0.2.0 → 0.3.0
+#   ./scripts/release.sh minor           # 0.3.0 → 0.4.0
 #   ./scripts/release.sh major           # 0.2.0 → 1.0.0
 #   ./scripts/release.sh patch --rc      # 0.2.0 → 0.2.1-rc.1   (or increments existing rc)
 #   ./scripts/release.sh patch --beta    # creates beta pre-release

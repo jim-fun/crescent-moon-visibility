@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-05-24
+
+### Changed
+- Version bump to 0.4.0
+- Documentation and release process hygiene updates for the clean public GitHub mirror
+- Improved contributor attribution in README
+- Updated all version examples and references to 0.4.0
+
+## [0.3.0] - 2026-05-24
+
 ### Added
 - Pure Go blending engine (`internal/blend`) — removed Python dependency for normal usage
 - Comprehensive accuracy test suite (`make test` and `make test-accuracy`)
@@ -16,8 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Public GitHub repository restarted clean (https://github.com/jim-fun/crescent-moon-visibility) as the official public mirror. Internal maintainer tooling (agentic workflows, review artifacts) remains only on the private Gitea dev branch and the central agentic repository.
-
-### Changed
 - Project reorganization (`bin/`, `data/`, `docs/`, `scripts/legacy/`)
 - Improved Apple Silicon / Metal support via FP32 + double-double OpenCL kernel
 - Documentation & Architecture refresh for clarity, accuracy guarantees, design choices (FP32+DD only on time accumulators, Chebyshev rationale), and long-term maintainability (cross-refs to `crescent-moon-visibility-engineering` skill)
@@ -38,6 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pure-Go final blending step
 - Automated release workflow with signing and checksums
 
-[Unreleased]: https://github.com/jim-fun/crescent-moon-visibility/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/jim-fun/crescent-moon-visibility/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/jim-fun/crescent-moon-visibility/releases/tag/v0.4.0
+[0.3.0]: https://github.com/jim-fun/crescent-moon-visibility/releases/tag/v0.3.0
 [0.2.1]: https://github.com/jim-fun/crescent-moon-visibility/releases/tag/v0.2.1
 [0.2.0]: https://github.com/jim-fun/crescent-moon-visibility/releases/tag/v0.2.0
