@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-05-25
+
+### Changed
+- Release workflow now targets **Linux amd64 only**. macOS builds (both Intel and Apple Silicon) have been removed from automated CI. Users on macOS are expected to build locally with `make` for the best OpenCL/Metal experience on their hardware. The GitHub Actions release process continues to provide signed Linux amd64 artifacts (Go orchestrator + best-effort CPU renderer) with checksums and Cosign keyless signatures.
+
 ## [0.4.1] - 2026-05-24
 
 ### Added
