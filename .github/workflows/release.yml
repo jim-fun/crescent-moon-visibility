@@ -77,6 +77,13 @@ jobs:
           path: artifacts
           merge-multiple: true
 
+      - name: Compute version without 'v' prefix
+        id: ver
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Using version: $VERSION"
+
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3
 
@@ -124,7 +131,7 @@ jobs:
 
             **Quick start from release (Linux):**
             ```bash
-            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent_maps-${{ github.ref_name#v }}-linux-amd64
+            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent_maps-${{ steps.ver.outputs.version }}-linux-amd64
             chmod +x crescent_maps-*
             sudo mv crescent_maps-* /usr/local/bin/crescent_maps
             crescent_maps -version
