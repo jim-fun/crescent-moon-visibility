@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-05-24
+
+### Added
+- Hour markers on moon-age lines in the legend for improved readability.
+
+### Changed
+- Extensive legend visual overhaul driven by user feedback:
+  - Two-column layout (A–E categories on left with color swatches; first-visibility diamonds on right).
+  - Doubled font sizes using embedded Inter (44pt headers, 30pt labels).
+  - Rounded corners (16px radius) with matching 1px dark border.
+  - Reduced whitespace and tighter padding/spacing while preserving breathing room and aesthetics.
+  - GitHub repo reference right-aligned inside the legend box.
+  - Human-readable dates without leading zeros (e.g., "January 8, 2026").
+- First-visibility diamonds now rendered exclusively in the pure-Go compositor (`internal/blend`). Removed C++ baking of red/blue diamonds and the associated post-processing strip logic for simpler, more consistent output between CPU and GPU renderers.
+- Stronger and more robust diamond deduplication (relaxed color thresholds + explicit neighborhood clearing + post-blend safety pass) to guarantee exactly one clean outlined diamond per type on CPU maps.
+
+### Fixed
+- Duplicate first-visibility diamonds appearing on CPU-generated maps (multiple iterations of clearing logic, color-distance heuristics, and radius-based neighborhood wipes).
+- Various legend positioning, sizing, and text formatting issues reported during iterative visual testing.
+
+### Internal / Maintenance
+- Final public main cleanup before release (removal of GITEA_HANDOFF.md, experimental outmaps/ test artifacts, AI tooling directories, build junk; hardened .gitignore).
+
 ## [0.4.0] - 2026-05-24
 
 ### Changed
