@@ -39,4 +39,15 @@ Use the prompt in `scripts/agents/github-migration-agent.md` (it references this
 - For release tags, also consider `make test-accuracy` when renderers are available.
 - The public GitHub `main` must remain as clean and reproducible as the internal one.
 
+## Internal AI / Agent Tooling (Never Published)
+
+The following are **maintainer-only** and are automatically excluded by `scripts/push-to-github.sh` when pushing to the public GitHub mirror:
+
+- `AGENTIC_WORKFLOW.md`
+- `GITHUB_MIGRATION.md`
+- `scripts/agentic-review.sh`
+- `scripts/agents/` (entire directory)
+
+These files exist only in your local clone and the internal Gitea repository to power the agentic improvement process. The public GitHub repository intentionally does not contain them.
+
 **Last updated**: 2026-05 (together with the reusable GitHub migration agent and helper script).

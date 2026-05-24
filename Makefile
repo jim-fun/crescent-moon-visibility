@@ -123,6 +123,10 @@ test:
 test-accuracy:
 	RUN_ACCURACY_TEST=1 go test -v -run TestRendererAccuracy . -count=1
 
+# Run the ICOP external validation harness (early stage)
+validate-icop:
+	go run ./cmd/validate-icop
+
 # === Release targets ===
 
 .PHONY: release release-patch release-minor release-major release-rc release-beta

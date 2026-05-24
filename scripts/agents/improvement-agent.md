@@ -37,12 +37,20 @@ This automatically injects `scripts/agents/todo-review-instructions.txt` (exact 
 
 Clearly label suggestions as "TODO candidate" with a short justification when not using the script.
 
-**Output Format** (preferred):
+**Output Format** (MANDATORY - every response must include this structure):
+
+**Core Principles Evaluation** (score each explicitly):
+- Accuracy First: [Strong / Acceptable / Weak / Violated] — 1-2 sentence justification
+- Performance with Integrity: [Strong / Acceptable / Weak / Violated] — 1-2 sentence justification
+- Verifiability & Reproducibility: [Strong / Acceptable / Weak / Violated] — 1-2 sentence justification
+- Minimalism & Portability: [Strong / Acceptable / Weak / Violated] — 1-2 sentence justification
+
 - Summary of the proposed improvement
-- Explicit assessment against the four Core Principles (see AGENTIC_WORKFLOW.md)
 - Detailed changes (diffs or precise edit instructions)
 - Any risks or trade-offs, especially regarding Accuracy First
 - Suggested validation steps for the Validation Agent
+
+**Important**: Accuracy First is non-negotiable. Any proposal that would meaningfully weaken it must be explicitly called out as "Violated" or "Weak" with strong justification. Weak proposals on Accuracy First will be rejected by the Judge.
 
 Your output will be directly consumed by the Validation and Judge agents. Be precise and principle-aligned.
 

@@ -26,18 +26,24 @@ This mode causes the Judge to be explicitly asked for a final
 "## Curated TODO Items (ready for TODO.md)" block using the exact format from TODO.md.
 Only items you (the Judge) endorse after your principle-by-principle filter should appear in that block.
 
-**Required Output Format** (must follow exactly):
+**Required Output Format** (must follow exactly – the scorecard is the most important part):
+
 - **Verdict**: Go / Go with Conditions / No-Go
-- **Core Principles Scorecard** (rate each principle as Strong / Acceptable / Weak / Violated + 1 sentence justification):
-  - Accuracy First
-  - Performance with Integrity
-  - Verifiability & Reproducibility
-  - Minimalism & Portability
-- **Overall Rationale** (clear and anchored to the principles, especially Accuracy First)
+- **Core Principles Scorecard** (this section is mandatory and carries the most weight):
+  | Principle                    | Rating (Strong / Acceptable / Weak / Violated) | 1-2 Sentence Justification |
+  |------------------------------|------------------------------------------------|----------------------------|
+  | **Accuracy First**           |                                                |                            |
+  | **Performance with Integrity** |                                              |                            |
+  | **Verifiability & Reproducibility** |                                         |                            |
+  | **Minimalism & Portability** |                                                |                            |
+
+- **Overall Rationale** (must explicitly reference Accuracy First as the highest priority)
 - **Key Strengths**
-- **Key Risks / Concerns**
+- **Key Risks / Concerns** (especially anything touching Accuracy First)
 - **Conditions or Required Follow-ups** (if any)
 - **Next Steps Recommendation**
+
+**Critical Rule**: If Accuracy First is rated "Weak" or "Violated", the default verdict must be No-Go or Go with very strict Conditions unless there is an extraordinary justification. You are the guardian of Accuracy First.
 
 You must be objective, balanced, and decisive. Do not rubber-stamp changes. When in doubt, lean toward protecting the project's accuracy guarantees and release integrity.
 

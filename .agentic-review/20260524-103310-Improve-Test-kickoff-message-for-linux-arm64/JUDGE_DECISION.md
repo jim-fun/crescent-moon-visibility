@@ -18,17 +18,17 @@
 
 ## Core Principles Scorecard
 
-**This section is the most important part of the decision.** Rate the proposal against each principle. Be explicit and ruthless, especially on Accuracy First.
+Rate the proposal against each principle. Be explicit.
 
-| Principle                    | Rating (Strong / Acceptable / Weak / Violated) | 1-2 Sentence Justification |
-|-----------------------------|------------------------------------------------|----------------------------|
-| **Accuracy First** (Non-negotiable) | | |
-| **Performance with Integrity** | | |
-| **Verifiability & Reproducibility** | | |
-| **Minimalism & Portability** | | |
+| Principle                    | Rating                  | 1-Sentence Justification |
+|-----------------------------|-------------------------|--------------------------|
+| **Accuracy First**          | Strong / Acceptable / Weak / Violated | |
+| **Performance with Integrity** | Strong / Acceptable / Weak / Violated | |
+| **Verifiability & Reproducibility** | Strong / Acceptable / Weak / Violated | |
+| **Minimalism & Portability** | Strong / Acceptable / Weak / Violated | |
 
 **Overall Principle Alignment**:  
-(Brief paragraph — must call out Accuracy First explicitly)
+(Brief paragraph)
 
 ---
 

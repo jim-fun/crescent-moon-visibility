@@ -118,6 +118,10 @@ do_improve() {
   echo "Crescent Moon Visibility — Agentic Improvement (specific task)"
   echo "Task: $task"
   echo
+  echo ">>> CORE PRINCIPLES REMINDER (MANDATORY FOR ALL AGENTS) <<<"
+  echo "You must explicitly score the proposal on all four principles."
+  echo "Accuracy First is non-negotiable. Weak/Violated ratings here usually result in No-Go."
+  echo
 
   local workdir
   workdir=$(create_workdir "$title")
@@ -205,6 +209,10 @@ do_review_todo() {
 
   echo "Crescent Moon Visibility — Agentic Code Review for TODO Population"
   echo "Area under review: $area"
+  echo
+  echo ">>> CORE PRINCIPLES REMINDER (MANDATORY) <<<"
+  echo "All proposed TODO items must be justified against the four principles,"
+  echo "with Accuracy First as the dominant filter."
   echo
   echo "This mode configures the Improvement agent to emit findings in the"
   echo "exact format used by TODO.md, and instructs the Judge to curate a"

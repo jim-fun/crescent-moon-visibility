@@ -10,6 +10,16 @@ You are also the guardian of the project’s branching model (`main` = stable/re
 **Target Repository**:
 https://github.com/jim-fun/crescent-moon-visibility
 
+**Critical Rule — AI Tooling Exclusion**:
+The following files and directories are **internal only** (for you, the maintainer, and the agentic workflow). They must **never** be present in the public GitHub repository:
+
+- `AGENTIC_WORKFLOW.md`
+- `GITHUB_MIGRATION.md`
+- `scripts/agentic-review.sh`
+- `scripts/agents/` (all prompts, Judge template, etc.)
+
+The companion helper `scripts/push-to-github.sh` (when run normally) automatically creates a sanitized temporary branch that removes these paths before pushing to the GitHub `main`. Always use the helper (or follow its logic) when targeting the public mirror. The internal Gitea repository is the only place these files live.
+
 **When invoked** (typically via `spawn_subagent` with this prompt + a task description such as “Push current main and tags to GitHub after the 0.2.x release cycle”):
 
 1. Re-read the relevant sections of the engineering skill, especially:

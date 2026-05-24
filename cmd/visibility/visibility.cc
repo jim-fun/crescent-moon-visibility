@@ -327,14 +327,34 @@ int main(int argc, const char **argv)
         printf("Run like this:\n"
                "./visibility 2022-08-27 map evening yallop out.png\n"
                "./visibility 2022-08-27 table 34.23,23.3,0 100 > results.tsv\n"
-               "./visibility 2022-08-27 table-ignore-besttime 34.23,23.3,0 100 > results.tsv");
+               "./visibility 2022-08-27 point 31.95 35.23 yallop\n");
         return 1;
     }
 
+    // New "point" mode for external validation harness (ICOP, etc.)
     int year = atoi(strtok((char *)argv[1], "-"));
     int month = atoi(strtok(nullptr, "-"));
     int day = atoi(strtok(nullptr, "-"));
     astro_time_t time = Astronomy_MakeTime(year, month, day, 0, 0, 0);
+
+    if (argc >= 6 && !strcmp(argv[2], "point"))
+    {
+        double latitude = atof(argv[3]);
+        double longitude = atof(argv[4]);
+        bool yallop = (strcmp(argv[5], "yallop") == 0);
+
+        details_t details = {};
+        // We focus on evening crescents for most validation use cases
+        char result = calculate<true, true>(latitude, longitude, 0.0, time, &details, false);
+
+        if (!yallop) {
+            result = calculate<true, false>(latitude, longitude, 0.0, time, &details, false);
+        }
+
+        printf("date=%s lat=%.4f lon=%.4f criterion=%s category=%c q=%.4f arcv=%.2f w=%.2f\n",
+               argv[1], latitude, longitude, argv[5], result, details.value, details.arcv, details.w_topo);
+        return 0;
+    }
 
     if (!strcmp(argv[2], "map"))
     {
