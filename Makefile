@@ -19,7 +19,11 @@
 
 CC       ?= gcc
 CFLAGS   := -O3 -Wall -Wextra -fno-exceptions
-LDFLAGS  := -lm -I.
+# Use -iquote (not -I) so the repo root is searched only for quoted
+# #include "..." (e.g. "thirdparty/astronomy.h"), never for angle-bracket
+# system headers. This prevents the tracked ./VERSION file from shadowing the
+# C++ standard <version> header on case-insensitive filesystems (macOS/APFS).
+LDFLAGS  := -lm -iquote .
 CPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION_STR=\"$(VERSION)\"
 CPU_LDFLAGS  := $(LDFLAGS)
 GPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION_STR=\"$(VERSION)\"
@@ -93,7 +97,7 @@ cpu: $(CPU_BIN)
 
 $(CPU_BIN): cmd/visibility/visibility.cc thirdparty/astronomy.c | $(BIN_DIR)
 	g++ $(CPU_CFLAGS) -o $@ \
-		-I. \
+		-iquote . \
 		cmd/visibility/visibility.cc thirdparty/astronomy.c \
 		$(CPU_LDFLAGS)
 

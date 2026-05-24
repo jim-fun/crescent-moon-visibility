@@ -155,28 +155,32 @@ func processOne(overlayPath string, baseImg image.Image, opts BlendOptions, moon
 	// Resize overlay to target using high-quality CatmullRom
 	overlayResized := resizeToTarget(overlay, baseImg.Bounds())
 
-	// Perform 60% alpha blend
+	// --- First-visibility diamonds ---
+	// Locate the first naked-eye (A/B) and first telescope (C/D) points from the
+	// overlay's visibility-zone colors (cyan / yellow). Done before the blend.
+	nakedX, nakedY, teleX, teleY := findFirstVisibilityDiamonds(overlayResized)
+
+	// The C++ CPU renderer bakes filled red/blue diamonds directly into the
+	// overlay at its own (time-accurate) first-visibility points. Those baked
+	// positions don't match the points we detect here, and near the antimeridian
+	// they wrap to the opposite image edge — so a per-point clear can't reliably
+	// catch them. Since the *only* strongly red/blue pixels in any overlay are
+	// these baked diamonds (the A–E zones are cyan/yellow), strip all of them
+	// across the whole overlay before blending. This is a no-op for GPU overlays
+	// (which bake nothing) and guarantees a single diamond per point on CPU.
+	stripBakedDiamonds(overlayResized)
+
+	// Perform 60% alpha blend (baked diamonds, if any, now removed).
 	blended := blendImages(baseImg, overlayResized, opts.Alpha)
 
-	// --- Draw first-visibility diamonds on the map ---
-	// Only draw them in the blend layer if they are not already baked into the overlay
-	// (CPU renderer bakes them; GPU does not).
-	// We now check a small neighborhood around the detected point because the baked
-	// diamond is a filled shape, not a single pixel.
-	if nakedX, nakedY, teleX, teleY := findFirstVisibilityDiamonds(overlayResized); nakedX != -1 || teleX != -1 {
-		// For CPU renders, the diamonds are already baked into the overlay by the C++ renderer.
-		// To avoid double diamonds, we clear any strong red/blue pixels near the detected positions
-		// before drawing our own (larger, outlined) versions. This ensures only one set appears.
-		if nakedX != -1 && nakedY != -1 {
-			clearStrongColorInNeighborhood(overlayResized, nakedX, nakedY, 255, 0, 0, 13)
-			drawDiamond(blended, nakedX, nakedY, 12, color.RGBA{0, 0, 0, 255})   // thick black outline
-			drawDiamond(blended, nakedX, nakedY, 9, color.RGBA{255, 0, 0, 255})   // red fill
-		}
-		if teleX != -1 && teleY != -1 {
-			clearStrongColorInNeighborhood(overlayResized, teleX, teleY, 0, 0, 255, 13)
-			drawDiamond(blended, teleX, teleY, 12, color.RGBA{0, 0, 0, 255})   // thick black outline
-			drawDiamond(blended, teleX, teleY, 9, color.RGBA{0, 0, 255, 255})   // blue fill
-		}
+	// Draw a single, consistent diamond per point for BOTH renderers.
+	if nakedX != -1 && nakedY != -1 {
+		drawDiamond(blended, nakedX, nakedY, 12, color.RGBA{0, 0, 0, 255}) // thick black outline
+		drawDiamond(blended, nakedX, nakedY, 9, color.RGBA{255, 0, 0, 255}) // red fill
+	}
+	if teleX != -1 && teleY != -1 {
+		drawDiamond(blended, teleX, teleY, 12, color.RGBA{0, 0, 0, 255}) // thick black outline
+		drawDiamond(blended, teleX, teleY, 9, color.RGBA{0, 0, 255, 255}) // blue fill
 	}
 
 	// Draw legend with moon age
@@ -463,73 +467,25 @@ func formatDateForLegend(dateStr string) string {
 	return fmt.Sprintf("%s %s, %s", monthName, dayNum, year)
 }
 
-// hasStrongColorInNeighborhood checks a small square around (cx, cy) to see
-// if there is a pixel that is very close to the target (r,g,b) color.
-// This is used to detect when the CPU renderer has already baked in a
-// first-visibility diamond so we don't draw a duplicate one in the blend layer.
-func hasStrongColorInNeighborhood(img image.Image, cx, cy int, tr, tg, tb uint8, radius int) bool {
-	bounds := img.Bounds()
-	for dy := -radius; dy <= radius; dy++ {
-		for dx := -radius; dx <= radius; dx++ {
-			x := cx + dx
-			y := cy + dy
-			if x < bounds.Min.X || x >= bounds.Max.X || y < bounds.Min.Y || y >= bounds.Max.Y {
-				continue
-			}
-			r8, g8, b8, a8 := img.At(x, y).RGBA()
-			if a8 < 0xc000 { // require reasonably opaque
-				continue
-			}
-			r := uint8(r8 >> 8)
-			g := uint8(g8 >> 8)
-			b := uint8(b8 >> 8)
-
-			// Very strong match to the target color
-			if r > 240 && g < 30 && b < 30 && tr == 255 {
-				return true
-			}
-			if r < 30 && g < 30 && b > 240 && tb == 255 {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-// clearStrongColorInNeighborhood zeros out pixels that are strongly red or blue
-// in a neighborhood. Used to remove diamonds baked by the CPU renderer before
-// we draw our own versions in the blend layer.
+// stripBakedDiamonds removes the first-visibility diamonds the C++ CPU renderer
+// bakes into the overlay, so blend.go can draw a single consistent diamond per
+// point for both renderers. It clears every strongly red or strongly blue pixel
+// across the whole overlay (setting it fully transparent).
 //
-// This version is intentionally more aggressive to reliably catch the diamonds
-// that the C++ CPU renderer bakes into the raw overlay (including after resizing).
-func clearStrongColorInNeighborhood(img *image.RGBA, cx, cy int, tr, tg, tb uint8, radius int) {
-	bounds := img.Bounds()
-	for dy := -radius; dy <= radius; dy++ {
-		for dx := -radius; dx <= radius; dx++ {
-			x := cx + dx
-			y := cy + dy
-			if x < bounds.Min.X || x >= bounds.Max.X || y < bounds.Min.Y || y >= bounds.Max.Y {
-				continue
-			}
-			r8, g8, b8, a8 := img.At(x, y).RGBA()
-			if a8 < 0x6000 { // lower threshold to catch anti-aliased edges
-				continue
-			}
-			r := uint8(r8 >> 8)
-			g := uint8(g8 >> 8)
-			b := uint8(b8 >> 8)
-
-			if tr == 255 {
-				// Any pixel that is predominantly red (catches baked CPU diamonds reliably)
-				if r > 160 && g < 140 && b < 140 {
-					img.Set(x, y, color.RGBA{0, 0, 0, 0})
-				}
-			} else if tb == 255 {
-				// Any pixel that is predominantly blue
-				if r < 140 && g < 140 && b > 160 {
-					img.Set(x, y, color.RGBA{0, 0, 0, 0})
-				}
-			}
+// This is safe because the only red/blue content in an overlay is the baked
+// diamonds: the visibility zones A–E are cyan/yellow, never red or blue. GPU
+// overlays bake nothing, so this is effectively a no-op for them.
+func stripBakedDiamonds(img *image.RGBA) {
+	pix := img.Pix
+	for i := 0; i+3 < len(pix); i += 4 {
+		r, g, b, a := pix[i], pix[i+1], pix[i+2], pix[i+3]
+		if a < 0x60 { // skip near-transparent pixels (anti-aliased edges still caught below)
+			continue
+		}
+		strongRed := r > 160 && g < 140 && b < 140
+		strongBlue := b > 160 && r < 140 && g < 140
+		if strongRed || strongBlue {
+			pix[i], pix[i+1], pix[i+2], pix[i+3] = 0, 0, 0, 0
 		}
 	}
 }
