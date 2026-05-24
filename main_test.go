@@ -175,11 +175,12 @@ func TestRendererAccuracy(t *testing.T) {
 	tmp := t.TempDir()
 	date := "2025-01-30"
 
-	cpuOut := filepath.Join(tmp, "cpu.bin")
+	// Pass base name (without .bin); the CPU renderer appends .bin itself.
+	cpuBase := filepath.Join(tmp, "cpu")
 	gpuOut := filepath.Join(tmp, "gpu.png")
 
 	// Run CPU renderer
-	cmdCPU := exec.Command(cpuBin, date, "map", "evening", "yallop", cpuOut)
+	cmdCPU := exec.Command(cpuBin, date, "map", "evening", "yallop", cpuBase)
 	if err := cmdCPU.Run(); err != nil {
 		t.Fatalf("CPU renderer failed: %v", err)
 	}
@@ -191,7 +192,8 @@ func TestRendererAccuracy(t *testing.T) {
 	}
 
 	// Load both as RGBA
-	cpuData, err := os.ReadFile(cpuOut)
+	cpuBinPath := cpuBase + ".bin"
+	cpuData, err := os.ReadFile(cpuBinPath)
 	if err != nil {
 		t.Fatalf("failed to read CPU output: %v", err)
 	}

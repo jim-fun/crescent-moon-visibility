@@ -78,6 +78,10 @@ This repository contains a mature, production-oriented implementation of the **C
 | `internal/blend/` | Pure Go blending engine (no Python) |
 | `gpu/visibility_kernel_fp32.cl` | Apple Silicon / FP32+DD kernel |
 | `CHANGELOG.md` | Release history (Keep a Changelog format) |
+| `AGENTIC_WORKFLOW.md` | Formal 4-stage agentic process (Improvement → Validation → Security Review → Judge) |
+| `scripts/agents/` | Ready-to-use prompt templates + JUDGE_DECISION_TEMPLATE.md |
+| `scripts/agentic-review.sh` | Primary helper with two direct modes: `--improve "desc"` (specific change) and `--review-todo "area"` (code review that emits ready-to-paste TODO.md items). Prints exact spawn_subagent guidance and manages artifacts under `.agentic-review/`. |
+| `scripts/push-to-github.sh` + `scripts/agents/github-migration-agent.md` | Repeatable, safe migration/push helper + specialized agent for promoting `main` + tags to https://github.com/jim-fun/crescent-moon-visibility. Includes preflight (build + tests) and post-push verification. |
 | `GITEA_HANDOFF.md` | This document |
 
 ---
@@ -98,6 +102,10 @@ You can continue conversations with them using their task IDs.
 ## Recommended Next Work (Prioritized)
 
 ### High Priority
+- Use the now-complete agentic tooling for all material work:
+  - `./scripts/agentic-review.sh --improve "..."` for targeted changes
+  - `./scripts/agentic-review.sh --review-todo "..."` for systematic backlog population
+- The **Judge** (via the decision template + scorecard) is the explicit guardian of the Core Principles (Accuracy First is paramount) and has final authority on Go/No-Go decisions.
 - Expand release workflow to `linux-arm64` and Windows (where feasible)
 - Improve Cosign / GPG signing robustness in CI
 - Add source tarball generation to releases
@@ -130,6 +138,12 @@ make release-rc
 
 # View current version
 ./bin/crescent_maps -version
+
+# Start a specific improvement via the agentic workflow
+./scripts/agentic-review.sh --improve "Your change description"
+
+# Review an area and generate TODO items
+./scripts/agentic-review.sh --review-todo "Area to scan (e.g. release workflow)"
 ```
 
 ---

@@ -201,9 +201,9 @@ Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on
 Example (Linux/macOS, adjust tag and suffix for your release):
 
 ```bash
-curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.2.1/crescent_maps-v0.2.1-linux-amd64
-chmod +x crescent_maps-v0.2.1-linux-amd64
-sudo mv crescent_maps-v0.2.1-linux-amd64 /usr/local/bin/crescent_maps
+curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.2.1/crescent_maps-0.2.1-linux-amd64
+chmod +x crescent_maps-0.2.1-linux-amd64
+sudo mv crescent_maps-0.2.1-linux-amd64 /usr/local/bin/crescent_maps
 crescent_maps -version   # reports orchestrator + attempts to query bundled renderers
 crescent_maps -help
 ```
@@ -211,6 +211,8 @@ crescent_maps -help
 See the expanded release notes on each GitHub Release page (includes architecture summary, verification steps, and links to CHANGELOG + Performance & Accuracy doc) for the authoritative post-release instructions. The workflow attaches LICENSE and README for offline use.
 
 Full release engineering details (including pre-releases via `make release-rc`, Cosign verification, and `scripts/release.sh`): see the [Release Process](#release-process) section below.
+
+For important changes, the project uses a structured **Agentic Workflow** (Improvement → Validation → Security Review → Judge). The **Judge** serves as the final guardian of the project's Core Principles (especially Accuracy First and Performance with Integrity). See `AGENTIC_WORKFLOW.md`.
 
 ## Release Process
 

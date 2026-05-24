@@ -1,13 +1,18 @@
 #!/bin/bash
 # Release helper for crescent-moon-visibility
 #
+# This script (and the overall release process) is expected to go through the
+# Agentic Workflow defined in AGENTIC_WORKFLOW.md when making significant changes.
+# The Security Review and Judge agents pay particular attention here.
+#
 # Usage examples:
-#   ./scripts/release.sh patch           # 0.2.0 → 0.2.1
+#   ./scripts/release.sh patch           # 0.2.0 → 0.2.1  (see current VERSION file)
 #   ./scripts/release.sh minor           # 0.2.0 → 0.3.0
 #   ./scripts/release.sh major           # 0.2.0 → 1.0.0
 #   ./scripts/release.sh patch --rc      # 0.2.0 → 0.2.1-rc.1   (or increments existing rc)
 #   ./scripts/release.sh patch --beta    # creates beta pre-release
 #   ./scripts/release.sh 0.2.1-rc.3      # explicit version
+#   (Examples use placeholder; script always reads/updates the VERSION file)
 #
 #   make release-patch
 #   make release-minor
@@ -104,7 +109,7 @@ else
     echo "  $0 patch [--rc|--beta|--alpha]"
     echo "  $0 minor [--rc|--beta|--alpha]"
     echo "  $0 major [--rc|--beta|--alpha]"
-    echo "  $0 0.2.1-rc.2"
+    echo "  $0 0.2.1-rc.2   # explicit (version read from/ written to VERSION file)"
     exit 1
 fi
 
