@@ -194,11 +194,9 @@ static char calculate(
 template <bool evening, bool yallop>
 static void render(uint32_t *image, astro_time_t base_time)
 {
-    double min_naked_eye_time = INFINITY;
-    unsigned min_naked_eye_x = 0, min_naked_eye_y = 0;
-    double min_telescope_time = INFINITY;
-    unsigned min_telescope_x = 0, min_telescope_y = 0;
-
+    // First-visibility diamonds are drawn later by the Go compositor (blend.go)
+    // for both the CPU and GPU renderers, so this renderer only paints the A–E
+    // visibility zones and moon-age contour lines.
 #if defined(_OPENMP)
 #pragma omp parallel for
 #endif
@@ -244,25 +242,6 @@ static void render(uint32_t *image, astro_time_t base_time)
                 color = 0xFFFFFFFF;
             image[i + j * width] = color;
 
-            if ((q_code == 'A' || q_code == 'B') && result_time < min_naked_eye_time)
-#if defined(_OPENMP)
-#pragma omp critical
-#endif
-            {
-                min_naked_eye_x = i;
-                min_naked_eye_y = j;
-                min_naked_eye_time = result_time;
-            }
-            if ((q_code == 'C' || q_code == 'D') && result_time < min_telescope_time)
-#if defined(_OPENMP)
-#pragma omp critical
-#endif
-            {
-                min_telescope_x = i;
-                min_telescope_y = j;
-                min_telescope_time = result_time;
-            }
-
             //             if (q_value > max_q_value)
             // #if defined(_OPENMP)
             //                 #pragma omp critical
@@ -273,41 +252,6 @@ static void render(uint32_t *image, astro_time_t base_time)
         // if (max_q_value_x != 0 && max_q_value_y != 0)
         //     image[max_q_value_x + max_q_value_y * width] = 0xFF0000FF;
     }
-
-    // Draw a filled diamond with a black outer ring for visibility on the map.
-    // Outer = OUTER_SIZE (Manhattan), inner = OUTER_SIZE-2 → ring of black.
-#define OUTER_SIZE 22
-    if (min_naked_eye_x != 0 && min_naked_eye_y != 0)
-    {
-        for (int i = -OUTER_SIZE; i <= OUTER_SIZE; ++i)
-        {
-            for (int j = -OUTER_SIZE; j <= OUTER_SIZE; ++j)
-            {
-                int dist = abs(i) + abs(j);
-                if (dist > OUTER_SIZE) continue;
-                unsigned idx = min_naked_eye_x + i + (min_naked_eye_y + j) * width;
-                if (idx >= width * height) continue;
-                // 0xAABBGGRR layout: red = 0xFF0000FF
-                image[idx] = (dist > OUTER_SIZE - 3) ? 0xFF000000 : 0xFF0000FF;
-            }
-        }
-    }
-    if (min_telescope_x != 0 && min_telescope_y != 0)
-    {
-        for (int i = -OUTER_SIZE; i <= OUTER_SIZE; ++i)
-        {
-            for (int j = -OUTER_SIZE; j <= OUTER_SIZE; ++j)
-            {
-                int dist = abs(i) + abs(j);
-                if (dist > OUTER_SIZE) continue;
-                unsigned idx = min_telescope_x + i + (min_telescope_y + j) * width;
-                if (idx >= width * height) continue;
-                // 0xAABBGGRR layout: blue = 0xFFFF0000
-                image[idx] = (dist > OUTER_SIZE - 3) ? 0xFF000000 : 0xFFFF0000;
-            }
-        }
-    }
-#undef OUTER_SIZE
 }
 
 int main(int argc, const char **argv)

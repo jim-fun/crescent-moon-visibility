@@ -157,31 +157,12 @@ func processOne(overlayPath string, baseImg image.Image, opts BlendOptions, moon
 
 	// --- First-visibility diamonds ---
 	// Locate the first naked-eye (A/B) and first telescope (C/D) points from the
-	// overlay's visibility-zone colors (cyan / yellow). Done before the blend.
+	// overlay's visibility-zone colors (cyan / yellow). Neither renderer bakes
+	// diamonds into the overlay any more — we draw them here so CPU and GPU match.
 	nakedX, nakedY, teleX, teleY := findFirstVisibilityDiamonds(overlayResized)
 
-	// The C++ CPU renderer bakes large filled red/blue diamonds (OUTER_SIZE=22
-	// Manhattan + black ring) directly into the overlay. Baked positions can be
-	// offset from the cyan/yellow "first" pixels we detect, and resize + alpha
-	// blend can leave tint. We therefore:
-	// 1. Explicitly clear a generous radius around the *detected draw positions*.
-	// 2. Run aggressive global strip (relaxed thresholds + neighborhood).
-	// 3. After blend, strip the blended result again before drawing our clean
-	//    outlined diamonds. This guarantees exactly one diamond per type on CPU.
-	if nakedX != -1 && nakedY != -1 {
-		clearNeighborhood(overlayResized, nakedX, nakedY, 32)
-	}
-	if teleX != -1 && teleY != -1 {
-		clearNeighborhood(overlayResized, teleX, teleY, 32)
-	}
-
-	stripBakedDiamonds(overlayResized)
-
-	// Perform 60% alpha blend (baked diamonds, if any, now removed).
+	// Perform 60% alpha blend.
 	blended := blendImages(baseImg, overlayResized, opts.Alpha)
-
-	// Final safety: catch any reddish/bluish tint that survived alpha blend.
-	stripBakedDiamonds(blended)
 
 	// Draw a single, consistent diamond per point for BOTH renderers.
 	if nakedX != -1 && nakedY != -1 {
@@ -390,21 +371,6 @@ func drawDiamond(img *image.RGBA, cx, cy, size int, col color.Color) {
 	}
 }
 
-// clearNeighborhood zeros a square neighborhood (for deduplication of baked
-// CPU diamonds that may be slightly offset from the detected first-vis points).
-func clearNeighborhood(img *image.RGBA, cx, cy, radius int) {
-	bounds := img.Bounds()
-	for dy := -radius; dy <= radius; dy++ {
-		for dx := -radius; dx <= radius; dx++ {
-			x := cx + dx
-			y := cy + dy
-			if x >= bounds.Min.X && x < bounds.Max.X && y >= bounds.Min.Y && y < bounds.Max.Y {
-				img.Set(x, y, color.RGBA{0, 0, 0, 0})
-			}
-		}
-	}
-}
-
 // drawFilledCircle fills a disk using a simple Euclidean distance test.
 func drawFilledCircle(img *image.RGBA, cx, cy, radius int, col color.Color) {
 	for dy := -radius; dy <= radius; dy++ {
@@ -539,53 +505,6 @@ func formatDateForLegend(dateStr string) string {
 	}
 
 	return fmt.Sprintf("%s %s, %s", monthName, dayNum, year)
-}
-
-// stripBakedDiamonds removes the first-visibility diamonds the C++ CPU renderer
-// bakes into the overlay, so blend.go can draw a single consistent diamond per
-// point for both renderers. It clears every strongly red or strongly blue pixel
-// across the whole overlay (setting it fully transparent).
-//
-// This version is intentionally aggressive (relaxed thresholds + small
-// neighborhood clear) to catch anti-aliased edges, resize artifacts, and the
-// large (OUTER_SIZE=22) baked diamonds from the C++ renderer. The only red/blue
-// content in any overlay is these baked diamonds (A–E zones are cyan/yellow).
-// GPU overlays bake nothing, so this is a no-op for them.
-func stripBakedDiamonds(img *image.RGBA) {
-	pix := img.Pix
-	w := img.Bounds().Dx()
-	h := img.Bounds().Dy()
-	for i := 0; i+3 < len(pix); i += 4 {
-		r, g, b, a := pix[i], pix[i+1], pix[i+2], pix[i+3]
-		if a < 0x30 {
-			continue
-		}
-		// Relaxed thresholds + neighborhood to catch anti-aliased baked diamonds
-		// (the C++ draws a large Manhattan diamond with 3px black ring).
-		strongRed := r > 135 && g < 160 && b < 160
-		strongBlue := b > 135 && r < 160 && g < 160
-		if strongRed || strongBlue {
-			// Zero a small cross neighborhood (helps with blended/anti-aliased edges)
-			off := i / 4
-			x := off % w
-			y := off / w
-			for dy := -2; dy <= 2; dy++ {
-				for dx := -2; dx <= 2; dx++ {
-					nx := x + dx
-					ny := y + dy
-					if nx >= 0 && nx < w && ny >= 0 && ny < h {
-						nidx := (ny*w + nx) * 4
-						if nidx+3 < len(pix) {
-							pix[nidx+0] = 0
-							pix[nidx+1] = 0
-							pix[nidx+2] = 0
-							pix[nidx+3] = 0
-						}
-					}
-				}
-			}
-		}
-	}
 }
 
 // --- Legend drawing (improved with proper diamonds) ---
