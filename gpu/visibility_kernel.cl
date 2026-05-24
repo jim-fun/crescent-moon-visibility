@@ -333,6 +333,11 @@ __kernel void visibility_map(
     }
 
     // ABGR layout — bytes in memory (LE): R, G, B, A.  Matches CPU renderer.
+    //
+    // NOTE (2026-05): The GPU kernel does not yet track min_naked_eye / min_telescope
+    // locations like the CPU renderer does. First-visibility diamonds on GPU maps
+    // are currently synthesized in post-processing (internal/blend) by scanning
+    // the classification overlay for the easternmost qualifying pixels.
     if      (result == 'A') color = 0xFFCCCC00; // A: Cyan — easily visible
     else if (result == 'B') color = 0xFFB3B300; // B: Darker cyan — perfect conditions
     else if (result == 'C') color = 0xFF1AFFFF; // C: Light cyan — may need optical aid

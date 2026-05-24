@@ -26,3 +26,14 @@ __pycache__/
 # NOTE: *.png is intentionally not globbed globally.
 # The base map lives in data/map_nasa.png (tracked).
 # All generated output PNGs live inside ignored directories (output_maps/, etc.).
+
+**/.ipynb_checkpoints/
+
+# === Internal AI / Agentic tooling (maintainer + Grok only) ===
+# These are deliberately excluded when pushing to the public
+# GitHub mirror via scripts/push-to-github.sh.
+# They only exist in the internal Gitea repository.
+# AGENTIC_WORKFLOW.md
+# GITHUB_MIGRATION.md
+# scripts/agentic-review.sh
+# scripts/agents/

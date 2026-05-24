@@ -390,3 +390,8 @@ __kernel void visibility_map(
     if (draw_moon_line) color = 0xFFFFFFFF;
     image[gid] = color;
 }
+
+// NOTE (2026-05): The GPU kernel does not yet track min_naked_eye / min_telescope
+// locations like the CPU renderer does. First-visibility diamonds on GPU maps
+// are currently synthesized in post-processing (internal/blend) by scanning
+// the classification overlay for the easternmost qualifying pixels.

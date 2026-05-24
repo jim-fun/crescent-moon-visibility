@@ -123,17 +123,21 @@ test:
 test-accuracy:
 	RUN_ACCURACY_TEST=1 go test -v -run TestRendererAccuracy . -count=1
 
+# Run the ICOP external validation harness (early stage)
+validate-icop:
+	go run ./cmd/validate-icop
+
 # === Release targets ===
 
 .PHONY: release release-patch release-minor release-major release-rc release-beta
 
 release:
-	@echo "Use one of the following:"
-	@echo "  make release-patch          # 0.2.0 → 0.2.1"
-	@echo "  make release-minor          # 0.2.0 → 0.3.0"
-	@echo "  make release-major          # 0.2.0 → 1.0.0"
-	@echo "  make release-rc             # 0.2.0 → 0.2.1-rc.1"
-	@echo "  make release-beta           # 0.2.0 → 0.2.1-beta.1"
+	@echo "Use one of the following (current VERSION: $(shell cat VERSION 2>/dev/null || echo '?')):"
+	@echo "  make release-patch          # e.g. 0.2.0 → 0.2.1"
+	@echo "  make release-minor          # e.g. 0.2.0 → 0.3.0"
+	@echo "  make release-major          # e.g. 0.2.0 → 1.0.0"
+	@echo "  make release-rc             # e.g. 0.2.0 → 0.2.1-rc.1"
+	@echo "  make release-beta           # e.g. 0.2.0 → 0.2.1-beta.1"
 	@echo ""
 	@echo "Or use the script directly for full control:"
 	@echo "  ./scripts/release.sh patch --rc"
@@ -152,6 +156,40 @@ release-rc:
 
 release-beta:
 	@./scripts/release.sh patch --beta
+
+# === Agentic Workflow (see AGENTIC_WORKFLOW.md) ===
+# Structured 4-stage review process for important changes:
+#   1. Improvement Agent
+#   2. Validation Agent (focus on Accuracy First + Performance with Integrity)
+#   3. Security Review Agent
+#   4. Judge Agent (final authority; guardian of the Core Principles)
+#
+# The Judge has veto power. Use `make agentic-review` for quick reference.
+# This workflow is defined in AGENTIC_WORKFLOW.md and the project skill.
+
+agentic-review:
+	@echo "=== Crescent Moon Visibility — Agentic Improvement Workflow ==="
+	@echo ""
+	@echo "Primary kickoff commands (see AGENTIC_WORKFLOW.md for full details):"
+	@echo ""
+	@echo "  Specific improvement:"
+	@echo "    ./scripts/agentic-review.sh --improve \"Add linux-arm64 to release workflow with Cosign\""
+	@echo ""
+	@echo "  Review code area and emit ready-to-paste TODO.md items:"
+	@echo "    ./scripts/agentic-review.sh --review-todo \"GPU kernel FP32+DD accuracy on non-Apple hardware\""
+	@echo ""
+	@echo "  See all modes and examples:"
+	@echo "    ./scripts/agentic-review.sh --help"
+	@echo ""
+	@echo "Stages (always the same order):"
+	@echo "  1. Improvement Agent     → scripts/agents/improvement-agent.md (+ special TODO mode when --review-todo)"
+	@echo "  2. Validation Agent      → scripts/agents/validation-agent.md"
+	@echo "  3. Security Review Agent → scripts/agents/security-review-agent.md"
+	@echo "  4. Judge Agent           → scripts/agents/judge-agent.md  (final authority + Core Principles Scorecard)"
+	@echo ""
+	@echo "Judge Decision Template: scripts/agents/JUDGE_DECISION_TEMPLATE.md"
+	@echo "Full process and spawn_subagent guidance: AGENTIC_WORKFLOW.md"
+	@echo "Reference skill: crescent-moon-visibility-engineering"
 
 # Create release artifacts locally (useful for testing before tagging)
 dist:
