@@ -2,7 +2,7 @@
 
 This document tracks planned enhancements and features for the Crescent Moon Visibility Maps Generator.
 
-## High Priority Features
+## Completed High-Priority Work (Historical)
 
 ### 0. Apple Silicon GPU Support via FP32 + Double-Double Time
 - **Status**: **Completed** (implemented May 2026)
@@ -21,102 +21,49 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 - **Compatibility**: x86/Linux/NVIDIA/AMD devices continue to use the
   original FP64 kernel with no behavior change.
 
-## Medium Priority Features
+## High Priority (Accuracy First + Verifiability)
 
-### 1. Additional Visibility Criteria
-- **Task**: Implement alternative crescent visibility criteria
-- **Options**:
-  - Schaefer criterion (1988)
-  - Bruin criterion
-  - SAAO (South African Astronomical Observatory) criterion
-  - Ilyas criterion
-- **Rationale**: Different criteria may be preferred by different communities
-- **Impact**: Broader applicability and validation opportunities
+These items are the current focus because they most directly strengthen the project's core claim of high-accuracy, trustworthy visibility predictions.
 
-### 2. Atmospheric Extinction Modeling
-- **Task**: Add atmospheric extinction variations
-- **Details**:
-  - Seasonal atmospheric density changes
-  - Altitude-dependent atmospheric models
-  - Geographic variation in atmospheric conditions
-- **Impact**: Improved accuracy, especially at lower altitudes
+- [ ] **High** - Build systematic external validation harness against ICOP sighting database
+  Rationale: We have a high-quality computational implementation of the Yallop (1997) q-test and Odeh (2004) criteria, plus a detailed comparison document (`docs/yallop-criteria-and-external-validation.md`). However, we lack quantitative evidence of how well the current predictions match real-world naked-eye and telescopic observations. This is the single largest gap in the "Accuracy First" claim.
+  Ties to Core Principles: Directly strengthens Accuracy First (non-negotiable) and Verifiability & Reproducibility. Without this, all internal 96.97% numbers are only self-consistency, not external truth.
+  Suggested validation: Curated set of 50–100 ICOP positive/negative sightings from 2015–2025. Automated comparison script that ingests sighting reports (lat/lon, date, instrument, success/failure) and runs the renderer at those locations/times. Report precision/recall per category (A/B vs C/D/E) and confusion matrix. Add as `make validate-icop` or similar.
+  From agentic review of TODO prioritization on 2026-05-24.
 
-### 3. Terrain Elevation Integration
-- **Task**: Incorporate terrain elevation data
-- **Implementation**:
-  - Integrate SRTM or similar elevation datasets
-  - Adjust horizon calculations for mountains/valleys
-  - Account for elevated observation points
-- **Impact**: More realistic visibility predictions for terrestrial observers
+- [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline
+  Rationale: HMNAO publishes official predictions using (a version of) the Yallop method. Comparing our maps against their published tables for the same dates provides an independent implementation check and increases credibility.
+  Ties to Core Principles: Strong Verifiability & Reproducibility + Accuracy First. Helps prove our Chebyshev + rise/set + Yallop logic produces equivalent results to the official source.
+  Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables. Document any systematic differences in first-visibility longitude or category boundaries.
+  From agentic review of TODO prioritization on 2026-05-24.
 
-### 4. Observer Experience Factor
-- **Task**: Add observer experience parameter
-- **Details**:
-  - Beginner vs expert observer adjustments
-  - Visual acuity factors
-  - Age-related visibility corrections
-- **Impact**: Personalized predictions
+## Medium Priority (Supporting Accuracy + Performance)
 
-## Low Priority / Future Enhancements
+- [ ] **Medium** - Implement at least one additional modern visibility criterion (start with a recent published method)
+  Rationale: Having only Yallop + Odeh limits users who prefer other calibrated methods. Adding a third increases the tool's scientific utility.
+  Ties to Core Principles: Supports Accuracy First by allowing direct side-by-side comparison. Improves Verifiability.
+  Suggested validation: New `TestRendererAccuracy` variant that also exercises the new criterion. Ensure CPU/GPU match remains ≥96% for the new path.
+  From agentic review of TODO prioritization on 2026-05-24.
 
-### 5. Web-Based Interface
-- **Task**: Create web UI for interactive map generation
-- **Features**:
-  - Date picker
-  - Location selector
-  - Criteria selection
-  - Real-time rendering
-  - Download functionality
-- **Technologies**: WebAssembly (compile C++ to WASM), JavaScript frontend
-- **Impact**: Easier accessibility for non-technical users
+- [ ] **Medium** - Create golden sighting test dataset and regression harness
+  Rationale: As we add new criteria or modeling improvements, we need reproducible test cases that protect the accuracy bar.
+  Ties to Core Principles: Excellent for Verifiability & Reproducibility and long-term protection of Accuracy First.
+  Suggested validation: 20–30 high-quality ICOP or published sightings stored as JSON/CSV. Simple Go test or script that runs the renderer and asserts category or first-visibility time is within tolerance.
+  From agentic review of TODO prioritization on 2026-05-24.
 
-### 6. Real-Time Visibility Predictions
-- **Task**: Automatic calculation for upcoming new moons
-- **Features**:
-  - Automated scheduling
-  - Email/SMS notifications
-  - Location-based alerts
-- **Impact**: Proactive user notifications
+## Future / Stretch Goals
 
-### 7. Historical Sighting Database
-- **Task**: Validate predictions against historical sighting reports
-- **Data Sources**:
-  - ICOP (Islamic Crescents' Observation Project)
-  - Historical records
-  - Observatory reports
-- **Impact**: Validation and calibration of models
+The following items were deprioritized during the May 2026 agentic review because they score significantly lower on Accuracy First and Verifiability compared to external validation work. They remain desirable long-term enhancements.
 
-### 8. Configurable Map Projections
-- **Task**: Support multiple map projections
-- **Options**:
-  - Mercator (current)
-  - Equirectangular
-  - Robinson
-  - Mollweide
-- **Impact**: Better visualization for different use cases
+- Web-Based Interface (WASM + JS frontend)
+- Real-Time Visibility Predictions + notifications
+- Terrain Elevation Integration (SRTM + horizon adjustments)
+- Atmospheric Extinction Modeling
+- Observer Experience / acuity factors
+- Configurable Map Projections
+- Multi-Language Support
 
-### 9. Multi-Language Support
-- **Task**: Internationalize output and annotations
-- **Languages**: Arabic, English, French, Turkish, Urdu, Malay, etc.
-- **Impact**: Global accessibility
-
-## Research and Validation
-
-### 10. Accuracy Analysis
-- **Task**: Systematic comparison with observational data
-- **Methodology**:
-  - Compare with HMNAO predictions
-  - Validate against sighting reports
-  - Statistical analysis of differences
-- **Output**: Research paper or technical report
-
-### 11. Sensitivity Analysis
-- **Task**: Analyze parameter sensitivity
-- **Parameters**:
-  - Atmospheric refraction model
-  - Best time calculation (4/9 ratio)
-  - Crescent width threshold
-- **Impact**: Understanding of model robustness
+These may be revisited after the High Priority validation work is substantially complete.
 
 ---
 
@@ -147,7 +94,7 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 - ~~Unit Testing~~ — Tests in `main_test.go` covering parseYears, astronomy, caching
 - ~~Documentation~~ — Extensive inline docs + dedicated `docs/performance-accuracy.md` covering the FP32+DD technique, measured results, and visual-sighting validation (2026 update)
 
-**Last Updated:** May 2026 (Python blending fully removed + Go accuracy test suite + documentation refresh)
+**Last Updated:** May 2026 (Major agentic workflow prioritization: Elevated external validation (ICOP + HMNAO) to High Priority. Deprioritized older feature work in favor of strengthening Accuracy First and Verifiability.)
 
 ## How to Contribute
 
