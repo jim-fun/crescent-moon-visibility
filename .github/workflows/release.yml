@@ -71,10 +71,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
           merge-multiple: true
 
       - name: Compute version without 'v' prefix
@@ -107,8 +109,8 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
           files: |
-            crescent_maps-*
-            visibility-*
+            crescent_maps-*-linux-amd64
+            visibility-*-linux-amd64
             checksums.txt
             checksums.txt.sig
             checksums.txt.pem
