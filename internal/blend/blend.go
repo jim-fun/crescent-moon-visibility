@@ -513,13 +513,15 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	// Legend background rectangle (bottom-right). Tighter geometry to reduce
 	// excessive white space while preserving the two-column layout, large
 	// 44pt/30pt fonts, breathing room, and overall aesthetics the user liked.
+	// Increased padding/border by 13px all around the text to prevent it
+	// from feeling too close to the edges.
 	const (
-		legendL = 2820
-		legendT = 1620
+		legendL = 2790
+		legendT = 1600
 		legendR = 3790
-		legendB = 2075
-		padL    = 22 // inner padding from left edge
-		padR    = 22 // inner padding from right edge
+		legendB = 2090
+		padL    = 35 // inner padding from left edge (was 22)
+		padR    = 35 // inner padding from right edge (was 22)
 	)
 	legendRect := image.Rect(legendL, legendT, legendR, legendB)
 
@@ -544,7 +546,7 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	innerR := legendR - padR
 
 	// === Header row: date on the left, moon age right-aligned ===
-	headerY := legendT + 38
+	headerY := legendT + 50
 	headerDrawer.Dot = fixed.P(innerL, headerY)
 	headerDrawer.DrawString(formatDateForLegend(dateStr))
 
@@ -628,7 +630,7 @@ func drawLegend(img *image.RGBA, dateStr string, moonAge float64) *image.RGBA {
 	// Git repo reference, right-aligned inside the box using real text metrics.
 	repoText := "github.com/jim-fun/crescent-moon-visibility"
 	repoW := labelDrawer.MeasureString(repoText).Ceil()
-	repoY := legendB - 16
+	repoY := legendB - 30 // shifted up to align with 30px bottom padding
 	labelDrawer.Dot = fixed.P(innerR-repoW, repoY)
 	labelDrawer.DrawString(repoText)
 

@@ -37,6 +37,10 @@ These items are the current focus because they most directly strengthen the proj
   Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables. Document any systematic differences in first-visibility longitude or category boundaries.
   From agentic review of TODO prioritization on 2026-05-24.
 
+- [ ] **High** - Harden validation match logic and align sighting records
+  Rationale: In `cmd/validate-icop/main.go`, category `C` ("May need optical aid") and `D` ("Will need optical aid") are ignored by the validation match algorithm. Additionally, the dates/locations in the current `sightings.json` represent test/mock sightings that do not align with the actual astronomical conjunction times (producing a 0% match rate).
+  Ties to Core Principles: Directly improves Verifiability & Reproducibility + Accuracy First. Ensuring the test harness uses real-world observational database records and correctly handles instrument type for marginal categories (`C`, `D`, `E`) is essential to generate true quantitative validation results.
+
 ## Medium Priority (Supporting Accuracy + Performance)
 
 - [ ] **Medium** - Implement at least one additional modern visibility criterion (start with a recent published method)
@@ -50,6 +54,10 @@ These items are the current focus because they most directly strengthen the proj
   Ties to Core Principles: Excellent for Verifiability & Reproducibility and long-term protection of Accuracy First.
   Suggested validation: 20–30 high-quality ICOP or published sightings stored as JSON/CSV. Simple Go test or script that runs the renderer and asserts category or first-visibility time is within tolerance.
   From agentic review of TODO prioritization on 2026-05-24.
+
+- [ ] **Medium** - Dynamic grid dimensions (metadata headers) for binary files
+  Rationale: The Go compositor (`internal/blend/blend.go`) currently detects grid resolutions by probing a few hardcoded dimension arrays `{{3600, 2160}, {3840, 2160}, {1440, 720}}`. If the C++ binaries change their resolution macros (e.g. `PIXEL_PER_DEGREE`), the compositor fails to load the binary files.
+  Ties to Core Principles: Improves Code Robustness, Modularity & Portability. By prefixing the raw binary grid output files with 8 bytes of metadata (4-byte width, 4-byte height), we eliminate fragile hardcoded dimension lookups.
 
 ## Future / Stretch Goals
 
