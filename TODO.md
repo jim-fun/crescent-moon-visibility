@@ -87,6 +87,8 @@ These may be revisited after the High Priority validation work is substantially 
 - ~~Diamond Markers~~ — Naked-eye (red) and telescope (blue) markers drawn as 22-pixel diamonds with a 3-pixel black outline for 4K visibility.
 - ~~Vector Legend~~ — Legend (colors + first-visibility markers) drawn with vector primitives in the pure-Go blending package (no font glyph dependency).
 - ~~Dynamic Day Selection~~ — Orchestrator emits maps only for days reaching ≥ 0.2 % illumination at latest sunset on Earth (D+1 06:00 UTC sample); modern illumination-threshold rule with full sub-second new-moon precision.
+
+- ~~Public GitHub Repository Restart & Documentation Polish (2026)~~ — Fresh clean launch of the official public mirror at https://github.com/jim-fun/crescent-moon-visibility. Internal AI/agentic tooling, .agentic-review/ artifacts, and maintainer-only documents (AGENTIC_WORKFLOW.md, scripts/agents/, etc.) deliberately excluded from public main. README badges, version examples, agentic references, and CHANGELOG updated for the launch. Proper annotated v0.3.0 tag created on clean public history.
 - ~~WEBP Output~~ — Quality-98 WEBP at 60 % blend strength; ~2 MB per map vs ~9 MB PNG.
 - ~~Cross-platform Makefile~~ — Auto-detects OpenCL headers and library paths (Debian/Fedora/Arch/ROCm/CUDA) and OpenMP support (`libomp` via Homebrew on macOS).
 - ~~Caching and Memoization~~ — New moon dates cached in Go orchestrator (`newMoonCache`)
