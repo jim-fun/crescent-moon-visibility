@@ -197,21 +197,25 @@ The GPU renderer (both kernels) matches the CPU's classification counts to a ver
 
 ## Installation from GitHub Releases
 
-Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on the [Releases](https://github.com/jim-fun/crescent-moon-visibility/releases) page. These are produced by the automated workflow (multi-platform, checksums + Cosign keyless signing).
+Pre-built binaries (Go orchestrator + best-effort CPU renderer) for **Linux amd64** are available on the [Releases](https://github.com/jim-fun/crescent-moon-visibility/releases) page. These are produced by the automated workflow (checksums + Cosign keyless signing).
 
-**Recommended:** Download the `crescent_maps-*` orchestrator for your OS/arch (e.g. `linux-amd64`, `darwin-arm64`). The CPU renderer (`visibility-*`) is also attached for reference/validation use.
+**macOS users (Intel + Apple Silicon):** Pre-built binaries are no longer provided by CI. Build from source with `make` (best for OpenCL/Metal compatibility on your specific hardware). See [Building from source](#building-from-source) below.
+
+**Recommended for Linux:** Download the `crescent_maps-*` orchestrator (`linux-amd64`). The CPU renderer (`visibility-*`) is also attached for reference/validation use.
 
 **GPU renderer note:** Not pre-built (OpenCL is highly platform-dependent). After installing the orchestrator, clone the repo and run `make gpu` (or full `make`) on your target machine for `-gpu` support. See [GPU dependency installation](#gpu-dependency-installation) and the detailed mixed-language [Architecture](#architecture) section above.
 
-Example (Linux/macOS, adjust tag and suffix for your release):
+Example (Linux amd64):
 
 ```bash
-curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.4.0/crescent_maps-0.4.0-linux-amd64
-chmod +x crescent_maps-0.4.0-linux-amd64
-sudo mv crescent_maps-0.4.0-linux-amd64 /usr/local/bin/crescent_maps
+curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.4.1/crescent_maps-0.4.1-linux-amd64
+chmod +x crescent_maps-0.4.1-linux-amd64
+sudo mv crescent_maps-0.4.1-linux-amd64 /usr/local/bin/crescent_maps
 crescent_maps -version   # reports orchestrator + attempts to query bundled renderers
 crescent_maps -help
 ```
+
+macOS users should clone and run `make` locally (see above).
 
 See the expanded release notes on each GitHub Release page (includes architecture summary, verification steps, and links to CHANGELOG + Performance & Accuracy doc) for the authoritative post-release instructions. The workflow attaches LICENSE and README for offline use.
 
@@ -253,7 +257,8 @@ git push origin main --tags
 
 The GitHub Actions workflow (`.github/workflows/release.yml`) will:
 
-- Build the Go orchestrator (`crescent_maps`) for Linux amd64, macOS arm64, and macOS amd64
+- Build the Go orchestrator (`crescent_maps`) and best-effort CPU renderer for **Linux amd64** only (the primary supported CI target)
+  - macOS (Intel + Apple Silicon) users build locally with `make` (recommended for best OpenCL/Metal compatibility)
 - Build the CPU reference renderer where possible
 - Generate a combined `checksums.txt` for all release artifacts
 - Sign `checksums.txt` using **Cosign (keyless)** via GitHub OIDC

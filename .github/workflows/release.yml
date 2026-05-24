@@ -18,10 +18,9 @@ jobs:
         include:
           - os: ubuntu-latest
             suffix: linux-amd64
-          - os: macos-latest
-            suffix: darwin-arm64
-          - os: macos-13
-            suffix: darwin-amd64
+          # macOS builds (darwin-arm64 / darwin-amd64) are no longer provided by CI.
+          # Users on macOS (Intel + Apple Silicon) should build locally with `make`
+          # (see README § Building from source and GPU dependency installation).
 
     steps:
       - name: Checkout
@@ -123,14 +122,24 @@ jobs:
 
             **Important:** The GPU renderer (`gpu_visibility.out`) has platform-specific OpenCL / driver dependencies and is **not included** in GitHub releases. Build it locally with `make gpu` (or `make` for everything) after cloning. Full instructions: [README § GPU dependency installation](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#gpu-dependency-installation).
 
-            **Quick start from release (Linux/macOS example):**
+            **Quick start from release (Linux):**
             ```bash
-            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent_maps-${{ github.ref_name#v }}-linux-amd64   # (adjust suffix)
+            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent_maps-${{ github.ref_name#v }}-linux-amd64
             chmod +x crescent_maps-*
             sudo mv crescent_maps-* /usr/local/bin/crescent_maps
             crescent_maps -version
             crescent_maps -help
             # For a map: crescent_maps -start 2027 -end 2027   # CPU; add -gpu after local GPU build
+            ```
+
+            **macOS users:** Pre-built binaries are no longer provided by the release workflow.
+            Clone the repository and build locally with `make` (or `make cpu` + `make gpu` as needed).
+            Full instructions are in the README.
+            ```bash
+            git clone https://github.com/jim-fun/crescent-moon-visibility.git
+            cd crescent-moon-visibility
+            make
+            ./bin/crescent_maps -version
             ```
 
             ### Verifying Downloads (Supply-Chain Security)
