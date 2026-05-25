@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-05-25
+
+### Added
+- Windows x64 (CPU-only) release artifacts now produced by the automated workflow.
+  - Dedicated CI workflow (`.github/workflows/windows-cpu.yml`) for ongoing validation on push/PR.
+  - Full integration into the tagged release process (`.github/workflows/release.yml`).
+  - Pre-built `crescent_maps-*-windows-amd64.exe` + CPU renderer included in releases (GPU remains Linux/macOS only via local `make`).
+- Cross-platform binary discovery in the Go orchestrator (`main.go`) and tests (`main_test.go`) using `runtime.GOOS` + suffixed candidates.
+
+### Changed
+- Windows release builds now include MinGW toolchain setup, static linking attempts for the renderer, and `go test` execution.
+- Documentation (README, release notes body) updated with Windows usage examples and "CPU only" caveats.
+- `TODO.md` updated with detailed phased plan (now in active implementation).
+
 ## [0.5.1] - 2026-05-25
 
 ### Added

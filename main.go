@@ -26,6 +26,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -56,6 +57,25 @@ const (
 	// TimeType selects evening (waxing) or morning (waning) crescent.
 	TimeType = "evening"
 )
+
+// getRendererCandidates returns possible filenames for a renderer binary,
+// accounting for Windows .exe convention and common release artifact naming.
+func getRendererCandidates(base string) []string {
+	if runtime.GOOS == "windows" {
+		return []string{
+			"bin/" + base + "-windows-amd64.exe",
+			"./" + base + "-windows-amd64.exe",
+			"bin/" + base + ".exe",
+			"./" + base + ".exe",
+			"bin/" + base + ".out", // fallback
+			"./" + base + ".out",
+		}
+	}
+	return []string{
+		"bin/" + base + ".out",
+		"./" + base + ".out",
+	}
+}
 
 // task represents a single map-generation job.
 type task struct {
@@ -141,24 +161,33 @@ func main() {
 
 		// Try to report versions of the bundled renderers
 		fmt.Println("Bundled renderers:")
-		for _, name := range []string{"visibility.out", "gpu_visibility.out"} {
+		for _, base := range []string{"visibility", "gpu_visibility"} {
+			names := []string{base + ".out", base + ".exe"}
+			if runtime.GOOS == "windows" {
+				names = []string{base + "-windows-amd64.exe", base + ".exe", base + ".out"}
+			}
 			found := false
-			for _, dir := range []string{"bin", "."} {
-				path := filepath.Join(dir, name)
-				if _, err := os.Stat(path); err == nil {
-					cmd := exec.Command(path, "-version")
-					out, err := cmd.Output()
-					if err == nil {
-						fmt.Printf("  %-20s %s", name+":", string(out))
-					} else {
-						fmt.Printf("  %-20s (version query failed)\n", name+":")
+			for _, name := range names {
+				for _, dir := range []string{"bin", "."} {
+					path := filepath.Join(dir, name)
+					if _, err := os.Stat(path); err == nil {
+						cmd := exec.Command(path, "-version")
+						out, err := cmd.Output()
+						if err == nil {
+							fmt.Printf("  %-20s %s", name+":", string(out))
+						} else {
+							fmt.Printf("  %-20s (version query failed)\n", name+":")
+						}
+						found = true
+						break
 					}
-					found = true
+				}
+				if found {
 					break
 				}
 			}
 			if !found {
-				fmt.Printf("  %-20s (not found)\n", name+":")
+				fmt.Printf("  %-20s (not found)\n", base+":")
 			}
 		}
 		return
@@ -173,8 +202,7 @@ func main() {
 	// Determine renderer: GPU binary if available and -gpu flag, otherwise CPU.
 	var rendererBin string
 	if useGPU {
-		// Prefer bin/ (new organized layout), then fall back to legacy root location
-		candidates := []string{"bin/gpu_visibility.out", "./gpu_visibility.out"}
+		candidates := getRendererCandidates("gpu_visibility")
 		for _, c := range candidates {
 			if _, err := os.Stat(c); err == nil {
 				rendererBin = c
@@ -182,12 +210,17 @@ func main() {
 			}
 		}
 		if rendererBin == "" {
-			fmt.Printf("[warn] -gpu requested but no gpu_visibility.out found (tried bin/ and root) — falling back to CPU renderer\n")
-			rendererBin = "bin/visibility.out"
+			fmt.Printf("[warn] -gpu requested but no gpu_visibility binary found — falling back to CPU renderer\n")
+			candidates = getRendererCandidates("visibility")
+			for _, c := range candidates {
+				if _, err := os.Stat(c); err == nil {
+					rendererBin = c
+					break
+				}
+			}
 		}
 	} else {
-		// Prefer bin/, then legacy root
-		candidates := []string{"bin/visibility.out", "./visibility.out"}
+		candidates := getRendererCandidates("visibility")
 		for _, c := range candidates {
 			if _, err := os.Stat(c); err == nil {
 				rendererBin = c
@@ -195,7 +228,7 @@ func main() {
 			}
 		}
 		if rendererBin == "" {
-			fmt.Printf("[warn] %s not found — run 'make cpu' to build the CPU renderer\n", "bin/visibility.out or ./visibility.out")
+			fmt.Printf("[warn] CPU renderer not found — run 'make cpu' (or the Windows equivalent) to build it\n")
 			return
 		}
 	}

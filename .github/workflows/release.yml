@@ -35,8 +35,19 @@ jobs:
         with:
           go-version: '1.22'
 
+      - name: Setup Windows build environment (MinGW + CGO)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          choco install mingw -y
+          echo "C:\ProgramData\mingw64\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "CC=gcc" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CXX=g++" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CGO_ENABLED=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
       - name: Extract version
         id: version
+        shell: bash
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
@@ -45,9 +56,16 @@ jobs:
       - name: Build crescent_maps (Go orchestrator)
         shell: bash
         run: |
-          CGO_ENABLED=1 go build \
-            -ldflags "-X main.version=${{ steps.version.outputs.version }} -X main.buildDate=${{ steps.version.outputs.date }}" \
-            -o crescent_maps-${{ steps.version.outputs.version }}-${{ matrix.suffix }}${{ runner.os == 'Windows' && '.exe' || '' }}
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            # Best-effort static for the CGO orchestrator on Windows (CGO makes full static tricky)
+            CGO_ENABLED=1 CGO_LDFLAGS="-static-libgcc -static-libstdc++" go build \
+              -ldflags "-X main.version=${{ steps.version.outputs.version }} -X main.buildDate=${{ steps.version.outputs.date }} -extldflags '-static'" \
+              -o crescent_maps-${{ steps.version.outputs.version }}-${{ matrix.suffix }}.exe .
+          else
+            CGO_ENABLED=1 go build \
+              -ldflags "-X main.version=${{ steps.version.outputs.version }} -X main.buildDate=${{ steps.version.outputs.date }}" \
+              -o crescent_maps-${{ steps.version.outputs.version }}-${{ matrix.suffix }}
+          fi
 
       - name: Run Go tests (non-Linux platforms)
         if: runner.os != 'Linux'
@@ -58,15 +76,22 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            # Windows: build directly with MinGW g++ (make cpu may not work cleanly)
             mkdir -p bin
+            # Match the logic from the dedicated Windows CPU workflow (with OpenMP fallback)
             g++ -O3 -Wall -Wextra -fno-exceptions \
               -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 \
               -DVERSION_STR="${{ steps.version.outputs.version }}" \
               -o bin/visibility-windows-amd64.exe \
               -iquote . \
               cmd/visibility/visibility.cc thirdparty/astronomy.c \
-              -lm || echo "Windows CPU renderer build skipped or failed"
+              -lm -fopenmp -static -static-libgcc -static-libstdc++ 2>&1 || \
+            g++ -O3 -Wall -Wextra -fno-exceptions \
+              -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 \
+              -DVERSION_STR="${{ steps.version.outputs.version }}" \
+              -o bin/visibility-windows-amd64.exe \
+              -iquote . \
+              cmd/visibility/visibility.cc thirdparty/astronomy.c \
+              -lm -static -static-libgcc -static-libstdc++
             if [ -f bin/visibility-windows-amd64.exe ]; then
               cp bin/visibility-windows-amd64.exe visibility-${{ steps.version.outputs.version }}-${{ matrix.suffix }}.exe
             fi

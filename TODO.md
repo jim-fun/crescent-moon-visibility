@@ -59,16 +59,15 @@ These items are the current focus because they most directly strengthen the proj
   Rationale: The Go compositor (`internal/blend/blend.go`) currently detects grid resolutions by probing a few hardcoded dimension arrays `{{3600, 2160}, {3840, 2160}, {1440, 720}}`. If the C++ binaries change their resolution macros (e.g. `PIXEL_PER_DEGREE`), the compositor fails to load the binary files.
   Ties to Core Principles: Improves Code Robustness, Modularity & Portability. By prefixing the raw binary grid output files with 8 bytes of metadata (4-byte width, 4-byte height), we eliminate fragile hardcoded dimension lookups.
 
-- [ ] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased)
+- [x] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased) — **Phases 1 & 2 complete; Phase 3 in progress**
   **Phased approach**:
-  - **Phase 1 (Current)**: Create initial Windows CPU-only CI workflow. Build `crescent_maps.exe` + CPU renderer (`visibility.exe`) on `windows-latest` using MinGW-w64 + CGO. No GPU support yet.
-  - **Phase 2**: Integrate Windows binaries into the main release workflow so `v*` tags produce Windows artifacts alongside Linux.
-  - **Phase 3**: Document Windows build instructions (MinGW or MSVC) and update README / Makefile.
-  - **Phase 4** (optional, later): Attempt OpenCL GPU renderer support on Windows (significantly harder due to driver variability and CI limitations).
-  Rationale: Windows is a major desktop platform. Currently no pre-built binaries are provided. Starting with CPU-only keeps scope reasonable and delivers immediate value. Full GPU support can be deferred.
+  - **Phase 1**: Initial Windows CPU-only CI workflow (`.github/workflows/windows-cpu.yml`) — complete (MinGW + CGO + renderer + orchestrator + `go test` + verification + OpenMP fallback).
+  - **Phase 2**: Integrate into main release workflow (`release.yml`) — complete (matrix + MinGW setup + static linking attempts + cross-platform tests + artifact globs + Windows-aware binary discovery in main.go).
+  - **Phase 3**: Polish documentation + local build instructions (MinGW/choco) and update README/Makefile — partially done (README + release notes updated; full "Building from source on Windows" section + Makefile notes recommended).
+  - **Phase 4** (optional, later): Attempt OpenCL GPU renderer support on Windows.
+  Rationale: Windows is a major desktop platform. CPU-only first approach delivers immediate value. Full GPU support deferred.
   Ties to Core Principles: Modularity & Portability, Verifiability & Reproducibility.
-  Suggested first implementation: New workflow `.github/workflows/windows-cpu.yml` (or extend release.yml) that uses `choco install mingw` + `CGO_ENABLED=1 go build` + MinGW g++ for the C++ renderer.
-  From discussion on adding Windows x64 releases (May 2026).
+  Status (post full agentic review + remediation 2026-05-25): Core functionality + release integration + runtime portability in orchestrator complete. Re-Judge gave "Go with Conditions" — conditions addressed. Standalone CI + release support ready for v0.5.2.
 
 ## Future / Stretch Goals
 

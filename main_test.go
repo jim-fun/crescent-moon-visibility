@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"testing"
 	"time"
 
@@ -161,15 +162,26 @@ func TestRendererAccuracy(t *testing.T) {
 		t.Skip("skipping expensive renderer accuracy test (set RUN_ACCURACY_TEST=1 to run)")
 	}
 
-	// Require the renderers
+	// Require the renderers (platform-aware for Windows .exe)
 	cpuBin := "./bin/visibility.out"
 	gpuBin := "./bin/gpu_visibility.out"
+	if runtime.GOOS == "windows" {
+		cpuBin = "./bin/visibility-windows-amd64.exe"
+		gpuBin = "./bin/gpu_visibility-windows-amd64.exe"
+		// Also try plain .exe as fallback
+		if _, err := os.Stat(cpuBin); err != nil {
+			cpuBin = "./bin/visibility.exe"
+		}
+		if _, err := os.Stat(gpuBin); err != nil {
+			gpuBin = "./bin/gpu_visibility.exe"
+		}
+	}
 
 	if _, err := os.Stat(cpuBin); err != nil {
-		t.Fatalf("CPU renderer not found at %s — run 'make cpu'", cpuBin)
+		t.Fatalf("CPU renderer not found at %s — run 'make cpu' (or Windows equivalent)", cpuBin)
 	}
 	if _, err := os.Stat(gpuBin); err != nil {
-		t.Fatalf("GPU renderer not found at %s — run 'make gpu'", gpuBin)
+		t.Fatalf("GPU renderer not found at %s — run 'make gpu' (or Windows equivalent)", gpuBin)
 	}
 
 	tmp := t.TempDir()
