@@ -24,9 +24,15 @@ CFLAGS   := -O3 -Wall -Wextra -fno-exceptions
 # system headers. This prevents the tracked ./VERSION file from shadowing the
 # C++ standard <version> header on case-insensitive filesystems (macOS/APFS).
 LDFLAGS  := -lm -iquote .
-CPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION_STR=\"$(VERSION)\"
+# Version string. Defined here (before CPU_CFLAGS/GPU_CFLAGS expand it below with
+# := immediate assignment) so the -DVERSION_STR define is non-empty. Primary
+# source is the VERSION file; falls back to git describe for dev builds.
+VERSION ?= $(shell cat VERSION 2>/dev/null || git describe --tags --always --dirty 2>/dev/null || echo "dev")
+# VERSION_STR is passed UNQUOTED; the C++ side stringizes it (see visibility.cc).
+# This keeps the define free of quotes that shells (pwsh/bash) would strip in CI.
+CPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION_STR=$(VERSION)
 CPU_LDFLAGS  := $(LDFLAGS)
-GPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION_STR=\"$(VERSION)\"
+GPU_CFLAGS  := $(CFLAGS) -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 -DVERSION_STR=$(VERSION)
 
 # Platform detection for OpenCL and OpenMP
 UNAME_S := $(shell uname -s)
@@ -52,9 +58,7 @@ GPU_BIN  := $(BIN_DIR)/gpu_visibility.out
 CPU_BIN  := $(BIN_DIR)/visibility.out
 GO_BIN   := $(BIN_DIR)/crescent_maps
 
-# Versioning (injected via ldflags)
-# Primary source is VERSION file; falls back to git describe for dev builds.
-VERSION ?= $(shell cat VERSION 2>/dev/null || git describe --tags --always --dirty 2>/dev/null || echo "dev")
+# Versioning (injected via ldflags). VERSION is defined earlier (above CPU_CFLAGS).
 DATE    ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 LDFLAGS := -ldflags "-X main.version=$(VERSION) -X main.buildDate=$(DATE)"
 

@@ -259,7 +259,14 @@ int main(int argc, const char **argv)
     if (argc >= 2 && (!strcmp(argv[1], "-version") || !strcmp(argv[1], "--version")))
     {
 #ifdef VERSION_STR
-        printf("visibility (CPU renderer) version %s\n", VERSION_STR);
+// Stringize the version macro so it can be passed UNQUOTED on the command line
+// (-DVERSION_STR=0.5.2). Passing it quoted (-DVERSION_STR="0.5.2") is fragile:
+// shells (PowerShell, bash) strip the quotes, leaving g++ to choke on the bare
+// pp-number "0.5.2" ("too many decimal points in number"). Two-step indirection
+// expands VERSION_STR to its value before stringizing.
+#define CMV_STRINGIZE2(x) #x
+#define CMV_STRINGIZE(x) CMV_STRINGIZE2(x)
+        printf("visibility (CPU renderer) version %s\n", CMV_STRINGIZE(VERSION_STR));
 #elif defined(VERSION)
         printf("visibility (CPU renderer) version %s\n", VERSION);
 #else
