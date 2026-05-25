@@ -1,0 +1,127 @@
+name: Build (Linux + Windows CPU)
+
+# On-push / PR build verification for both supported CPU platforms.
+# Linux amd64 builds via the Makefile (gcc + OpenMP); Windows amd64 builds via
+# MinGW-w64 (CGO + g++). The tagged release workflow (release.yml) mirrors this
+# matrix and additionally publishes signed artifacts.
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: build-${{ matrix.suffix }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            suffix: linux-amd64
+          - os: windows-latest
+            suffix: windows-amd64
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install MinGW-w64 (Windows; for CGO + C++)
+        if: runner.os == 'Windows'
+        run: choco install mingw -y
+
+      - name: Set up MinGW environment (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          echo "C:\ProgramData\mingw64\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "CC=gcc" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CXX=g++" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "CGO_ENABLED=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Extract version info
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(cat VERSION 2>/dev/null | tr -d '[:space:]')
+          [ -z "$VERSION" ] && VERSION=dev
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "date=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$GITHUB_OUTPUT"
+
+      - name: Build CPU renderer (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          make cpu
+          cp bin/visibility.out bin/visibility-linux-amd64
+
+      - name: Build CPU renderer (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          mkdir -p bin
+          # -DVERSION_STR must stay double-quoted: PowerShell otherwise splits the
+          # bare token 0.5.2 into "-DVERSION_STR=0" + ".5.2" (the latter reaches the
+          # linker as a phantom input file). PowerShell strips the quotes before g++
+          # sees them, so g++ gets the bare value -- visibility.cc stringizes
+          # VERSION_STR, so an unquoted value compiles fine.
+          # Try with OpenMP first; fall back gracefully if libgomp is missing.
+          g++ -O3 -Wall -Wextra -fno-exceptions `
+            -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
+            -DVERSION_STR="${{ steps.version.outputs.version }}" `
+            -o bin/visibility-windows-amd64.exe `
+            -iquote . `
+            cmd/visibility/visibility.cc thirdparty/astronomy.c `
+            -lm -fopenmp 2>&1 || `
+          g++ -O3 -Wall -Wextra -fno-exceptions `
+            -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
+            -DVERSION_STR="${{ steps.version.outputs.version }}" `
+            -o bin/visibility-windows-amd64.exe `
+            -iquote . `
+            cmd/visibility/visibility.cc thirdparty/astronomy.c `
+            -lm
+          if (-not (Test-Path bin/visibility-windows-amd64.exe)) {
+            Write-Error "CPU renderer build failed"
+            exit 1
+          }
+
+      - name: Build Go orchestrator (CGO)
+        shell: bash
+        run: |
+          OUT="bin/crescent_maps-${{ matrix.suffix }}"
+          [ "${{ runner.os }}" = "Windows" ] && OUT="${OUT}.exe"
+          CGO_ENABLED=1 go build \
+            -ldflags "-X main.version=${{ steps.version.outputs.version }} -X main.buildDate=${{ steps.version.outputs.date }}" \
+            -o "$OUT" .
+
+      - name: Run Go tests
+        shell: bash
+        run: go test ./... -count=1 -short
+
+      - name: Upload CPU build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpu-build-${{ matrix.suffix }}
+          path: |
+            bin/crescent_maps-${{ matrix.suffix }}*
+            bin/visibility-${{ matrix.suffix }}*
+          retention-days: 14
+
+      - name: Verify binaries
+        shell: bash
+        run: |
+          ls -la bin/
+          ORCH="bin/crescent_maps-${{ matrix.suffix }}"
+          [ "${{ runner.os }}" = "Windows" ] && ORCH="${ORCH}.exe"
+          if [ ! -f "$ORCH" ]; then
+            echo "Go orchestrator build failed ($ORCH missing)" >&2
+            exit 1
+          fi
+          echo "${{ matrix.suffix }} CPU build completed successfully"

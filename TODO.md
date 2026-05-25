@@ -61,7 +61,7 @@ These items are the current focus because they most directly strengthen the proj
 
 - [x] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased) — **Phases 1 & 2 complete; Phase 3 in progress**
   **Phased approach**:
-  - **Phase 1**: Initial Windows CPU-only CI workflow (`.github/workflows/windows-cpu.yml`) — complete (MinGW + CGO + renderer + orchestrator + `go test` + verification + OpenMP fallback).
+  - **Phase 1**: On-push CI build workflow (`.github/workflows/build.yml`, formerly `windows-cpu.yml`) — complete. Now a Linux + Windows matrix (MinGW + CGO + renderer + orchestrator + `go test` + verification; OpenMP fallback on Windows).
   - **Phase 2**: Integrate into main release workflow (`release.yml`) — complete (matrix + MinGW setup + static linking attempts + cross-platform tests + artifact globs + Windows-aware binary discovery in main.go).
   - **Phase 3**: Polish documentation + local build instructions (MinGW/choco) and update README/Makefile — partially done (README + release notes updated; full "Building from source on Windows" section + Makefile notes recommended).
   - **Phase 4** (optional, later): Attempt OpenCL GPU renderer support on Windows.

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.3] - 2026-05-25
+
+### Fixed
+- **Windows CPU build** (`error: too many decimal points in number`): the version
+  macro was passed as `-DVERSION_STR="x.y.z"`, but the shell (PowerShell, and bash)
+  strips the quotes, so `g++` received the bare pp-number and rejected it. Removing
+  the quotes then exposed a second issue: PowerShell splits the bare `x.y.z` token,
+  feeding `.y.z` to the linker. Fixed by stringizing the macro in
+  `cmd/visibility/visibility.cc` (so an unquoted value compiles) while keeping the
+  quotes in the workflows (so PowerShell passes a single token). The same fix is
+  applied to the Windows leg of `release.yml`.
+- `Makefile`: the `VERSION` definition is now placed above `CPU_CFLAGS`/`GPU_CFLAGS`
+  (which use `:=` immediate expansion), so local `make` builds embed a non-empty
+  version string. Quote-escaping of the define removed (now handled in C++).
+
+### Changed
+- On-push CI build is now a **Linux + Windows matrix** (`.github/workflows/build.yml`,
+  renamed from `windows-cpu.yml`): every push to `main`/`dev` and PRs to `main` build
+  the CPU renderer + Go orchestrator on both platforms and run `go test`.
+
 ## [0.5.2] - 2026-05-25
 
 ### Added
