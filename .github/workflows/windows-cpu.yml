@@ -45,17 +45,22 @@ jobs:
         shell: pwsh
         run: |
           mkdir -p bin
+          # NOTE: -DVERSION_STR must stay double-quoted here. PowerShell otherwise
+          # splits the bare token 0.5.2 into "-DVERSION_STR=0" + ".5.2" (the latter
+          # reaches the linker as a phantom input file). PowerShell strips the quotes
+          # before g++ sees them, so g++ gets the bare number -- visibility.cc
+          # stringizes VERSION_STR, so an unquoted value compiles fine.
           # Try with OpenMP first; fall back gracefully if libgomp is missing in this MinGW install
           g++ -O3 -Wall -Wextra -fno-exceptions `
             -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
-            -DVERSION_STR=${{ steps.version.outputs.version }} `
+            -DVERSION_STR="${{ steps.version.outputs.version }}" `
             -o bin/visibility-windows-amd64.exe `
             -iquote . `
             cmd/visibility/visibility.cc thirdparty/astronomy.c `
             -lm -fopenmp 2>&1 || `
           g++ -O3 -Wall -Wextra -fno-exceptions `
             -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
-            -DVERSION_STR=${{ steps.version.outputs.version }} `
+            -DVERSION_STR="${{ steps.version.outputs.version }}" `
             -o bin/visibility-windows-amd64.exe `
             -iquote . `
             cmd/visibility/visibility.cc thirdparty/astronomy.c `
