@@ -59,6 +59,17 @@ These items are the current focus because they most directly strengthen the proj
   Rationale: The Go compositor (`internal/blend/blend.go`) currently detects grid resolutions by probing a few hardcoded dimension arrays `{{3600, 2160}, {3840, 2160}, {1440, 720}}`. If the C++ binaries change their resolution macros (e.g. `PIXEL_PER_DEGREE`), the compositor fails to load the binary files.
   Ties to Core Principles: Improves Code Robustness, Modularity & Portability. By prefixing the raw binary grid output files with 8 bytes of metadata (4-byte width, 4-byte height), we eliminate fragile hardcoded dimension lookups.
 
+- [ ] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased)
+  **Phased approach**:
+  - **Phase 1 (Current)**: Create initial Windows CPU-only CI workflow. Build `crescent_maps.exe` + CPU renderer (`visibility.exe`) on `windows-latest` using MinGW-w64 + CGO. No GPU support yet.
+  - **Phase 2**: Integrate Windows binaries into the main release workflow so `v*` tags produce Windows artifacts alongside Linux.
+  - **Phase 3**: Document Windows build instructions (MinGW or MSVC) and update README / Makefile.
+  - **Phase 4** (optional, later): Attempt OpenCL GPU renderer support on Windows (significantly harder due to driver variability and CI limitations).
+  Rationale: Windows is a major desktop platform. Currently no pre-built binaries are provided. Starting with CPU-only keeps scope reasonable and delivers immediate value. Full GPU support can be deferred.
+  Ties to Core Principles: Modularity & Portability, Verifiability & Reproducibility.
+  Suggested first implementation: New workflow `.github/workflows/windows-cpu.yml` (or extend release.yml) that uses `choco install mingw` + `CGO_ENABLED=1 go build` + MinGW g++ for the C++ renderer.
+  From discussion on adding Windows x64 releases (May 2026).
+
 ## Future / Stretch Goals
 
 The following items were deprioritized during the May 2026 agentic review because they score significantly lower on Accuracy First and Verifiability compared to external validation work. They remain desirable long-term enhancements.
