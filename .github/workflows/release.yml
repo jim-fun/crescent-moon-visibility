@@ -18,6 +18,8 @@ jobs:
         include:
           - os: ubuntu-latest
             suffix: linux-amd64
+          - os: windows-latest
+            suffix: windows-amd64
           # macOS builds (darwin-arm64 / darwin-amd64) are no longer provided by CI.
           # Users on macOS (Intel + Apple Silicon) should build locally with `make`
           # (see README § Building from source and GPU dependency installation).
@@ -41,19 +43,42 @@ jobs:
           echo "date=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_OUTPUT
 
       - name: Build crescent_maps (Go orchestrator)
+        shell: bash
         run: |
           CGO_ENABLED=1 go build \
             -ldflags "-X main.version=${{ steps.version.outputs.version }} -X main.buildDate=${{ steps.version.outputs.date }}" \
-            -o crescent_maps-${{ steps.version.outputs.version }}-${{ matrix.suffix }}
+            -o crescent_maps-${{ steps.version.outputs.version }}-${{ matrix.suffix }}${{ runner.os == 'Windows' && '.exe' || '' }}
+
+      - name: Run Go tests (non-Linux platforms)
+        if: runner.os != 'Linux'
+        shell: bash
+        run: go test ./... -count=1 -short || true  # best-effort on Windows
 
       - name: Build CPU renderer (best effort)
+        shell: bash
         run: |
-          make cpu || echo "CPU renderer build skipped or failed"
-          if [ -f bin/visibility.out ]; then
-            cp bin/visibility.out visibility-${{ steps.version.outputs.version }}-${{ matrix.suffix }}
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            # Windows: build directly with MinGW g++ (make cpu may not work cleanly)
+            mkdir -p bin
+            g++ -O3 -Wall -Wextra -fno-exceptions \
+              -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 \
+              -DVERSION_STR="${{ steps.version.outputs.version }}" \
+              -o bin/visibility-windows-amd64.exe \
+              -iquote . \
+              cmd/visibility/visibility.cc thirdparty/astronomy.c \
+              -lm || echo "Windows CPU renderer build skipped or failed"
+            if [ -f bin/visibility-windows-amd64.exe ]; then
+              cp bin/visibility-windows-amd64.exe visibility-${{ steps.version.outputs.version }}-${{ matrix.suffix }}.exe
+            fi
+          else
+            make cpu || echo "CPU renderer build skipped or failed"
+            if [ -f bin/visibility.out ]; then
+              cp bin/visibility.out visibility-${{ steps.version.outputs.version }}-${{ matrix.suffix }}
+            fi
           fi
 
       - name: Generate checksums
+        shell: bash
         run: |
           shasum -a 256 crescent_maps-${{ steps.version.outputs.version }}* visibility-${{ steps.version.outputs.version }}* 2>/dev/null | sort > checksums-${{ matrix.suffix }}.txt || true
 
@@ -110,7 +135,9 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
           files: |
             crescent_maps-*-linux-amd64
+            crescent_maps-*-windows-amd64*
             visibility-*-linux-amd64
+            visibility-*-windows-amd64*
             checksums.txt
             checksums.txt.sig
             checksums.txt.pem
@@ -139,6 +166,12 @@ jobs:
             crescent_maps -version
             crescent_maps -help
             # For a map: crescent_maps -start 2027 -end 2027   # CPU; add -gpu after local GPU build
+            ```
+
+            **Windows (x64) users:** Pre-built `crescent_maps-*-windows-amd64.exe` and CPU renderer are included in releases (CPU only).
+            ```powershell
+            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.5.1/crescent_maps-0.5.1-windows-amd64.exe
+            .\crescent_maps-0.5.1-windows-amd64.exe -version
             ```
 
             **macOS users:** Pre-built binaries are no longer provided by the release workflow.

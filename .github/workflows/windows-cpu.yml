@@ -45,14 +45,27 @@ jobs:
         shell: pwsh
         run: |
           mkdir -p bin
+          # Try with OpenMP first; fall back gracefully if libgomp is missing in this MinGW install
           g++ -O3 -Wall -Wextra -fno-exceptions `
             -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
             -DVERSION_STR="${{ steps.version.outputs.version }}" `
             -o bin/visibility-windows-amd64.exe `
             -iquote . `
             cmd/visibility/visibility.cc thirdparty/astronomy.c `
-            -lm -fopenmp
-        continue-on-error: true   # OpenMP may not be available in all MinGW setups
+            -lm -fopenmp 2>&1 || `
+          g++ -O3 -Wall -Wextra -fno-exceptions `
+            -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
+            -DVERSION_STR="${{ steps.version.outputs.version }}" `
+            -o bin/visibility-windows-amd64.exe `
+            -iquote . `
+            cmd/visibility/visibility.cc thirdparty/astronomy.c `
+            -lm
+          if (Test-Path bin/visibility-windows-amd64.exe) {
+            echo "CPU renderer built successfully"
+          } else {
+            Write-Error "CPU renderer build failed"
+            exit 1
+          }
 
       - name: Build Go orchestrator (CGO)
         shell: pwsh
@@ -62,10 +75,15 @@ jobs:
             -ldflags "-X main.version=${{ steps.version.outputs.version }} -X main.buildDate=${{ steps.version.outputs.date }}" `
             -o bin/crescent_maps-windows-amd64.exe .
 
+      - name: Run Go tests (Windows)
+        shell: pwsh
+        run: |
+          go test ./... -count=1 -short
+
       - name: Upload Windows CPU artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: windows-cpu-build
+          name: windows-cpu-${{ steps.version.outputs.version }}
           path: |
             bin/crescent_maps-windows-amd64.exe
             bin/visibility-windows-amd64.exe
@@ -74,10 +92,9 @@ jobs:
       - name: Verify binaries
         shell: pwsh
         run: |
-          ls -la bin/
-          if (Test-Path bin/crescent_maps-windows-amd64.exe) {
-            echo "Go orchestrator built successfully"
-          } else {
+          Get-ChildItem bin/ -Recurse
+          if (-not (Test-Path bin/crescent_maps-windows-amd64.exe)) {
             Write-Error "Go orchestrator build failed"
             exit 1
           }
+          Write-Host "Windows CPU build completed successfully" -ForegroundColor Green
