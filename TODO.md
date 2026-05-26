@@ -69,6 +69,11 @@ These items are the current focus because they most directly strengthen the proj
   Ties to Core Principles: Modularity & Portability, Verifiability & Reproducibility.
   Status (post full agentic review + remediation 2026-05-25): Core functionality + release integration + runtime portability in orchestrator complete. Re-Judge gave "Go with Conditions" — conditions addressed. Standalone CI + release support ready for v0.5.2.
 
+- [ ] **Medium** - Fix `make release-rc` (and `--beta`/`--alpha`) when `VERSION` is already a prerelease
+  Rationale: `scripts/release.sh patch --rc` calls `bump_version` *before* `parse_prerelease`. When `VERSION` is already an rc (e.g. `0.5.4-rc.1`), `bump_version` runs `patch=$((patch + 1))` on the patch field `4-rc.1` and dies with `syntax error: invalid arithmetic operator (error token is ".1")`, so the rc-increment logic in `parse_prerelease` (`-rc.N` → `-rc.(N+1)`) is never reached. Discovered 2026-05-25 while testing release packaging; worked around by passing an explicit version (`./scripts/release.sh 0.5.4-rc.2`).
+  Suggested fix: in release.sh, when the current `VERSION` already matches `X.Y.Z-(rc|beta|alpha).N`, route straight to `parse_prerelease` (bump the prerelease number, skip `bump_version`); or strip the `-rc.N` suffix to a clean `X.Y.Z` before `bump_version`. Add a small test covering bump-from-rc.
+  Ties to Core Principles: Code Robustness; smoother, less error-prone Release Process.
+
 ## Future / Stretch Goals
 
 The following items were deprioritized during the May 2026 agentic review because they score significantly lower on Accuracy First and Verifiability compared to external validation work. They remain desirable long-term enhancements.
