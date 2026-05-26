@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Windows release artifacts were absent from `checksums.txt`** (so they could
+  not be verified against the Cosign-signed manifest). The checksum step ran
+  `shasum` under bash, but Git Bash on the Windows runner ships `sha256sum`, not
+  `shasum`; combined with `|| true`, the Windows checksum file came out empty. Now
+  prefers `sha256sum` with a `shasum` fallback and no longer swallows failures.
+
 ### Added
 - **Ready-to-run release packages** for Linux x64 (`.tar.gz`) and Windows x64
   (`.zip`). Each bundles the minimal runtime: the orchestrator (`crescent_maps[.exe]`),
