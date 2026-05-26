@@ -197,40 +197,65 @@ The GPU renderer (both kernels) matches the CPU's classification counts to a ver
 
 ## Installation from GitHub Releases
 
-Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on the [Releases](https://github.com/jim-fun/crescent-moon-visibility/releases) page for:
+The [Releases](https://github.com/jim-fun/crescent-moon-visibility/releases) page ships **ready-to-run packages** (recommended) plus the individual binaries, for:
 
 - **Linux amd64** (primary CI target)
 - **Windows x64** (CPU only — no GPU renderer in releases)
 
-These are produced by the automated workflow (checksums + Cosign keyless signing).
+All artifacts are produced by the automated workflow (checksums + Cosign keyless signing).
 
-**macOS users (Intel + Apple Silicon):** Pre-built binaries are no longer provided by CI. Build from source with `make` (best for OpenCL/Metal compatibility on your specific hardware). See [Building from source](#building-from-source) below.
+**macOS users (Intel + Apple Silicon):** Pre-built artifacts are not provided by CI. Build from source with `make` (best for OpenCL/Metal compatibility on your specific hardware) and run `make package` for a local package. See [Building from source](#building-from-source) below.
 
-**Recommended:**
-- Linux: `crescent_maps-*-linux-amd64`
-- Windows: `crescent_maps-*-windows-amd64.exe`
+### Ready-to-run packages (recommended)
 
-The CPU renderer is also attached for reference/validation use on both platforms.
+| File | Platform |
+|------|----------|
+| `crescent-moon-visibility-<version>-linux-amd64.tar.gz` | Linux x64 |
+| `crescent-moon-visibility-<version>-windows-amd64.zip`  | Windows x64 |
 
-**GPU renderer note:** Not pre-built (OpenCL is highly platform-dependent). After installing the orchestrator, clone the repo and run `make gpu` (or full `make`) on your target machine for `-gpu` support. See [GPU dependency installation](#gpu-dependency-installation) and the detailed mixed-language [Architecture](#architecture) section above.
+A bare binary cannot generate maps on its own: the orchestrator shells out to the CPU renderer (discovered by relative path) and the blend step reads `data/map_nasa.png`. The package bundles exactly what's needed and nothing else:
 
-Example (Linux amd64):
+```
+crescent-moon-visibility-<version>-<platform>/
+├── crescent_maps[.exe]        # run this
+├── bin/visibility[.out|.exe]  # CPU renderer (auto-discovered)
+├── data/map_nasa.png          # base map (required by the blend step)
+├── README.md
+├── LICENSE
+└── QUICKSTART.txt
+```
+
+**Keep the folder layout intact and run from inside the extracted folder** so the program finds the renderer and base map.
+
+Linux:
+```bash
+curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.5.3/crescent-moon-visibility-0.5.3-linux-amd64.tar.gz
+tar -xzf crescent-moon-visibility-0.5.3-linux-amd64.tar.gz
+cd crescent-moon-visibility-0.5.3-linux-amd64
+./crescent_maps -version          # reports orchestrator + bundled CPU renderer
+./crescent_maps -start 2027 -end 2027
+```
+
+Windows (x64) — extract the `.zip`, then from the folder in PowerShell:
+```powershell
+.\crescent_maps.exe -version
+.\crescent_maps.exe -start 2027 -end 2027
+```
+
+### Individual binaries (advanced)
+
+The raw `crescent_maps-*` and `visibility-*` binaries are also attached for users who already have a working tree (with `data/map_nasa.png` and the CPU renderer alongside). On Windows, `crescent_maps.exe` discovers the renderer as `bin/visibility.exe`, `./visibility.exe`, or `*-windows-amd64.exe`; on Linux as `bin/visibility.out` or `./visibility.out`.
+
+**GPU renderer note:** Not pre-built (OpenCL is highly platform-dependent). Clone the repo and run `make gpu` (or full `make`) on your target machine for `-gpu` support. See [GPU dependency installation](#gpu-dependency-installation) and the detailed mixed-language [Architecture](#architecture) section above.
+
+### Building a package locally
+
+`make package` builds the CPU renderer + orchestrator and assembles a package for your host platform under `dist/` (uses `scripts/package.sh`, the same script CI uses):
 
 ```bash
-curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.4.1/crescent_maps-0.4.1-linux-amd64
-chmod +x crescent_maps-0.4.1-linux-amd64
-sudo mv crescent_maps-0.4.1-linux-amd64 /usr/local/bin/crescent_maps
-crescent_maps -version   # reports orchestrator + attempts to query bundled renderers
-crescent_maps -help
+make package
+# -> dist/crescent-moon-visibility-<version>-<host-platform>.tar.gz
 ```
-
-**Windows (x64) example:**
-```powershell
-curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.5.1/crescent_maps-0.5.1-windows-amd64.exe
-.\crescent_maps-0.5.1-windows-amd64.exe -version
-```
-
-macOS users should clone and run `make` locally (see above).
 
 See the expanded release notes on each GitHub Release page (includes architecture summary, verification steps, and links to CHANGELOG + Performance & Accuracy doc) for the authoritative post-release instructions. The workflow attaches LICENSE and README for offline use.
 

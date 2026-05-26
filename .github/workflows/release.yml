@@ -102,10 +102,40 @@ jobs:
             fi
           fi
 
+      # Assemble the minimal, ready-to-run package (orchestrator + CPU renderer +
+      # data/map_nasa.png, binaries named so crescent_maps auto-discovers them).
+      # See scripts/package.sh. Skipped (with a warning) if either binary is
+      # missing, so a partial build still publishes the raw binaries as before.
+      - name: Build runtime package
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          SUFFIX="${{ matrix.suffix }}"
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            ORCH="crescent_maps-${VERSION}-${SUFFIX}.exe"
+            REND="visibility-${VERSION}-${SUFFIX}.exe"
+          else
+            ORCH="crescent_maps-${VERSION}-${SUFFIX}"
+            REND="visibility-${VERSION}-${SUFFIX}"
+          fi
+          if [[ -f "$ORCH" && -f "$REND" ]]; then
+            ./scripts/package.sh --version "$VERSION" --suffix "$SUFFIX" \
+              --orchestrator "$ORCH" --renderer "$REND"
+            # Surface the archive at the repo root for the checksum/artifact globs.
+            mv dist/crescent-moon-visibility-*.tar.gz . 2>/dev/null || true
+            mv dist/crescent-moon-visibility-*.zip . 2>/dev/null || true
+          else
+            echo "[warn] orchestrator ($ORCH) or renderer ($REND) missing — skipping runtime package for $SUFFIX"
+          fi
+
       - name: Generate checksums
         shell: bash
         run: |
-          shasum -a 256 crescent_maps-${{ steps.version.outputs.version }}* visibility-${{ steps.version.outputs.version }}* 2>/dev/null | sort > checksums-${{ matrix.suffix }}.txt || true
+          shasum -a 256 \
+            crescent_maps-${{ steps.version.outputs.version }}* \
+            visibility-${{ steps.version.outputs.version }}* \
+            crescent-moon-visibility-${{ steps.version.outputs.version }}* \
+            2>/dev/null | sort > checksums-${{ matrix.suffix }}.txt || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -114,6 +144,7 @@ jobs:
           path: |
             crescent_maps-*
             visibility-*
+            crescent-moon-visibility-*
             checksums-*.txt
           retention-days: 14
 
@@ -159,6 +190,8 @@ jobs:
           draft: false
           prerelease: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
           files: |
+            crescent-moon-visibility-*-linux-amd64.tar.gz
+            crescent-moon-visibility-*-windows-amd64.zip
             crescent_maps-*-linux-amd64
             crescent_maps-*-windows-amd64*
             visibility-*-linux-amd64
@@ -174,29 +207,34 @@ jobs:
 
             High-performance crescent moon visibility maps using a mixed-language architecture: Go orchestrator (CGO + Astronomy Engine), dual C++ / OpenCL renderers (CPU reference in double + GPU with Chebyshev ephemeris + FP32+double-double for Apple Silicon), and pure-Go blending (no Python in default path). See the **[Architecture section](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#architecture)** and **[Performance & Accuracy](https://github.com/jim-fun/crescent-moon-visibility/blob/main/docs/performance-accuracy.md)** for design rationale and ~96.97 % fidelity guarantees.
 
-            ### Downloads (Pre-built Artifacts)
+            ### Downloads
+
+            **Recommended — ready-to-run packages** (orchestrator + CPU renderer + base map, runs out of the box):
 
             | File | Description |
             |------|-------------|
-            | `crescent_maps-*` | **Main Go orchestrator** (recommended for all users; includes version reporting for bundled renderers) |
-            | `visibility-*` | CPU reference renderer (pure double C++ + OpenMP; built best-effort on release runners) |
+            | `crescent-moon-visibility-*-linux-amd64.tar.gz` | **Linux x64 package** — extract and run `./crescent_maps` from the folder |
+            | `crescent-moon-visibility-*-windows-amd64.zip`  | **Windows x64 package** — extract and run `.\crescent_maps.exe` from the folder |
+
+            Each package contains `crescent_maps[.exe]` (run this), `bin/visibility[.out\|.exe]` (CPU renderer, auto-discovered), and `data/map_nasa.png` (required by the blend step), plus `README.md`, `LICENSE`, and `QUICKSTART.txt`. **Keep the folder layout intact** — the program finds the renderer and base map by relative path.
+
+            Individual binaries are also attached (`crescent_maps-*`, `visibility-*`) for users who already have a working tree with `data/map_nasa.png`; note a bare binary cannot generate maps without the CPU renderer and base map alongside it.
 
             **Important:** The GPU renderer (`gpu_visibility.out`) has platform-specific OpenCL / driver dependencies and is **not included** in GitHub releases. Build it locally with `make gpu` (or `make` for everything) after cloning. Full instructions: [README § GPU dependency installation](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#gpu-dependency-installation).
 
             **Quick start from release (Linux):**
             ```bash
-            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent_maps-${{ steps.ver.outputs.version }}-linux-amd64
-            chmod +x crescent_maps-*
-            sudo mv crescent_maps-* /usr/local/bin/crescent_maps
-            crescent_maps -version
-            crescent_maps -help
-            # For a map: crescent_maps -start 2027 -end 2027   # CPU; add -gpu after local GPU build
+            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent-moon-visibility-${{ steps.ver.outputs.version }}-linux-amd64.tar.gz
+            tar -xzf crescent-moon-visibility-${{ steps.ver.outputs.version }}-linux-amd64.tar.gz
+            cd crescent-moon-visibility-${{ steps.ver.outputs.version }}-linux-amd64
+            ./crescent_maps -version
+            ./crescent_maps -start 2027 -end 2027   # CPU; add -gpu after a local GPU build
             ```
 
-            **Windows (x64) users:** Pre-built `crescent_maps-*-windows-amd64.exe` and CPU renderer are included in releases (CPU only).
+            **Windows (x64):** download `crescent-moon-visibility-*-windows-amd64.zip`, extract, then from the folder in PowerShell:
             ```powershell
-            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.5.1/crescent_maps-0.5.1-windows-amd64.exe
-            .\crescent_maps-0.5.1-windows-amd64.exe -version
+            .\crescent_maps.exe -version
+            .\crescent_maps.exe -start 2027 -end 2027
             ```
 
             **macOS users:** Pre-built binaries are no longer provided by the release workflow.

@@ -5,6 +5,13 @@ bin/
 *.o
 crescent_maps
 
+# Local release packages / staging (scripts/package.sh, make package, make dist)
+dist/
+crescent-moon-visibility-*.tar.gz
+crescent-moon-visibility-*.zip
+crescent-moon-visibility-*-amd64/
+crescent-moon-visibility-*-arm64/
+
 # Generated map output (raw RGBA bins / WEBP / per-run output dirs)
 *.bin
 *.webp

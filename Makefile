@@ -206,3 +206,36 @@ dist:
 	@CGO_ENABLED=1 go build -ldflags "-X main.version=$(shell cat VERSION) -X main.buildDate=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")" -o dist/crescent_maps .
 	@echo "Built dist/crescent_maps"
 	@echo "Note: CPU/GPU renderers can be built with 'make cpu' and 'make gpu'"
+
+# === Runtime package (minimal, ready-to-run distribution) ===
+#
+# Builds a self-contained CPU package for the HOST platform: the orchestrator,
+# the CPU renderer, and data/map_nasa.png laid out so the program runs from the
+# extracted folder with no extra steps. See scripts/package.sh for the layout
+# and rationale. Release CI uses the same script for all platforms.
+#
+#   make package    -> dist/crescent-moon-visibility-<version>-<suffix>.{tar.gz|zip}
+.PHONY: package
+ARCH_RAW := $(shell uname -m)
+ifeq ($(UNAME_S),Darwin)
+  PKG_OS := darwin
+else
+  PKG_OS := linux
+endif
+ifeq ($(ARCH_RAW),x86_64)
+  PKG_ARCH := amd64
+else ifeq ($(ARCH_RAW),aarch64)
+  PKG_ARCH := arm64
+else ifeq ($(ARCH_RAW),arm64)
+  PKG_ARCH := arm64
+else
+  PKG_ARCH := $(ARCH_RAW)
+endif
+PKG_SUFFIX := $(PKG_OS)-$(PKG_ARCH)
+
+package: cpu go
+	@./scripts/package.sh \
+		--version "$(VERSION)" \
+		--suffix "$(PKG_SUFFIX)" \
+		--orchestrator "$(GO_BIN)" \
+		--renderer "$(CPU_BIN)"

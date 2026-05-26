@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Ready-to-run release packages** for Linux x64 (`.tar.gz`) and Windows x64
+  (`.zip`). Each bundles the minimal runtime: the orchestrator (`crescent_maps[.exe]`),
+  the CPU renderer under `bin/visibility[.out|.exe]` (named so `crescent_maps`
+  auto-discovers it), the required `data/map_nasa.png` base map, plus `README.md`,
+  `LICENSE`, and a `QUICKSTART.txt`. Extract and run from the folder — no manual
+  renaming or hunting for the base map. The GPU renderer remains excluded (build
+  locally with `make gpu`). New `scripts/package.sh` is the single source of truth
+  for the package layout, used by both `make package` (host platform) and the
+  tagged release workflow. Raw individual binaries are still attached for advanced use.
+
 ## [0.5.3] - 2026-05-25
 
 ### Fixed
