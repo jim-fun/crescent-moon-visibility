@@ -7,7 +7,8 @@
 #            Apple Silicon (M1+) automatically uses the FP32+DD kernel when
 #            FP64 is unavailable (see gpu/visibility_kernel_fp32.cl).
 #   Linux  — gcc/clang, -lOpenCL (AMD ROCm / NVIDIA CUDA / Intel GPU)
-#   Windows (MinGW-w64) — best-effort local OpenCL only (see README). Never shipped in releases.
+#   Windows (MinGW-w64) — best-effort local OpenCL only (see README "Building the GPU renderer on Windows").
+#                         Never shipped in releases (matches macOS/Linux policy).
 #
 # Usage:
 #   make              # Build everything into bin/ (CPU + GPU + Go)
@@ -147,9 +148,12 @@ test:
 test-accuracy:
 	RUN_ACCURACY_TEST=1 go test -v -run TestRendererAccuracy . -count=1
 
-# Run the ICOP external validation harness (early stage)
+# Run the ICOP external validation harness (PR 2 hardened: instrument-aware + exact renderer moon ages + JSON report)
 validate-icop:
 	go run ./cmd/validate-icop
+
+# Example with machine-readable output for CI / PR4 regression:
+#   go run ./cmd/validate-icop --report=json
 
 # === Release targets ===
 

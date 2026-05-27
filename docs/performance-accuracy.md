@@ -116,7 +116,7 @@ These tests live in `internal/blend/blend_test.go` and `main_test.go`.
 - Port the min-tracking + diamond drawing logic into the OpenCL kernels (or a lightweight post-pass) so first-visibility markers appear on GPU-generated maps.
 - Finish rendering the moon-age value in the legend (now drawn by the pure-Go `internal/blend` package).
 - Expand the automated renderer accuracy test suite with more dates and platforms.
-- Systematic comparison against external datasets (HMNAO predictions, ICOP sighting reports) — still listed as research items in TODO.md.
+- Systematic comparison against external datasets (HMNAO predictions, ICOP sighting reports) — PR 2 delivered hardened `make validate-icop` harness + 12 real Ramadan 1446 records with 100% result on exact renderer (see yallop doc §4.3.1 and data/validation/icop/); full matrices + HMNAO baseline targeted for PR 4.
 - Explore further kernel tuning (e.g., vectorized DD helpers, subgroup operations) if even higher throughput is required.
 
 ## References

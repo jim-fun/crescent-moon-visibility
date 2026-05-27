@@ -304,8 +304,11 @@ int main(int argc, const char **argv)
             result = calculate<true, false>(latitude, longitude, 0.0, time, &details, false);
         }
 
-        printf("date=%s lat=%.4f lon=%.4f criterion=%s category=%c q=%.4f arcv=%.2f w=%.2f\n",
-               argv[1], latitude, longitude, argv[5], result, details.value, details.arcv, details.w_topo);
+        // Emit moon age (hours since previous conjunction at best time) for validation harness alignment diagnostics.
+        // This is the *exact* age used internally for the category/q decision (high fidelity for PR2 ICOP).
+        double moon_age_h = details.moon_age_prev * 24.0;
+        printf("date=%s lat=%.4f lon=%.4f criterion=%s category=%c q=%.4f arcv=%.2f w=%.2f age=%.2f\n",
+               argv[1], latitude, longitude, argv[5], result, details.value, details.arcv, details.w_topo, moon_age_h);
         return 0;
     }
 

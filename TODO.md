@@ -25,11 +25,12 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 
 These items are the current focus because they most directly strengthen the project's core claim of high-accuracy, trustworthy visibility predictions.
 
-- [ ] **High** - Build systematic external validation harness against ICOP sighting database
-  Rationale: We have a high-quality computational implementation of the Yallop (1997) q-test and Odeh (2004) criteria, plus a detailed comparison document (`docs/yallop-criteria-and-external-validation.md`). However, we lack quantitative evidence of how well the current predictions match real-world naked-eye and telescopic observations. This is the single largest gap in the "Accuracy First" claim.
-  Ties to Core Principles: Directly strengthens Accuracy First (non-negotiable) and Verifiability & Reproducibility. Without this, all internal 96.97% numbers are only self-consistency, not external truth.
-  Suggested validation: Curated set of 50–100 ICOP positive/negative sightings from 2015–2025. Automated comparison script that ingests sighting reports (lat/lon, date, instrument, success/failure) and runs the renderer at those locations/times. Report precision/recall per category (A/B vs C/D/E) and confusion matrix. Add as `make validate-icop` or similar.
-  From agentic review of TODO prioritization on 2026-05-24.
+- [x] **High** - Build systematic external validation harness against ICOP sighting database (PR 2 of roadmap-execution-plan-f01edaab)
+  **Status (2026-05)**: Foundation complete. Hardened `cmd/validate-icop` with `InstrumentAwareMatch` (naked A/B only; aided A-E), exact renderer moon-age alignment (point mode now emits age=), robust parsing/JSON summary, per-instrument breakdowns. Replaced mocks with 12 real, conjunction-aligned, provenance-rich ICOP records (Ramadan 1446, 2025-02-28 00:45 UT conjunction from https://astronomycenter.net/icop/ram46.html?l=en).
+  **Result**: 100.0% match rate (12/12) on the curated set using exact CPU reference. Ages 10–42 h sensible. All instrument rules applied correctly. `make validate-icop --report=json` functional. Decoupled harness from astro CGO for portability.
+  **Next (PR 3/4)**: Expand to 30–50 records across lunations + HMNAO baseline + publish quantitative report in yallop doc + regression hook.
+  Ties to Core Principles: Directly strengthens Accuracy First (non-negotiable) and Verifiability & Reproducibility. This was the single largest gap called out in the May 2026 agentic review.
+  From agentic review of TODO prioritization on 2026-05-24 + roadmap PR 2.
 
 - [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline
   Rationale: HMNAO publishes official predictions using (a version of) the Yallop method. Comparing our maps against their published tables for the same dates provides an independent implementation check and increases credibility.

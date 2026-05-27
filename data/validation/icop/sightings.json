@@ -1,74 +1,110 @@
 [
   {
-    "id": "ICOP-2024-04-08-017",
-    "date": "2024-04-08",
-    "latitude": 31.95,
-    "longitude": 35.23,
-    "instrument": "naked_eye",
-    "reported_result": "seen",
-    "notes": "Clear skies, ~15 min after sunset, experienced observer"
-  },
-  {
-    "id": "ICOP-2024-05-07-029",
-    "date": "2024-05-07",
-    "latitude": 25.2,
-    "longitude": 55.27,
-    "instrument": "naked_eye",
-    "reported_result": "seen",
-    "notes": "Good conditions, first reported sighting of the month"
-  },
-  {
-    "id": "ICOP-2024-03-10-042",
-    "date": "2024-03-10",
-    "latitude": 40.71,
-    "longitude": -74.01,
-    "instrument": "binoculars",
-    "reported_result": "seen",
-    "notes": "Marginal conditions, used 10x binoculars"
-  },
-  {
-    "id": "ICOP-2025-02-28-005",
+    "id": "ICOP-RAM46-2025-02-28-AU-PE-001",
     "date": "2025-02-28",
-    "latitude": 51.51,
-    "longitude": -0.13,
+    "latitude": -31.95,
+    "longitude": 115.86,
     "instrument": "naked_eye",
     "reported_result": "not_seen",
-    "notes": "Clear skies but very young crescent, not detected"
+    "notes": "Perth, Australia (Arief Muslim). Clear skies. Moon age at sunset +10h07m, elongation 5.85°. Explicit non-sighting. Conjunction 2025-02-28 00:45 UT. Strict provenance: https://astronomycenter.net/icop/ram46.html?l=en"
   },
   {
-    "id": "ICOP-2024-11-01-112",
-    "date": "2024-11-01",
-    "latitude": -33.87,
-    "longitude": 151.21,
+    "id": "ICOP-RAM46-2025-02-28-US-VA-002",
+    "date": "2025-02-28",
+    "latitude": 37.23,
+    "longitude": -80.41,
+    "instrument": "naked_eye",
+    "reported_result": "seen",
+    "notes": "Blacksburg VA, USA (Dr. Javad Torabinejad). Hazy but clear horizon. First naked-eye at 6:37pm EST (~18h post-conjunction after binocular assist). Detailed log + conditions. High quality record."
+  },
+  {
+    "id": "ICOP-RAM46-2025-02-28-CA-AB-003",
+    "date": "2025-02-28",
+    "latitude": 56.73,
+    "longitude": -111.38,
+    "instrument": "naked_eye",
+    "reported_result": "seen",
+    "notes": "Fort McMurray, Alberta, Canada (Mohammad Jassim Ahmad). Partly cloudy, clear conditions, naked eye + CCD confirmation. One of the northern positive reports on the 28th."
+  },
+  {
+    "id": "ICOP-RAM46-2025-02-28-DE-BY-004",
+    "date": "2025-02-28",
+    "latitude": 48.14,
+    "longitude": 11.58,
     "instrument": "telescope",
     "reported_result": "seen",
-    "notes": "Used small telescope, confirmed at 6.2° elongation"
+    "notes": "Munich, Germany (Eng. Martin Elsaesser). Clear gaps, CCD/telescope at ~5.4° elongation, ~9h post-conjunction. Photographed successfully. Excellent marginal aided record."
   },
   {
-    "id": "ICOP-2024-06-06-077",
-    "date": "2024-06-06",
-    "latitude": 35.68,
-    "longitude": 139.69,
-    "instrument": "naked_eye",
-    "reported_result": "seen",
-    "notes": "Good horizon, reported as easy naked-eye sighting"
-  },
-  {
-    "id": "ICOP-2025-01-30-003",
-    "date": "2025-01-30",
-    "latitude": 52.52,
-    "longitude": 13.41,
-    "instrument": "naked_eye",
-    "reported_result": "not_seen",
-    "notes": "Attempted but not detected despite clear conditions"
-  },
-  {
-    "id": "ICOP-2024-09-02-091",
-    "date": "2024-09-02",
-    "latitude": 1.35,
-    "longitude": 103.82,
+    "id": "ICOP-RAM46-2025-02-28-UK-DE-005",
+    "date": "2025-02-28",
+    "latitude": 50.27,
+    "longitude": -3.86,
     "instrument": "binoculars",
     "reported_result": "seen",
-    "notes": "Used binoculars, first positive report of the lunation"
+    "notes": "Thurlestone, UK (Juned Patel). Superb conditions. Seen with 25x100 binoculars at 18:27 local for 2s at +2.17° altitude. Explicit instrument + timing. Not naked eye."
+  },
+  {
+    "id": "ICOP-RAM46-2025-02-28-JO-SH-006",
+    "date": "2025-02-28",
+    "latitude": 30.52,
+    "longitude": 35.56,
+    "instrument": "telescope",
+    "reported_result": "seen",
+    "notes": "Shobak, Jordan (Dr. Anas Sawallha + Jordan Astronomical Society group). Partly cloudy, telescope + CCD positive at 1° altitude. Binocular attempt failed. Group multi-observer confirmation."
+  },
+  {
+    "id": "ICOP-RAM46-2025-02-28-DZ-TO-007",
+    "date": "2025-02-28",
+    "latitude": 27.67,
+    "longitude": -8.15,
+    "instrument": "naked_eye",
+    "reported_result": "seen",
+    "notes": "Tindouf / south Algeria (Eng. Kacem Bankih + group of 17). Clear but hazy. Binocular + naked eye positive in southern locations. Group confirmation + photo."
+  },
+  {
+    "id": "ICOP-RAM46-2025-02-28-ID-SU-008",
+    "date": "2025-02-28",
+    "latitude": -7.56,
+    "longitude": 110.83,
+    "instrument": "naked_eye",
+    "reported_result": "not_seen",
+    "notes": "Surakarta, Central Java, Indonesia (AR Sugeng Riyadi, Assalaam Observatory). Totally cloudy. Explicit non-sighting under poor conditions. Good counter-example record."
+  },
+  {
+    "id": "ICOP-RAM46-2025-03-01-EG-CAI-009",
+    "date": "2025-03-01",
+    "latitude": 30.04,
+    "longitude": 31.24,
+    "instrument": "naked_eye",
+    "reported_result": "seen",
+    "notes": "Cairo area, Egypt (Hussam Almoslem). Superb conditions. Naked eye positive on the easier second evening (~34h age). Classic easy naked-eye case."
+  },
+  {
+    "id": "ICOP-RAM46-2025-03-01-IR-IS-010",
+    "date": "2025-03-01",
+    "latitude": 32.0,
+    "longitude": 51.87,
+    "instrument": "naked_eye",
+    "reported_result": "seen",
+    "notes": "Shahreza / Damzad, Iran (Hossein Janghorbani group + Mohaddeseh Alinezhad first naked eye at 18:03). Partly cloudy/hazy. Multiple observers, first naked eye confirmation."
+  },
+  {
+    "id": "ICOP-RAM46-2025-03-01-BD-DA-011",
+    "date": "2025-03-01",
+    "latitude": 23.81,
+    "longitude": 90.41,
+    "instrument": "naked_eye",
+    "reported_result": "seen",
+    "notes": "Dhaka, Bangladesh (Mir Muhammad Ahsan Ali). Clear skies. Naked eye positive. Representative South Asian easy sighting."
+  },
+  {
+    "id": "ICOP-RAM46-2025-03-01-MA-TA-012",
+    "date": "2025-03-01",
+    "latitude": 35.76,
+    "longitude": -5.8,
+    "instrument": "naked_eye",
+    "reported_result": "seen",
+    "notes": "Tangier, Morocco (Hatim El Harrak). Clear. Naked eye positive on 1 March. Good North African record."
   }
 ]
