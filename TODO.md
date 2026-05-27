@@ -63,7 +63,7 @@ These items are the current focus because they most directly strengthen the proj
   **Phased approach**:
   - **Phase 1**: On-push CI build workflow (`.github/workflows/build.yml`, formerly `windows-cpu.yml`) — complete. Now a Linux + Windows matrix (MinGW + CGO + renderer + orchestrator + `go test` + verification; OpenMP fallback on Windows).
   - **Phase 2**: Integrate into main release workflow (`release.yml`) — complete (matrix + MinGW setup + static linking attempts + cross-platform tests + artifact globs + Windows-aware binary discovery in main.go).
-  - **Phase 3**: Polish documentation + local build instructions (MinGW/choco) and update README/Makefile — partially done (README + release notes updated; full "Building from source on Windows" section + Makefile notes recommended).
+  - **Phase 3**: Polish documentation + local build instructions (MinGW/choco) and update README/Makefile — **completed** (PR 5: dedicated "Building from source on Windows" subsection + anchor repair + public documentation-maintenance.md process). Light Makefile comments added. See docs/documentation-maintenance.md.
   - **Phase 4** (optional, later): Attempt OpenCL GPU renderer support on Windows.
   Rationale: Windows is a major desktop platform. CPU-only first approach delivers immediate value. Full GPU support deferred.
   Ties to Core Principles: Modularity & Portability, Verifiability & Reproducibility.
@@ -114,7 +114,7 @@ These may be revisited after the High Priority validation work is substantially 
 - ~~Unit Testing~~ — Tests in `main_test.go` covering parseYears, astronomy, caching
 - ~~Documentation~~ — Extensive inline docs + dedicated `docs/performance-accuracy.md` covering the FP32+DD technique, measured results, and visual-sighting validation (2026 update)
 
-**Last Updated:** May 2026 (Major agentic workflow prioritization: Elevated external validation (ICOP + HMNAO) to High Priority. Deprioritized older feature work in favor of strengthening Accuracy First and Verifiability.)
+**Last Updated:** May 2026 (PR 5: Documentation & Architecture Agent process + Windows CPU Phase 3 completed per roadmap-execution-plan-f01edaab.md. External validation work remains High Priority.)
 
 ## How to Contribute
 

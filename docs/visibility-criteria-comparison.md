@@ -111,3 +111,4 @@ This document will be updated as more comparison data and validation results bec
 - [Performance and Accuracy](performance-accuracy.md)
 - [Yallop Criteria and External Validation](yallop-criteria-and-external-validation.md)
 - [TODO.md](../TODO.md) (High Priority: ICOP and HMNAO work)
+- [Documentation & Architecture Maintenance](documentation-maintenance.md) (triggers, checklist, and ongoing sync process)

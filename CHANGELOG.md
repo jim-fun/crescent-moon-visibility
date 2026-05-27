@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Documentation
+- New public `docs/documentation-maintenance.md` defining triggers, full Sync Checklist (with explicit Markdown anchor audit step), and public vs. internal split (per Open Question #3 in the roadmap).
+- Completed Windows CPU Phase 3: Added high-fidelity "Building from source on Windows" subsection in README (exact commands from current CI in build.yml/release.yml). Repaired pre-existing dangling `#building-from-source` anchor.
+- Light updates to Makefile comments, CONTRIBUTING.md, all `docs/*.md` footers, TODO.md, and this changelog.
+- All changes self-enforced the new Sync Checklist (PR 5, roadmap-execution-plan-f01edaab.md).
+
 ### Fixed
 - Release tooling: `scripts/release.sh` (and `make release-rc` / `--beta` / `--alpha`) now correctly handles bumping when `VERSION` is already a prerelease (e.g. `0.5.4-rc.2` → `0.5.4-rc.3`). Previously this would crash with an arithmetic error in `bump_version`. Added regression coverage. (Part of roadmap-execution-plan-f01edaab, PR 1)
 

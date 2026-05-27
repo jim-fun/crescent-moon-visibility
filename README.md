@@ -85,6 +85,56 @@ make cpu && make go
 - **Linux:** GCC ships with OpenMP support; no extra setup needed.
 - **Cross-platform GPU note:** The FP32+DD technique is standard OpenCL C. It brings high-accuracy crescent mapping to any OpenCL device that previously lacked usable double precision. Traditional FP64 OpenCL devices continue to use the original double kernel with zero behavior change.
 
+### Building from source on Windows
+
+Windows x64 (CPU-only) builds use the same MinGW-w64 + CGO toolchain as the on-push and release CI matrices (`.github/workflows/build.yml` and `release.yml`).
+
+**Prerequisites**
+- Chocolatey (for MinGW): https://chocolatey.org/
+- Go 1.22+
+- Git (for clone + optional bash)
+
+**Build steps (PowerShell example, mirroring CI exactly)**
+
+```powershell
+# Install toolchain (admin PowerShell)
+choco install mingw -y
+
+# Session environment (or persist via System Properties)
+$env:Path = "C:\ProgramData\mingw64\mingw64\bin;" + $env:Path
+$env:CC = "gcc"
+$env:CXX = "g++"
+$env:CGO_ENABLED = "1"
+
+# Version (from canonical VERSION file)
+$VERSION = (Get-Content VERSION -Raw -ErrorAction SilentlyContinue).Trim()
+if (-not $VERSION) { $VERSION = "dev" }
+$DATE = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+
+# CPU renderer (OpenMP attempt with exact fallback + defines from CI)
+mkdir -p bin
+g++ -O3 -Wall -Wextra -fno-exceptions `
+  -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
+  -DVERSION_STR="$VERSION" `
+  -o bin/visibility-windows-amd64.exe `
+  -iquote . `
+  cmd/visibility/visibility.cc thirdparty/astronomy.c `
+  -lm -fopenmp 2>&1 || `
+g++ -O3 -Wall -Wextra -fno-exceptions `
+  -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
+  -DVERSION_STR="$VERSION" `
+  -o bin/visibility-windows-amd64.exe `
+  -iquote . `
+  cmd/visibility/visibility.cc thirdparty/astronomy.c `
+  -lm
+# (Note: PowerShell strips outer quotes on -DVERSION_STR before g++ sees it; the C++ side stringizes the value.)
+
+# Go orchestrator (CGO)
+go build -ldflags "-X main.version=$VERSION -X main.buildDate=$DATE" -o crescent_maps-windows-amd64.exe .
+```
+
+Run `./crescent_maps-windows-amd64.exe -version` and `-help`. The resulting `visibility-*.exe` can be placed alongside for orchestrator discovery. GPU renderer on Windows is local-only (future PR per roadmap); use vendor OpenCL SDK headers with MinGW after CPU baseline succeeds. See also [docs/documentation-maintenance.md](docs/documentation-maintenance.md) for the cross-document sync process.
+
 ## Usage
 
 ```bash
@@ -204,7 +254,7 @@ Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on
 
 These are produced by the automated workflow (checksums + Cosign keyless signing).
 
-**macOS users (Intel + Apple Silicon):** Pre-built binaries are no longer provided by CI. Build from source with `make` (best for OpenCL/Metal compatibility on your specific hardware). See [Building from source](#building-from-source) below.
+**macOS users (Intel + Apple Silicon):** Pre-built binaries are no longer provided by CI. Build from source with `make` (best for OpenCL/Metal compatibility on your specific hardware). See the [Setup & Installation](#setup--installation) section (including the dedicated "Building from source on Windows" guidance below) for local build instructions.
 
 **Recommended:**
 - Linux: `crescent_maps-*-linux-amd64`

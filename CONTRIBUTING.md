@@ -13,7 +13,7 @@ Be respectful, inclusive, and constructive. We welcome contributions from people
 1. **Check existing issues** — Look for open issues or discussions before starting new work.
 2. **Fork & branch** — Create a feature branch from `main` (or the current development branch).
 3. **Make focused changes** — One logical change per pull request when possible.
-4. **Update documentation** — If you change behavior, update README.md, TODO.md, or the relevant docs.
+4. **Update documentation** — Documentation changes must follow the triggers and Sync Checklist (including the mandatory Markdown anchor audit) in [docs/documentation-maintenance.md](docs/documentation-maintenance.md). If you change behavior, update README.md, TODO.md, or the relevant docs per that process.
 5. **Test your changes** — At minimum, ensure `make` succeeds and the generated maps look correct for a test date.
 6. **Open a Pull Request** — Describe what you changed and why. Link any related issues.
 

@@ -216,7 +216,7 @@ Use the agentic tooling:
 
 **Document status**: May 2026 — created as part of the project’s ongoing commitment to Accuracy First and transparent external validation.
 
-**Maintained by**: Project maintainers + the crescent-moon-visibility-engineering skill and agentic workflow (especially Validation, Documentation & Architecture, and Judge agents).
+**Maintained by**: Project maintainers + the crescent-moon-visibility-engineering skill and agentic workflow (especially Validation, Documentation & Architecture, and Judge agents). See [docs/documentation-maintenance.md](documentation-maintenance.md) for the public triggers and Sync Checklist.
 
 ---
 

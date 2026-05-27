@@ -128,6 +128,6 @@ These tests live in `internal/blend/blend_test.go` and `main_test.go`.
 
 ---
 
-**Document version**: May 2026 (post Apple Silicon FP32+DD implementation and full documentation refresh).
+**Document status**: May 2026 (post PR 5: Documentation & Architecture Agent process + Windows CPU Phase 3 completion; see docs/documentation-maintenance.md for ongoing sync rules).
 
 For the latest measured numbers on new hardware, re-run the comparison procedure described above or open an issue with your device details.
