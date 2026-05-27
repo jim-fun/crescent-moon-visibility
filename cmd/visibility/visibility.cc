@@ -353,6 +353,11 @@ int main(int argc, const char **argv)
             return 1;
         }
 
+        // Write 8-byte metadata header (little-endian): width (4 bytes) + height (4 bytes)
+        // This allows the Go compositor to load the file without hardcoded dimension probing.
+        uint32_t header[2] = { width, height };
+        fwrite(header, sizeof(uint32_t), 2, f);
+
         // The image array is in RGBA format (bytes are already ABGR, converted to RGBA above)
         // Write each pixel as R, G, B, A (RGBA order for PNG)
         for (unsigned j = 0; j < height; ++j) {

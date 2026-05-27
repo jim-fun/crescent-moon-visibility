@@ -393,7 +393,7 @@ The project includes automated tests for both code correctness and output accura
 - `make test` — Runs the full Go test suite, including unit tests for the blending logic and early-skip visibility counting.
 - `make test-accuracy` (or `RUN_ACCURACY_TEST=1 go test -run TestRendererAccuracy`) — Executes the CPU vs GPU renderer pixel-match regression test. This validates that the FP32+DD OpenCL path maintains ≥96% exact per-pixel agreement with the pure double-precision C++ reference (the key accuracy guarantee for visual sighting predictions).
 - `make validate-icop` (or `go run ./cmd/validate-icop [--report=json]`) — Runs the hardened external validation harness against a curated set of real ICOP observational records (instrument-aware Yallop matching, exact renderer "point" mode + moon-age alignment). Produces per-sighting diagnostics, match rates, breakdowns by naked_eye vs. aided, and optional machine-readable JSON. See [data/validation/icop/README.md](data/validation/icop/README.md) and [docs/yallop-criteria-and-external-validation.md](docs/yallop-criteria-and-external-validation.md) for the dataset, results (100% on the PR 2 12-record Ramadan 1446 foundation set), and methodology. This is the primary source of trustworthy external evidence for Accuracy First.
-- `make validate-icop-ci` + the guarded PR4 targets (`validate-icop-golden-check`, `ICOP_GOLDEN_UPDATE=1 validate-icop-golden-update`) — CI-friendly regression gate with strict Summary comparison against a committed golden file.
+- `make validate-icop-ci` + the guarded PR4 targets (`validate-icop-golden-check`, `ICOP_GOLDEN_UPDATE=1 validate-icop-golden-update`) — CI-friendly regression gate with strict Summary comparison against a committed golden file. The check runs on every Linux build in the matrix (mismatch fails the job). Future: required status via branch protection.
 - `go run ./cmd/validate-icop --baseline=hmnao` — Exercises the PR3 HMNAO/UKHO baseline comparison skeleton (pending real data per Option 3).
 
 See `internal/blend/blend_test.go` and `main_test.go` for the test implementation, and [docs/performance-accuracy.md](docs/performance-accuracy.md) for historical and current accuracy data.
@@ -401,6 +401,7 @@ See `internal/blend/blend_test.go` and `main_test.go` for the test implementatio
 **Consolidated Roadmap PR preparation artifacts** (on branch `roadmap-implementation/f01edaab`):
 - Working PR description draft: `docs/roadmap-implementation-pr-body-draft.md`
 - Ready-to-execute checklist + suggested title/summary: `docs/roadmap-implementation-pr-creation-checklist.md`
+- Final hygiene sweep + PR opening notes package: `docs/roadmap-implementation-closing-package.md`
 
 ## Credits
 

@@ -286,11 +286,17 @@ func main() {
 				}
 				return cat, q, nil
 			})
+			fmt.Printf("%-30s  baseline_lon  our_cat  our_q   q_delta  status\n", "RecordID")
 			for _, d := range deltas {
-				fmt.Printf("%s  baseline_lon=%.2f  our_cat=%s  our_q=%.3f  q_delta=%.3f  status=%s\n",
-					d.RecordID, d.BaselineLonDeg, d.OurCategory, d.OurQ, d.QDelta, d.Status)
+				catDisplay := d.OurCategory
+				if catDisplay == "" {
+					catDisplay = "-"
+				}
+				fmt.Printf("%-30s  %10.2f  %-7s  %6.3f  %7.3f  %s\n",
+					d.RecordID, d.BaselineLonDeg, catDisplay, d.OurQ, d.QDelta, d.Status)
 			}
-			fmt.Println("\n(Real HMNAO table excerpts will be added in future PR3 data population work.)")
+			fmt.Println("\n(Real HMNAO table excerpts will be added in future PR3 data population work per Option 3.)")
+			fmt.Println("Baseline mode is currently for development and comparison only.")
 		}
 	}
 

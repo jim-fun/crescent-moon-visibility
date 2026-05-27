@@ -168,6 +168,9 @@ validate-icop-ci:
 # Golden comparison already supported via --golden (or ICOP_GOLDEN env) + strict
 # Summary equality inside the binary. These thin targets make the workflow
 # explicit and safe for regression protection (no new heavy deps).
+#
+# Long-term goal (future PR4 follow-up): Make `validate-icop-golden-check`
+# a required pre-merge step in CI for the consolidated branch.
 .PHONY: validate-icop-golden-update validate-icop-golden-check
 validate-icop-golden-update:
 	@if [ "$(ICOP_GOLDEN_UPDATE)" != "1" ]; then \

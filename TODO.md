@@ -33,10 +33,14 @@ These items are the current focus because they most directly strengthen the proj
   From agentic review of TODO prioritization on 2026-05-24 + roadmap PR 2.
 
 - [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline (PR 3)
-  **Status**: PR 3 initialization complete (`data/validation/hmnao/` + README skeleton + example placeholder + cross-refs). Full curated excerpts (10–20 lunations), comparison harness extension, and quantitative deltas targeted for the body of PR 3.
+  **Status**: PR 3 initialization complete. Delivered:
+  - `data/validation/hmnao/` directory + harness skeleton
+  - Baseline mode (`--baseline=hmnao` in validate-icop) live and improved
+  - Research sources memo + pending example data
+  Real curated excerpts (10–20 lunations) and quantitative deltas remain deferred per explicit Option 3 decision.
   Rationale: HMNAO publishes official predictions using (a version of) the Yallop method. Comparing our maps against their published tables for the same dates provides an independent implementation check and increases credibility.
   Ties to Core Principles: Strong Verifiability & Reproducibility + Accuracy First. Helps prove our Chebyshev + rise/set + Yallop logic produces equivalent results to the official source.
-  Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables. Document any systematic differences in first-visibility longitude or category boundaries.
+  Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables once real data is available. Document any systematic differences in first-visibility longitude or category boundaries.
   From agentic review of TODO prioritization on 2026-05-24. (PR 3 start per roadmap-execution-plan-f01edaab)
 
 - [x] **High** - Harden validation match logic and align sighting records (delivered in PR 2)
@@ -54,12 +58,13 @@ These items are the current focus because they most directly strengthen the proj
 - [x] **Medium** - Create golden sighting test dataset and regression harness (PR 8 + PR4 foundation)
   **Status (2026-05)**: Initial golden file `data/validation/golden/validate-icop.json` committed (exact 100% Summary from the hardened ICOP 12-record Ramadan 1446 run using CPU reference renderer). `validate-icop-ci` target already supports `ICOP_GOLDEN=...` for strict comparison. Native `--update-golden` support + guarded Makefile targets (`validate-icop-golden-update`, `validate-icop-golden-check`) added in PR4 hardening. 
   Rationale and ties to Core Principles unchanged (Verifiability & Reproducibility + Accuracy First protection).
-  See `docs/roadmap-implementation-pr-body-draft.md` (Ollama-generated + Grok-corrected outline) and the companion `docs/roadmap-implementation-pr-creation-checklist.md` (ready-to-execute steps + suggested final PR title/summary) for consolidated PR preparation. Next: make golden-check a mandatory pre-merge gate in CI, capture additional HMNAO golden baselines once PR3 curation advances.
+  See `docs/roadmap-implementation-pr-body-draft.md` (Ollama-generated + Grok-corrected outline) and the companion `docs/roadmap-implementation-pr-creation-checklist.md` (ready-to-execute steps + suggested final PR title/summary) for consolidated PR preparation. 
+  The golden check now runs on every Linux build in the CI matrix (mismatch fails the job; no soft-fail flag). Next enforcement step (tracked): make the build job (or dedicated golden check) a required status in GitHub branch protection for `main`. Additional HMNAO golden baselines once PR3 curation advances (deferred).
   From agentic review of TODO prioritization on 2026-05-24 + PR8/PR4 work on roadmap-execution-plan-f01edaab.
 
-- [ ] **Medium** - Dynamic grid dimensions (metadata headers) for binary files
-  Rationale: The Go compositor (`internal/blend/blend.go`) currently detects grid resolutions by probing a few hardcoded dimension arrays `{{3600, 2160}, {3840, 2160}, {1440, 720}}`. If the C++ binaries change their resolution macros (e.g. `PIXEL_PER_DEGREE`), the compositor fails to load the binary files.
-  Ties to Core Principles: Improves Code Robustness, Modularity & Portability. By prefixing the raw binary grid output files with 8 bytes of metadata (4-byte width, 4-byte height), we eliminate fragile hardcoded dimension lookups.
+- [x] **Medium** - Dynamic grid dimensions (metadata headers) for binary files
+  **Status (2026-05)**: Implemented. Raw .bin files now start with an 8-byte header (little-endian uint32 width + uint32 height). The Go compositor (`internal/blend/blend.go`) prefers the header when present and falls back to old probing for legacy files. CPU renderer updated to emit the header.
+  Ties to Core Principles: Improves Code Robustness, Modularity & Portability. Hardcoded dimension probing removed for new files.
 
 - [x] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased) — **Phases 1-3 + GPU local-build Phase 4 complete** (PR 5/6 of roadmap)
   **Phased approach**:

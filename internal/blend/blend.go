@@ -11,6 +11,7 @@ package blend
 import (
 	"bytes"
 	_ "embed"
+	"encoding/binary"
 	"fmt"
 	"image"
 	"image/color"
@@ -239,7 +240,23 @@ func loadOverlay(path string) (img image.Image, cleanup func(), err error) {
 		if err != nil {
 			return nil, nil, err
 		}
-		// Try common resolutions used by the project
+
+		// New format: 8-byte header (little-endian uint32 width + uint32 height)
+		if len(data) >= 8 {
+			w := int(binary.LittleEndian.Uint32(data[0:4]))
+			h := int(binary.LittleEndian.Uint32(data[4:8]))
+			payload := data[8:]
+			if len(payload) == w*h*4 && w > 0 && h > 0 {
+				rgba := &image.RGBA{
+					Pix:    payload,
+					Stride: w * 4,
+					Rect:   image.Rect(0, 0, w, h),
+				}
+				return rgba, func() { os.Remove(binPath) }, nil
+			}
+		}
+
+		// Fallback: old format without header — probe known sizes
 		for _, dims := range [][2]int{{3600, 2160}, {3840, 2160}, {1440, 720}} {
 			w, h := dims[0], dims[1]
 			if len(data) == w*h*4 {

@@ -67,7 +67,7 @@ All critical paths were re-verified after each incremental change during executi
 ### Risks & Follow-Ups
 
 * **Deferred Item (HMNAO / PR3)**: The full real curated HMNAO/UKHO data population (10–20 lunations with quantitative deltas) remains deferred per explicit **Option 3** decision. Only the harness skeleton, `--baseline=hmnao` mode, research sources memo, and pending example data have been delivered. Real curation is planned as follow-up work.
-* **Golden as Mandatory Gate (PR4 follow-up)**: The guarded golden targets exist and work, but enforcing `validate-icop-golden-check` as a required pre-merge CI step is not yet in place.
+* **Golden as Mandatory Gate (PR4 follow-up)**: The guarded golden targets (`validate-icop-golden-check` + `validate-icop-golden-update`) are fully implemented and working. The explicit long-term goal (tracked in the roadmap TODOs) is to enforce `validate-icop-golden-check` as a **required** pre-merge gate in CI for this branch. The foundation is complete — enforcement is the documented next step.
 * **Scope Creep**: Local GPU support was strictly scoped as a development tool and is formally deferred from the public release candidate scope.
 
 ---
@@ -90,3 +90,4 @@ All critical paths were re-verified after each incremental change during executi
 See the companion files for opening the PR:
 - [PR Creation Checklist](roadmap-implementation-pr-creation-checklist.md)
 - [Final Hygiene & PR Opening Package](roadmap-implementation-closing-package.md)
+- [GitHub PR Ready Package](roadmap-implementation-github-pr-ready.md) (exact title + body optimized for GitHub)

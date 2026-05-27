@@ -17,7 +17,12 @@ This supports the external validation story (Accuracy First + Verifiability).
 - Only unambiguous tabulated values (no derived interpolations without source).
 
 ## Current Status
-**PR 3 initialization** (roadmap-execution-plan-f01edaab). Directory and skeleton created. Real curated excerpts (10–20 lunations) and comparison harness logic to be added in the body of PR 3.
+**PR 3 initialization complete** (roadmap-execution-plan-f01edaab). 
+- Directory + harness skeleton created.
+- Baseline comparison mode (`go run ./cmd/validate-icop --baseline=hmnao`) is live and improved.
+- Research sources memo + pending example data added.
+
+**Real curated HMNAO/UKHO data population** (10–20 lunations with quantitative deltas) is **explicitly deferred** per the project’s Option 3 decision. It will be addressed in a later phase of PR3. Current work is limited to the comparison harness and source research only.
 
 See `docs/yallop-criteria-and-external-validation.md` §4.3 and the main roadmap plan for targets.
 
