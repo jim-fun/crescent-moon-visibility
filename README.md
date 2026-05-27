@@ -135,6 +135,45 @@ go build -ldflags "-X main.version=$VERSION -X main.buildDate=$DATE" -o crescent
 
 Run `./crescent_maps-windows-amd64.exe -version` and `-help`. The resulting `visibility-*.exe` can be placed alongside for orchestrator discovery. GPU renderer on Windows is local-only (future PR per roadmap); use vendor OpenCL SDK headers with MinGW after CPU baseline succeeds. See also [docs/documentation-maintenance.md](docs/documentation-maintenance.md) for the cross-document sync process.
 
+### Building the GPU renderer on Windows (local builds only — never shipped in releases)
+
+The GPU renderer (`gpu_visibility*.exe`) is **never** included in GitHub Releases or automated packaging for any platform, including Windows. This is the established local-only policy (identical to macOS and Linux). Windows users with real NVIDIA, AMD, or Intel discrete GPUs build it locally after the CPU baseline.
+
+**Prerequisites** (after the CPU steps above)
+- MinGW-w64 already installed via `choco install mingw -y` (see CPU subsection).
+- Vendor OpenCL SDK / headers + ICD library for your GPU (added to compiler search paths).
+
+**NVIDIA (CUDA Toolkit — recommended for NVIDIA hardware)**
+1. Download and install the CUDA Toolkit (e.g., 12.4+) from https://developer.nvidia.com/cuda-downloads (select custom install; OpenCL headers/libs are included).
+2. Typical paths (adjust version):
+   - Headers: `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\include`
+   - Lib: `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\lib\x64`
+3. In the same PowerShell session (or persist):
+   ```powershell
+   $env:CPATH = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\include;$env:CPATH"
+   $env:LIBRARY_PATH = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\lib\x64;$env:LIBRARY_PATH"
+   ```
+4. `make gpu WINDOWS_OPENCL=1` (or the manual g++ equivalent with `-I`/`-L`/`-lOpenCL`).
+
+**AMD**
+- Use the latest AMD drivers (OpenCL ICD included) + AMD OpenCL SDK / APP SDK if headers are needed (download from amd.com or via vendor tools). Paths vary; common under `C:\Program Files\AMD` or driver install locations. Set `CPATH`/`LIBRARY_PATH` or use `pkg-config` if available under MinGW.
+
+**Intel (oneAPI / OpenCL SDK)**
+- Install Intel oneAPI Base Toolkit (or standalone OpenCL SDK) from intel.com. Headers typically under `C:\Program Files (x86)\Intel\oneAPI\...` or similar. Configure paths identically.
+
+**MinGW + CGO notes**
+- Use the 64-bit MinGW-w64 toolchain (`C:\ProgramData\mingw64\mingw64\bin`).
+- After successful `make gpu WINDOWS_OPENCL=1`, a `bin/gpu_visibility*.exe` (or equivalent) will be produced locally.
+- Place it alongside `crescent_maps-windows-amd64.exe` (or in `bin/`). The orchestrator (`getRendererCandidates` in `main.go`) will discover it automatically when you pass `-gpu`.
+
+**Verification (pragmatic fallback when real Windows + discrete GPU hardware is unavailable during development)**
+- Build on your Windows machine (or document exact commands attempted).
+- Run a small test: `./crescent_maps-windows-amd64.exe -start 2027 -end 2027 -months 3 -gpu` (compare output visually or via `TestRendererAccuracy` proxy on primary platform).
+- Re-run the full accuracy regression on the PR author's primary platform as a gate.
+- **Note**: Windows GPU local-build instructions validated via documentation review + Unix-side `make test-accuracy` + `make validate-icop` gate; real-hardware confirmation targeted as follow-up issue (per roadmap-execution-plan-f01edaab.md).
+
+**Policy (repeated for clarity)**: Windows GPU binaries are **never** shipped in releases. Users on real NVIDIA/AMD/Intel Windows hardware build locally using the instructions above. This protects Minimalism, supply-chain security, and operational simplicity.
+
 ## Usage
 
 ```bash

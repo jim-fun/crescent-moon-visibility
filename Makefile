@@ -7,6 +7,7 @@
 #            Apple Silicon (M1+) automatically uses the FP32+DD kernel when
 #            FP64 is unavailable (see gpu/visibility_kernel_fp32.cl).
 #   Linux  — gcc/clang, -lOpenCL (AMD ROCm / NVIDIA CUDA / Intel GPU)
+#   Windows (MinGW-w64) — best-effort local OpenCL only (see README). Never shipped in releases.
 #
 # Usage:
 #   make              # Build everything into bin/ (CPU + GPU + Go)
@@ -85,6 +86,21 @@ else
       GPU_LDFLAGS += -L/usr/lib/x86_64-linux-gnu -lOpenCL
     endif
   endif
+endif
+
+# Windows (MinGW-w64) best-effort OpenCL support — local builds ONLY.
+# Never built or shipped by CI/release.yml (GitHub Windows runners have no GPUs;
+# matches macOS/Linux "local-only" GPU policy). Requires vendor SDK headers/libs
+# visible to MinGW gcc (see README "Building the GPU renderer on Windows").
+ifeq ($(OS),Windows_NT)
+ifeq ($(WINDOWS_OPENCL),1)
+  GPU_SUPPORTED := yes
+  GPU_LDFLAGS += -lOpenCL
+  $(info [Windows] WINDOWS_OPENCL=1: best-effort GPU renderer enabled (local only))
+else
+  GPU_SUPPORTED := no
+  $(warning [Windows] GPU renderer skipped. For local OpenCL builds: choco install mingw, install vendor SDK (NVIDIA/AMD/Intel), then 'make gpu WINDOWS_OPENCL=1'. Full instructions in README.)
+endif
 endif
 
 .PHONY: all cpu gpu go clean test

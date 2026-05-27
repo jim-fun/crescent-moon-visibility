@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Documentation
+- Windows GPU (OpenCL) Phase 4: best-effort guarded Makefile support (`WINDOWS_OPENCL=1`) + comprehensive per-vendor local-build instructions (NVIDIA CUDA Toolkit, AMD, Intel oneAPI) in README. Explicit "local only, never released" policy restated in README, release.yml, docs, TODO, and Makefile. Pragmatic hardware verification fallback documented and followed (Unix-side `make test-accuracy` + `make validate-icop` gate during development). All changes executed the PR5 Documentation & Architecture process (PR 6, roadmap-execution-plan-f01edaab.md).
+
+### Documentation
 - New public `docs/documentation-maintenance.md` defining triggers, full Sync Checklist (with explicit Markdown anchor audit step), and public vs. internal split (per Open Question #3 in the roadmap).
 - Completed Windows CPU Phase 3: Added high-fidelity "Building from source on Windows" subsection in README (exact commands from current CI in build.yml/release.yml). Repaired pre-existing dangling `#building-from-source` anchor.
 - Light updates to Makefile comments, CONTRIBUTING.md, all `docs/*.md` footers, TODO.md, and this changelog.
