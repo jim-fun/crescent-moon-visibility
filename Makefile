@@ -161,6 +161,8 @@ release-major:
 
 release-rc:
 	@./scripts/release.sh patch --rc
+	# Note: PR 1 from roadmap-execution-plan-f01edaab hardened the prerelease
+	# bumping logic so this now works correctly even when VERSION is already e.g. 0.5.4-rc.2.
 
 release-beta:
 	@./scripts/release.sh patch --beta

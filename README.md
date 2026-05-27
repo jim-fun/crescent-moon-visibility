@@ -252,6 +252,7 @@ make release-major          # Major release
 # Pre-releases
 make release-rc             # Next release candidate (0.2.0 → 0.2.1-rc.1)
 make release-beta           # Beta release
+# (PR 1 from the roadmap hardened bumping so these work reliably even from an existing -rc.N)
 ```
 
 For full control (including custom pre-release versions):

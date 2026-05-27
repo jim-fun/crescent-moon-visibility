@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Release tooling: `scripts/release.sh` (and `make release-rc` / `--beta` / `--alpha`) now correctly handles bumping when `VERSION` is already a prerelease (e.g. `0.5.4-rc.2` → `0.5.4-rc.3`). Previously this would crash with an arithmetic error in `bump_version`. Added regression coverage. (Part of roadmap-execution-plan-f01edaab, PR 1)
+
 ## [0.5.3] - 2026-05-25
 
 ### Fixed
