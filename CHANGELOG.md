@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Accuracy & Validation
+- PR 3 initialization: `data/validation/hmnao/` skeleton + README (HMNAO/UKHO baseline comparison data). Full curated excerpts, harness extension, and deltas targeted for PR 3 body (see roadmap-execution-plan-f01edaab and yallop doc).
+
 ### Accuracy & Validation (PR 2 of roadmap-execution-plan-f01edaab — highest Accuracy First priority)
 - **ICOP external validation harness hardened** (`cmd/validate-icop`, `internal/validation/icop/compute.go`): Full `InstrumentAwareMatch` (naked-eye seen → A/B only; aided → A-E; documented rules matching Yallop category meanings). Exact moon-age alignment via renderer point mode (now emits `age=` for fidelity). Robust parsing, scored-only denominators, per-instrument breakdowns, richer `Summary` + `--report=json`. `make validate-icop` now produces trustworthy evidence.
 - Replaced 8 unaligned mock records with **12 real, high-quality, conjunction-aligned ICOP sightings** (Ramadan 1446, 2025-02-28 00:45 UT conjunction, strict provenance from public https://astronomycenter.net/icop/ram46.html?l=en reports). Mix of instruments/outcomes/ages/latitudes.
@@ -15,8 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentation
 - Windows GPU (OpenCL) Phase 4: best-effort guarded Makefile support (`WINDOWS_OPENCL=1`) + comprehensive per-vendor local-build instructions (NVIDIA CUDA Toolkit, AMD, Intel oneAPI) in README. Explicit "local only, never released" policy restated in README, release.yml, docs, TODO, and Makefile. Pragmatic hardware verification fallback documented and followed (Unix-side `make test-accuracy` + `make validate-icop` gate during development). All changes executed the PR5 Documentation & Architecture process (PR 6, roadmap-execution-plan-f01edaab.md).
-
-### Documentation
 - New public `docs/documentation-maintenance.md` defining triggers, full Sync Checklist (with explicit Markdown anchor audit step), and public vs. internal split (per Open Question #3 in the roadmap).
 - Completed Windows CPU Phase 3: Added high-fidelity "Building from source on Windows" subsection in README (exact commands from current CI in build.yml/release.yml). Repaired pre-existing dangling `#building-from-source` anchor.
 - Light updates to Makefile comments, CONTRIBUTING.md, all `docs/*.md` footers, TODO.md, and this changelog.

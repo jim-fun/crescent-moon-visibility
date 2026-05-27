@@ -220,7 +220,7 @@ These limitations are **by design** — the tool produces the pure geometric/emp
 
 ## 8. Recommended Next Steps (Tied to Agentic Workflow)
 
-1. Systematic ICOP / HMNAO comparison study (High priority in current TODO).
+1. Systematic ICOP / HMNAO comparison study (PR 2 delivered ICOP foundation + 100% result; PR 3 initialization complete with `data/validation/hmnao/` skeleton — full baseline + deltas in body of PR 3).
 2. Port remaining diamond + legend features to the GPU path (Validation + Judge review required).
 3. Consider adding a “Yallop vs Odeh vs Schaefer-lite” mode or diagnostic table output for researchers.
 4. Any future coefficient tweak or new criterion must go through the full Improvement → Validation (accuracy regression) → Security → **Judge** process with explicit Accuracy First scorecard.

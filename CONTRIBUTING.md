@@ -54,7 +54,7 @@ The core pipeline is now pure Go + CGO (the final Python component was removed i
 
 ## Releases
 
-Releases are automated via GitHub Actions on `v*` tags. See the [Release Process](#release-process) section in the README.
+Releases are automated via GitHub Actions on `v*` tags. See the [Release Process](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#release-process) section in the README.
 
 ## Adding New Features or Fixing Bugs
 

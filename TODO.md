@@ -32,15 +32,16 @@ These items are the current focus because they most directly strengthen the proj
   Ties to Core Principles: Directly strengthens Accuracy First (non-negotiable) and Verifiability & Reproducibility. This was the single largest gap called out in the May 2026 agentic review.
   From agentic review of TODO prioritization on 2026-05-24 + roadmap PR 2.
 
-- [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline
+- [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline (PR 3)
+  **Status**: PR 3 initialization complete (`data/validation/hmnao/` + README skeleton + example placeholder + cross-refs). Full curated excerpts (10–20 lunations), comparison harness extension, and quantitative deltas targeted for the body of PR 3.
   Rationale: HMNAO publishes official predictions using (a version of) the Yallop method. Comparing our maps against their published tables for the same dates provides an independent implementation check and increases credibility.
   Ties to Core Principles: Strong Verifiability & Reproducibility + Accuracy First. Helps prove our Chebyshev + rise/set + Yallop logic produces equivalent results to the official source.
   Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables. Document any systematic differences in first-visibility longitude or category boundaries.
-  From agentic review of TODO prioritization on 2026-05-24.
+  From agentic review of TODO prioritization on 2026-05-24. (PR 3 start per roadmap-execution-plan-f01edaab)
 
-- [ ] **High** - Harden validation match logic and align sighting records
-  Rationale: In `cmd/validate-icop/main.go`, category `C` ("May need optical aid") and `D` ("Will need optical aid") are ignored by the validation match algorithm. Additionally, the dates/locations in the current `sightings.json` represent test/mock sightings that do not align with the actual astronomical conjunction times (producing a 0% match rate).
-  Ties to Core Principles: Directly improves Verifiability & Reproducibility + Accuracy First. Ensuring the test harness uses real-world observational database records and correctly handles instrument type for marginal categories (`C`, `D`, `E`) is essential to generate true quantitative validation results.
+- [x] **High** - Harden validation match logic and align sighting records (delivered in PR 2)
+  **Status**: Complete (roadmap PR 2). `InstrumentAwareMatch` implemented and wired (naked A/B only; aided A-E). 12 real conjunction-aligned ICOP records replaced mocks. Harness now 100% on exact renderer (see CHANGELOG and data/validation/icop/README.md). The original 0% problem is resolved.
+  Ties to Core Principles: Directly improves Verifiability & Reproducibility + Accuracy First.
 
 ## Medium Priority (Supporting Accuracy + Performance)
 
@@ -60,7 +61,7 @@ These items are the current focus because they most directly strengthen the proj
   Rationale: The Go compositor (`internal/blend/blend.go`) currently detects grid resolutions by probing a few hardcoded dimension arrays `{{3600, 2160}, {3840, 2160}, {1440, 720}}`. If the C++ binaries change their resolution macros (e.g. `PIXEL_PER_DEGREE`), the compositor fails to load the binary files.
   Ties to Core Principles: Improves Code Robustness, Modularity & Portability. By prefixing the raw binary grid output files with 8 bytes of metadata (4-byte width, 4-byte height), we eliminate fragile hardcoded dimension lookups.
 
-- [x] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased) — **Phases 1 & 2 complete; Phase 3 in progress**
+- [x] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased) — **Phases 1-3 + GPU local-build Phase 4 complete** (PR 5/6 of roadmap)
   **Phased approach**:
   - **Phase 1**: On-push CI build workflow (`.github/workflows/build.yml`, formerly `windows-cpu.yml`) — complete. Now a Linux + Windows matrix (MinGW + CGO + renderer + orchestrator + `go test` + verification; OpenMP fallback on Windows).
   - **Phase 2**: Integrate into main release workflow (`release.yml`) — complete (matrix + MinGW setup + static linking attempts + cross-platform tests + artifact globs + Windows-aware binary discovery in main.go).

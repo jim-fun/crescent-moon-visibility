@@ -1,0 +1,10 @@
+[
+  {
+    "id": "HMNAO-EXAMPLE-2025-03-01",
+    "date": "2025-03-01",
+    "source": "HMNAO/UKHO published table or almanac (TBD - replace with exact citation during PR 3 curation)",
+    "predicted_first_visibility_longitude": "TBD (e.g. ~ -10° or specific tabulated value)",
+    "notes": "ILLUSTRATIVE PLACEHOLDER ONLY. Real HMNAO excerpt + our computed equivalent (from renderer or astro helpers) + delta analysis will be added in the body of PR 3. See roadmap PR 3 and yallop-criteria doc.",
+    "project_computed_equivalent": "TBD"
+  }
+]
