@@ -304,8 +304,11 @@ int main(int argc, const char **argv)
             result = calculate<true, false>(latitude, longitude, 0.0, time, &details, false);
         }
 
-        printf("date=%s lat=%.4f lon=%.4f criterion=%s category=%c q=%.4f arcv=%.2f w=%.2f\n",
-               argv[1], latitude, longitude, argv[5], result, details.value, details.arcv, details.w_topo);
+        // Emit moon age (hours since previous conjunction at best time) for validation harness alignment diagnostics.
+        // This is the *exact* age used internally for the category/q decision (high fidelity for PR2 ICOP).
+        double moon_age_h = details.moon_age_prev * 24.0;
+        printf("date=%s lat=%.4f lon=%.4f criterion=%s category=%c q=%.4f arcv=%.2f w=%.2f age=%.2f\n",
+               argv[1], latitude, longitude, argv[5], result, details.value, details.arcv, details.w_topo, moon_age_h);
         return 0;
     }
 
@@ -349,6 +352,11 @@ int main(int argc, const char **argv)
             fprintf(stderr, "Cannot open %s\n", bin_file);
             return 1;
         }
+
+        // Write 8-byte metadata header (little-endian): width (4 bytes) + height (4 bytes)
+        // This allows the Go compositor to load the file without hardcoded dimension probing.
+        uint32_t header[2] = { width, height };
+        fwrite(header, sizeof(uint32_t), 2, f);
 
         // The image array is in RGBA format (bytes are already ABGR, converted to RGBA above)
         // Write each pixel as R, G, B, A (RGBA order for PNG)

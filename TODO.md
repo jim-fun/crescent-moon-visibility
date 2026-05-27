@@ -25,21 +25,27 @@ This document tracks planned enhancements and features for the Crescent Moon Vis
 
 These items are the current focus because they most directly strengthen the project's core claim of high-accuracy, trustworthy visibility predictions.
 
-- [ ] **High** - Build systematic external validation harness against ICOP sighting database
-  Rationale: We have a high-quality computational implementation of the Yallop (1997) q-test and Odeh (2004) criteria, plus a detailed comparison document (`docs/yallop-criteria-and-external-validation.md`). However, we lack quantitative evidence of how well the current predictions match real-world naked-eye and telescopic observations. This is the single largest gap in the "Accuracy First" claim.
-  Ties to Core Principles: Directly strengthens Accuracy First (non-negotiable) and Verifiability & Reproducibility. Without this, all internal 96.97% numbers are only self-consistency, not external truth.
-  Suggested validation: Curated set of 50–100 ICOP positive/negative sightings from 2015–2025. Automated comparison script that ingests sighting reports (lat/lon, date, instrument, success/failure) and runs the renderer at those locations/times. Report precision/recall per category (A/B vs C/D/E) and confusion matrix. Add as `make validate-icop` or similar.
-  From agentic review of TODO prioritization on 2026-05-24.
+- [x] **High** - Build systematic external validation harness against ICOP sighting database (PR 2 of roadmap-execution-plan-f01edaab)
+  **Status (2026-05)**: Foundation complete. Hardened `cmd/validate-icop` with `InstrumentAwareMatch` (naked A/B only; aided A-E), exact renderer moon-age alignment (point mode now emits age=), robust parsing/JSON summary, per-instrument breakdowns. Replaced mocks with 12 real, conjunction-aligned, provenance-rich ICOP records (Ramadan 1446, 2025-02-28 00:45 UT conjunction from https://astronomycenter.net/icop/ram46.html?l=en).
+  **Result**: 100.0% match rate (12/12) on the curated set using exact CPU reference. Ages 10–42 h sensible. All instrument rules applied correctly. `make validate-icop --report=json` functional. Decoupled harness from astro CGO for portability.
+  **Next (PR 3/4)**: Expand to 30–50 records across lunations + HMNAO baseline + publish quantitative report in yallop doc + regression hook.
+  Ties to Core Principles: Directly strengthens Accuracy First (non-negotiable) and Verifiability & Reproducibility. This was the single largest gap called out in the May 2026 agentic review.
+  From agentic review of TODO prioritization on 2026-05-24 + roadmap PR 2.
 
-- [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline
+- [ ] **High** - Add HMNAO / UKHO lunar crescent visibility predictions as a comparison baseline (PR 3)
+  **Status**: PR 3 initialization complete. Delivered:
+  - `data/validation/hmnao/` directory + harness skeleton
+  - Baseline mode (`--baseline=hmnao` in validate-icop) live and improved
+  - Research sources memo + pending example data
+  Real curated excerpts (10–20 lunations) and quantitative deltas remain deferred per explicit Option 3 decision.
   Rationale: HMNAO publishes official predictions using (a version of) the Yallop method. Comparing our maps against their published tables for the same dates provides an independent implementation check and increases credibility.
   Ties to Core Principles: Strong Verifiability & Reproducibility + Accuracy First. Helps prove our Chebyshev + rise/set + Yallop logic produces equivalent results to the official source.
-  Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables. Document any systematic differences in first-visibility longitude or category boundaries.
-  From agentic review of TODO prioritization on 2026-05-24.
+  Suggested validation: Manually or semi-automatically compare 10–20 dates against published HMNAO visibility tables once real data is available. Document any systematic differences in first-visibility longitude or category boundaries.
+  From agentic review of TODO prioritization on 2026-05-24. (PR 3 start per roadmap-execution-plan-f01edaab)
 
-- [ ] **High** - Harden validation match logic and align sighting records
-  Rationale: In `cmd/validate-icop/main.go`, category `C` ("May need optical aid") and `D` ("Will need optical aid") are ignored by the validation match algorithm. Additionally, the dates/locations in the current `sightings.json` represent test/mock sightings that do not align with the actual astronomical conjunction times (producing a 0% match rate).
-  Ties to Core Principles: Directly improves Verifiability & Reproducibility + Accuracy First. Ensuring the test harness uses real-world observational database records and correctly handles instrument type for marginal categories (`C`, `D`, `E`) is essential to generate true quantitative validation results.
+- [x] **High** - Harden validation match logic and align sighting records (delivered in PR 2)
+  **Status**: Complete (roadmap PR 2). `InstrumentAwareMatch` implemented and wired (naked A/B only; aided A-E). 12 real conjunction-aligned ICOP records replaced mocks. Harness now 100% on exact renderer (see CHANGELOG and data/validation/icop/README.md). The original 0% problem is resolved.
+  Ties to Core Principles: Directly improves Verifiability & Reproducibility + Accuracy First.
 
 ## Medium Priority (Supporting Accuracy + Performance)
 
@@ -49,22 +55,23 @@ These items are the current focus because they most directly strengthen the proj
   Suggested validation: New `TestRendererAccuracy` variant that also exercises the new criterion. Ensure CPU/GPU match remains ≥96% for the new path.
   From agentic review of TODO prioritization on 2026-05-24.
 
-- [ ] **Medium** - Create golden sighting test dataset and regression harness
-  Rationale: As we add new criteria or modeling improvements, we need reproducible test cases that protect the accuracy bar.
-  Ties to Core Principles: Excellent for Verifiability & Reproducibility and long-term protection of Accuracy First.
-  Suggested validation: 20–30 high-quality ICOP or published sightings stored as JSON/CSV. Simple Go test or script that runs the renderer and asserts category or first-visibility time is within tolerance.
-  From agentic review of TODO prioritization on 2026-05-24.
+- [x] **Medium** - Create golden sighting test dataset and regression harness (PR 8 + PR4 foundation)
+  **Status (2026-05)**: Initial golden file `data/validation/golden/validate-icop.json` committed (exact 100% Summary from the hardened ICOP 12-record Ramadan 1446 run using CPU reference renderer). `validate-icop-ci` target already supports `ICOP_GOLDEN=...` for strict comparison. Native `--update-golden` support + guarded Makefile targets (`validate-icop-golden-update`, `validate-icop-golden-check`) added in PR4 hardening. 
+  Rationale and ties to Core Principles unchanged (Verifiability & Reproducibility + Accuracy First protection).
+  See `docs/roadmap-implementation-pr-body-draft.md` (Ollama-generated + Grok-corrected outline) and the companion `docs/roadmap-implementation-pr-creation-checklist.md` (ready-to-execute steps + suggested final PR title/summary) for consolidated PR preparation. 
+  The golden check now runs on every Linux build in the CI matrix (mismatch fails the job; no soft-fail flag). Next enforcement step (tracked): make the build job (or dedicated golden check) a required status in GitHub branch protection for `main`. Additional HMNAO golden baselines once PR3 curation advances (deferred).
+  From agentic review of TODO prioritization on 2026-05-24 + PR8/PR4 work on roadmap-execution-plan-f01edaab.
 
-- [ ] **Medium** - Dynamic grid dimensions (metadata headers) for binary files
-  Rationale: The Go compositor (`internal/blend/blend.go`) currently detects grid resolutions by probing a few hardcoded dimension arrays `{{3600, 2160}, {3840, 2160}, {1440, 720}}`. If the C++ binaries change their resolution macros (e.g. `PIXEL_PER_DEGREE`), the compositor fails to load the binary files.
-  Ties to Core Principles: Improves Code Robustness, Modularity & Portability. By prefixing the raw binary grid output files with 8 bytes of metadata (4-byte width, 4-byte height), we eliminate fragile hardcoded dimension lookups.
+- [x] **Medium** - Dynamic grid dimensions (metadata headers) for binary files
+  **Status (2026-05)**: Implemented. Raw .bin files now start with an 8-byte header (little-endian uint32 width + uint32 height). The Go compositor (`internal/blend/blend.go`) prefers the header when present and falls back to old probing for legacy files. CPU renderer updated to emit the header.
+  Ties to Core Principles: Improves Code Robustness, Modularity & Portability. Hardcoded dimension probing removed for new files.
 
-- [x] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased) — **Phases 1 & 2 complete; Phase 3 in progress**
+- [x] **Medium** - Add Windows x64 (CPU-only) release artifacts (phased) — **Phases 1-3 + GPU local-build Phase 4 complete** (PR 5/6 of roadmap)
   **Phased approach**:
   - **Phase 1**: On-push CI build workflow (`.github/workflows/build.yml`, formerly `windows-cpu.yml`) — complete. Now a Linux + Windows matrix (MinGW + CGO + renderer + orchestrator + `go test` + verification; OpenMP fallback on Windows).
   - **Phase 2**: Integrate into main release workflow (`release.yml`) — complete (matrix + MinGW setup + static linking attempts + cross-platform tests + artifact globs + Windows-aware binary discovery in main.go).
-  - **Phase 3**: Polish documentation + local build instructions (MinGW/choco) and update README/Makefile — partially done (README + release notes updated; full "Building from source on Windows" section + Makefile notes recommended).
-  - **Phase 4** (optional, later): Attempt OpenCL GPU renderer support on Windows.
+  - **Phase 3**: Polish documentation + local build instructions (MinGW/choco) and update README/Makefile — **completed** (PR 5: dedicated "Building from source on Windows" subsection + anchor repair + public documentation-maintenance.md process). Light Makefile comments added. See docs/documentation-maintenance.md.
+  - **Phase 4** (optional, later): Attempt OpenCL GPU renderer support on Windows. **Status update (PR 6)**: Best-effort guarded Makefile support + comprehensive local-build documentation delivered. Strict "local only, never released" policy now explicit everywhere. Real-hardware verification on Windows + discrete GPU noted as follow-up (pragmatic Unix proxy used during development per roadmap). See README "Building the GPU renderer on Windows" and docs/documentation-maintenance.md.
   Rationale: Windows is a major desktop platform. CPU-only first approach delivers immediate value. Full GPU support deferred.
   Ties to Core Principles: Modularity & Portability, Verifiability & Reproducibility.
   Status (post full agentic review + remediation 2026-05-25): Core functionality + release integration + runtime portability in orchestrator complete. Re-Judge gave "Go with Conditions" — conditions addressed. Standalone CI + release support ready for v0.5.2.
@@ -114,7 +121,7 @@ These may be revisited after the High Priority validation work is substantially 
 - ~~Unit Testing~~ — Tests in `main_test.go` covering parseYears, astronomy, caching
 - ~~Documentation~~ — Extensive inline docs + dedicated `docs/performance-accuracy.md` covering the FP32+DD technique, measured results, and visual-sighting validation (2026 update)
 
-**Last Updated:** May 2026 (Major agentic workflow prioritization: Elevated external validation (ICOP + HMNAO) to High Priority. Deprioritized older feature work in favor of strengthening Accuracy First and Verifiability.)
+**Last Updated:** May 2026 (PR 5: Documentation & Architecture Agent process + Windows CPU Phase 3 completed per roadmap-execution-plan-f01edaab.md. External validation work remains High Priority.)
 
 ## How to Contribute
 

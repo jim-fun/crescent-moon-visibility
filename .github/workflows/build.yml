@@ -125,3 +125,22 @@ jobs:
             exit 1
           fi
           echo "${{ matrix.suffix }} CPU build completed successfully"
+
+      # PR4 Golden Regression Check
+      # This runs the committed golden baseline comparison.
+      # Per the roadmap TODO, this is intended to become a required pre-merge gate.
+      - name: Golden regression check (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: make validate-icop-golden-check ICOP_MIN_MATCH_RATE=100
+
+# PR4 Golden Regression Check (executes on Linux in matrix)
+# The step runs `make validate-icop-golden-check` (strict 100% Summary match via
+# reflect.DeepEqual against the committed golden). Because there is no
+# `continue-on-error` on the step, a mismatch causes the Linux build job to fail.
+# This provides real regression protection on every PR/push targeting main.
+#
+# Future (tracked in TODO + prep docs): Add the Linux build job (or a dedicated
+# golden job) as a required status check in GitHub branch protection for `main`.
+# Consider extending a similar (non-CGO) golden path for the Windows leg when
+# practical. See docs/roadmap-implementation-github-pr-ready.md for status.

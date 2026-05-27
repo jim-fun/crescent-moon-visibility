@@ -21,7 +21,11 @@ Entries in this dataset must meet **all** of the following:
 
 ## Current Size
 
-This initial seed contains 8 sightings. Future increments may grow this to 30–50 entries.
+This PR 2 foundation set contains **12 real, high-quality, conjunction-aligned ICOP records** (Feb 28 + Mar 1 2025 Ramadan 1446 lunation, new moon 2025-02-28 00:45 UT).
+
+All entries drawn from public reports on https://astronomycenter.net/icop/ram46.html?l=en with explicit observer, location, sky conditions, instrument, and outcome. Mix: 9 naked_eye + 3 aided (binoculars/telescope); 9 "seen" + 3 "not_seen"; young marginal (10–24 h) + easier (36–42 h) cases.
+
+Future increments (PR 3/4) may grow this to 30–50 entries across multiple lunations.
 
 ## Format
 
@@ -43,7 +47,20 @@ go run ./cmd/validate-icop
 
 ## Provenance
 
-All data originates from public ICOP reports (https://www.icoproject.org). Only a tiny curated subset is included here for reproducibility.
+All data originates from public ICOP reports at https://astronomycenter.net/icop/ram46.html?l=en (Ramadan 1446, conjunction 2025-02-28 00:45 UT). Only a tiny curated subset meeting the strict criteria is included here for reproducibility and regression.
+
+## PR 2 Validation Harness Results (on this dataset)
+
+Run via `make validate-icop` (exact CPU renderer "point" mode + InstrumentAwareMatch):
+
+- **100.0% match rate** (12/12)
+- naked_eye: 100% (9/9)
+- aided: 100% (3/3)
+- Mean moon age (exact, renderer best-time): 24.4 h
+
+One marginal naked-eye "seen" on predicted B (Algeria south) correctly accepted. Three difficult young aided sightings on D correctly accepted. Non-sightings on F correctly accepted.
+
+This demonstrates the hardened harness + real aligned data now produces trustworthy external evidence (Accuracy First). See docs/yallop-criteria-and-external-validation.md for full analysis (PR 4).
 
 ## License / Attribution
 

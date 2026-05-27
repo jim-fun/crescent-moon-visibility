@@ -85,6 +85,95 @@ make cpu && make go
 - **Linux:** GCC ships with OpenMP support; no extra setup needed.
 - **Cross-platform GPU note:** The FP32+DD technique is standard OpenCL C. It brings high-accuracy crescent mapping to any OpenCL device that previously lacked usable double precision. Traditional FP64 OpenCL devices continue to use the original double kernel with zero behavior change.
 
+### Building from source on Windows
+
+Windows x64 (CPU-only) builds use the same MinGW-w64 + CGO toolchain as the on-push and release CI matrices (`.github/workflows/build.yml` and `release.yml`).
+
+**Prerequisites**
+- Chocolatey (for MinGW): https://chocolatey.org/
+- Go 1.22+
+- Git (for clone + optional bash)
+
+**Build steps (PowerShell example, mirroring CI exactly)**
+
+```powershell
+# Install toolchain (admin PowerShell)
+choco install mingw -y
+
+# Session environment (or persist via System Properties)
+$env:Path = "C:\ProgramData\mingw64\mingw64\bin;" + $env:Path
+$env:CC = "gcc"
+$env:CXX = "g++"
+$env:CGO_ENABLED = "1"
+
+# Version (from canonical VERSION file)
+$VERSION = (Get-Content VERSION -Raw -ErrorAction SilentlyContinue).Trim()
+if (-not $VERSION) { $VERSION = "dev" }
+$DATE = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+
+# CPU renderer (OpenMP attempt with exact fallback + defines from CI)
+mkdir -p bin
+g++ -O3 -Wall -Wextra -fno-exceptions `
+  -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
+  -DVERSION_STR="$VERSION" `
+  -o bin/visibility-windows-amd64.exe `
+  -iquote . `
+  cmd/visibility/visibility.cc thirdparty/astronomy.c `
+  -lm -fopenmp 2>&1 || `
+g++ -O3 -Wall -Wextra -fno-exceptions `
+  -DPIXEL_PER_DEGREE_LON=10 -DPIXEL_PER_DEGREE_LAT=12 `
+  -DVERSION_STR="$VERSION" `
+  -o bin/visibility-windows-amd64.exe `
+  -iquote . `
+  cmd/visibility/visibility.cc thirdparty/astronomy.c `
+  -lm
+# (Note: PowerShell strips outer quotes on -DVERSION_STR before g++ sees it; the C++ side stringizes the value.)
+
+# Go orchestrator (CGO)
+go build -ldflags "-X main.version=$VERSION -X main.buildDate=$DATE" -o crescent_maps-windows-amd64.exe .
+```
+
+Run `./crescent_maps-windows-amd64.exe -version` and `-help`. The resulting `visibility-*.exe` can be placed alongside for orchestrator discovery. GPU renderer on Windows is local-only (future PR per roadmap); use vendor OpenCL SDK headers with MinGW after CPU baseline succeeds. See also [docs/documentation-maintenance.md](docs/documentation-maintenance.md) for the cross-document sync process.
+
+### Building the GPU renderer on Windows (local builds only — never shipped in releases)
+
+The GPU renderer (`gpu_visibility*.exe`) is **never** included in GitHub Releases or automated packaging for any platform, including Windows. This is the established local-only policy (identical to macOS and Linux). Windows users with real NVIDIA, AMD, or Intel discrete GPUs build it locally after the CPU baseline.
+
+**Prerequisites** (after the CPU steps above)
+- MinGW-w64 already installed via `choco install mingw -y` (see CPU subsection).
+- Vendor OpenCL SDK / headers + ICD library for your GPU (added to compiler search paths).
+
+**NVIDIA (CUDA Toolkit — recommended for NVIDIA hardware)**
+1. Download and install the CUDA Toolkit (e.g., 12.4+) from https://developer.nvidia.com/cuda-downloads (select custom install; OpenCL headers/libs are included).
+2. Typical paths (adjust version):
+   - Headers: `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\include`
+   - Lib: `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\lib\x64`
+3. In the same PowerShell session (or persist):
+   ```powershell
+   $env:CPATH = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\include;$env:CPATH"
+   $env:LIBRARY_PATH = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.5\lib\x64;$env:LIBRARY_PATH"
+   ```
+4. `make gpu WINDOWS_OPENCL=1` (or the manual g++ equivalent with `-I`/`-L`/`-lOpenCL`).
+
+**AMD**
+- Use the latest AMD drivers (OpenCL ICD included) + AMD OpenCL SDK / APP SDK if headers are needed (download from amd.com or via vendor tools). Paths vary; common under `C:\Program Files\AMD` or driver install locations. Set `CPATH`/`LIBRARY_PATH` or use `pkg-config` if available under MinGW.
+
+**Intel (oneAPI / OpenCL SDK)**
+- Install Intel oneAPI Base Toolkit (or standalone OpenCL SDK) from intel.com. Headers typically under `C:\Program Files (x86)\Intel\oneAPI\...` or similar. Configure paths identically.
+
+**MinGW + CGO notes**
+- Use the 64-bit MinGW-w64 toolchain (`C:\ProgramData\mingw64\mingw64\bin`).
+- After successful `make gpu WINDOWS_OPENCL=1`, a `bin/gpu_visibility*.exe` (or equivalent) will be produced locally.
+- Place it alongside `crescent_maps-windows-amd64.exe` (or in `bin/`). The orchestrator (`getRendererCandidates` in `main.go`) will discover it automatically when you pass `-gpu`.
+
+**Verification (pragmatic fallback when real Windows + discrete GPU hardware is unavailable during development)**
+- Build on your Windows machine (or document exact commands attempted).
+- Run a small test: `./crescent_maps-windows-amd64.exe -start 2027 -end 2027 -months 3 -gpu` (compare output visually or via `TestRendererAccuracy` proxy on primary platform).
+- Re-run the full accuracy regression on the PR author's primary platform as a gate.
+- **Note**: Windows GPU local-build instructions validated via documentation review + Unix-side `make test-accuracy` + `make validate-icop` gate; real-hardware confirmation targeted as follow-up issue (per roadmap-execution-plan-f01edaab.md).
+
+**Policy (repeated for clarity)**: Windows GPU binaries are **never** shipped in releases. Users on real NVIDIA/AMD/Intel Windows hardware build locally using the instructions above. This protects Minimalism, supply-chain security, and operational simplicity.
+
 ## Usage
 
 ```bash
@@ -204,7 +293,7 @@ Pre-built binaries (Go orchestrator + best-effort CPU renderer) are available on
 
 These are produced by the automated workflow (checksums + Cosign keyless signing).
 
-**macOS users (Intel + Apple Silicon):** Pre-built binaries are no longer provided by CI. Build from source with `make` (best for OpenCL/Metal compatibility on your specific hardware). See [Building from source](#building-from-source) below.
+**macOS users (Intel + Apple Silicon):** Pre-built binaries are no longer provided by CI. Build from source with `make` (best for OpenCL/Metal compatibility on your specific hardware). See the [Setup & Installation](#setup--installation) section (including the dedicated "Building from source on Windows" guidance below) for local build instructions.
 
 **Recommended:**
 - Linux: `crescent_maps-*-linux-amd64`
@@ -252,6 +341,7 @@ make release-major          # Major release
 # Pre-releases
 make release-rc             # Next release candidate (0.2.0 → 0.2.1-rc.1)
 make release-beta           # Beta release
+# (PR 1 from the roadmap hardened bumping so these work reliably even from an existing -rc.N)
 ```
 
 For full control (including custom pre-release versions):
@@ -302,8 +392,16 @@ The project includes automated tests for both code correctness and output accura
 
 - `make test` — Runs the full Go test suite, including unit tests for the blending logic and early-skip visibility counting.
 - `make test-accuracy` (or `RUN_ACCURACY_TEST=1 go test -run TestRendererAccuracy`) — Executes the CPU vs GPU renderer pixel-match regression test. This validates that the FP32+DD OpenCL path maintains ≥96% exact per-pixel agreement with the pure double-precision C++ reference (the key accuracy guarantee for visual sighting predictions).
+- `make validate-icop` (or `go run ./cmd/validate-icop [--report=json]`) — Runs the hardened external validation harness against a curated set of real ICOP observational records (instrument-aware Yallop matching, exact renderer "point" mode + moon-age alignment). Produces per-sighting diagnostics, match rates, breakdowns by naked_eye vs. aided, and optional machine-readable JSON. See [data/validation/icop/README.md](data/validation/icop/README.md) and [docs/yallop-criteria-and-external-validation.md](docs/yallop-criteria-and-external-validation.md) for the dataset, results (100% on the PR 2 12-record Ramadan 1446 foundation set), and methodology. This is the primary source of trustworthy external evidence for Accuracy First.
+- `make validate-icop-ci` + the guarded PR4 targets (`validate-icop-golden-check`, `ICOP_GOLDEN_UPDATE=1 validate-icop-golden-update`) — CI-friendly regression gate with strict Summary comparison against a committed golden file. The check runs on every Linux build in the matrix (mismatch fails the job). Future: required status via branch protection.
+- `go run ./cmd/validate-icop --baseline=hmnao` — Exercises the PR3 HMNAO/UKHO baseline comparison skeleton (pending real data per Option 3).
 
 See `internal/blend/blend_test.go` and `main_test.go` for the test implementation, and [docs/performance-accuracy.md](docs/performance-accuracy.md) for historical and current accuracy data.
+
+**Consolidated Roadmap PR preparation artifacts** (on branch `roadmap-implementation/f01edaab`):
+- Working PR description draft: `docs/roadmap-implementation-pr-body-draft.md`
+- Ready-to-execute checklist + suggested title/summary: `docs/roadmap-implementation-pr-creation-checklist.md`
+- Final hygiene sweep + PR opening notes package: `docs/roadmap-implementation-closing-package.md`
 
 ## Credits
 

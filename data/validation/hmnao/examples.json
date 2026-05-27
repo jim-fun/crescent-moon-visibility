@@ -1,0 +1,32 @@
+[
+  {
+    "id": "HMNAO-EXAMPLE-2025-03-01",
+    "date": "2025-03-01",
+    "source": "HMNAO/UKHO published table or almanac (TBD - replace with exact citation during PR 3 curation)",
+    "predicted_first_visibility_longitude": "TBD (e.g. ~ -10° or specific tabulated value)",
+    "notes": "ILLUSTRATIVE PLACEHOLDER ONLY. Real HMNAO excerpt + our computed equivalent (from renderer or astro helpers) + delta analysis will be added in the body of PR 3. See roadmap PR 3 and yallop-criteria doc.",
+    "project_computed_equivalent": "TBD"
+  },
+  {
+    "id": "HMNAO-2026-02-18-Mecca",
+    "date": "2026-02-18",
+    "location": "Mecca (AST, UTC+3)",
+    "visibility": "Easily Visible",
+    "sunset": "18:20",
+    "moonset": "19:19",
+    "source": "https://www.gov.uk/government/publications/crescent-moon-visibility-for-february-2026 + Crescent_Moon_Visibility_summary_for_February_2026.pdf (pp.1-2, pink shading for first easy naked-eye)",
+    "status": "pending-manual-verification",
+    "notes": "From HMNAO February 2026 summary PDF (new moon 17 Feb 2026 12:01 UT). Added 2026-05-27 as Grok fallback research after Claude auth blocker. Full delta analysis deferred per Option 3."
+  },
+  {
+    "id": "HMNAO-2026-02-18-London",
+    "date": "2026-02-18",
+    "location": "London (GMT, UTC+0)",
+    "visibility": "Easily Visible",
+    "sunset": "17:21",
+    "moonset": "18:47",
+    "source": "https://www.gov.uk/government/publications/crescent-moon-visibility-for-february-2026 + Crescent_Moon_Visibility_summary_for_February_2026.pdf (pp.1-2, pink shading)",
+    "status": "pending-manual-verification",
+    "notes": "From HMNAO February 2026 summary PDF. Added 2026-05-27 as Grok fallback research after Claude auth blocker. Full delta analysis deferred per Option 3."
+  }
+]

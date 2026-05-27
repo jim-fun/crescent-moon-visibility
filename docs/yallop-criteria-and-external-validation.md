@@ -153,9 +153,29 @@ Because the project uses the **exact published coefficients** derived from those
 - **HMNAO / UK Hydrographic Office** predictions and almanac tables.
 - National astronomical society archives and individual observer logs (e.g., from the 2020s great conjunction era and regular new-moon watches).
 
-**Current project status**: No automated or systematic comparison against these corpora has yet been performed and committed. This is explicitly called out as future work in `TODO.md`, `docs/performance-accuracy.md`, and the agentic workflow backlog.
+**Current project status (post-PR 2)**: Foundational automated + systematic comparison has been delivered. See 4.3.1 below. Full multi-lunation quantitative reporting, confusion matrices, expansion to 30–50 records, and HMNAO baseline comparison remain targeted for PR 4 (see roadmap-execution-plan-f01edaab.md and TODO.md).
 
-When such a study is undertaken it should:
+### 4.3.1 PR 2 Foundation (2026-05) — Hardened ICOP Harness + Initial Real Records
+
+PR 2 of the Accuracy First roadmap (roadmap-execution-plan-f01edaab) delivered:
+- Hardened `cmd/validate-icop` harness with `InstrumentAwareMatch` (naked-eye “seen” matches only A/B; aided “seen” accepts A–E per Yallop category semantics; documented rules in code).
+- Exact moon-age alignment: the CPU renderer “point” mode now emits the precise `moon_age_prev` (best-time hours since previous conjunction) used for its own category/q decision; the harness parses it for diagnostics.
+- Replacement of 8 unaligned mock records with **12 real, high-quality, conjunction-aligned ICOP sightings** from the public Ramadan 1446 reports (new moon 2025-02-28 00:45 UT, https://astronomycenter.net/icop/ram46.html?l=en). Strict provenance, mix of instruments/outcomes/ages/latitudes, clear conditions stated.
+- Robust output: per-record diagnostics (pred, q, reported, instrument, match reason, exact age), scored-only denominators, naked vs. aided breakdowns, richer `Summary` struct, and `--report=json`.
+
+**Result on the curated 12-record foundation set** (exact CPU renderer + InstrumentAwareMatch):
+- **100.0% match rate (12/12)**
+- naked_eye: 100% (9/9)
+- aided (binoculars/telescope): 100% (3/3)
+- Mean exact renderer moon age: 24.4 h (range 10.2–42.4 h, fully consistent with the lunation)
+
+One marginal naked-eye “seen” on predicted B (southern Algeria) was correctly accepted. Three difficult young aided sightings on D were correctly accepted. Young F non-sightings for naked-eye observers were correctly accepted.
+
+The dataset, harness usage, and full results are documented in `data/validation/icop/README.md`. The harness is opt-in (`make validate-icop`) and produces reproducible, auditable external evidence.
+
+Full quantitative matrices, expansion, HMNAO baseline, and integration into regression/CI are deferred to PR 3/4 per the approved plan. All changes followed the project’s 4-stage agentic workflow + Documentation & Architecture Maintenance process (PR 5).
+
+When expanding the study it should still:
 - Use the exact same Yallop and Odeh paths the renderers expose.
 - Report success rates, false-positive/negative rates, and boundary cases.
 - Be added to the automated test suite where possible (or as a documented research notebook).
@@ -200,7 +220,7 @@ These limitations are **by design** — the tool produces the pure geometric/emp
 
 ## 8. Recommended Next Steps (Tied to Agentic Workflow)
 
-1. Systematic ICOP / HMNAO comparison study (High priority in current TODO).
+1. Systematic ICOP / HMNAO comparison study (PR 2 delivered ICOP foundation + 100% result; PR 3 initialization complete with `data/validation/hmnao/` skeleton — full baseline + deltas in body of PR 3).
 2. Port remaining diamond + legend features to the GPU path (Validation + Judge review required).
 3. Consider adding a “Yallop vs Odeh vs Schaefer-lite” mode or diagnostic table output for researchers.
 4. Any future coefficient tweak or new criterion must go through the full Improvement → Validation (accuracy regression) → Security → **Judge** process with explicit Accuracy First scorecard.
@@ -214,9 +234,9 @@ Use the agentic tooling:
 
 ---
 
-**Document status**: May 2026 — created as part of the project’s ongoing commitment to Accuracy First and transparent external validation.
+**Document status**: May 2026 (PR 2 update) — hardened ICOP harness + 12 real aligned records + 100% result delivered; full analysis deferred to PR 4. Part of the project’s ongoing commitment to Accuracy First and transparent external validation.
 
-**Maintained by**: Project maintainers + the crescent-moon-visibility-engineering skill and agentic workflow (especially Validation, Documentation & Architecture, and Judge agents).
+**Maintained by**: Project maintainers + the crescent-moon-visibility-engineering skill and agentic workflow (especially Validation, Documentation & Architecture, and Judge agents). See [docs/documentation-maintenance.md](documentation-maintenance.md) for the public triggers and Sync Checklist.
 
 ---
 

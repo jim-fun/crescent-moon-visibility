@@ -1,0 +1,11 @@
+{
+  "Total": 12,
+  "Matches": 12,
+  "Mismatches": 0,
+  "MatchRate": 100,
+  "ByCategory": {
+    "aided_total": 3,
+    "naked_total": 9,
+    "total_scored": 12
+  }
+}

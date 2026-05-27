@@ -17,6 +17,12 @@
 #   make release-patch
 #   make release-minor
 #   make release-rc
+#
+# Regression coverage (prerelease bumping fix):
+#   CURRENT=0.5.4-rc.2 ; ./scripts/release.sh patch --rc   → 0.5.4-rc.3   (direct inc, no crash)
+#   CURRENT=0.5.4-rc.2 ; ./scripts/release.sh patch --beta → 0.5.4-beta.1 (cross-kind)
+#   CURRENT=0.5.4      ; ./scripts/release.sh patch --rc   → 0.5.5-rc.1   (normal new pre-release)
+#   Prevents the old "invalid arithmetic operator (error token is \".1\")" failure.
 
 set -euo pipefail
 
@@ -93,10 +99,17 @@ done
 CURRENT_VERSION=$(cat VERSION 2>/dev/null || echo "0.0.0")
 
 if [[ "$CMD" =~ ^(patch|minor|major)$ ]]; then
-    NEW_VERSION=$(bump_version "$CURRENT_VERSION" "$CMD")
+    if [[ -n "$PRE_RELEASE" && "$CURRENT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-(${PRE_RELEASE})\.[0-9]+$ ]]; then
+        # Existing prerelease of the requested kind: route directly to parse_prerelease
+        # to increment the counter. This avoids feeding a string like "0.5.4-rc.2"
+        # into bump_version (which does IFS='.' + arithmetic and blows up).
+        NEW_VERSION=$(parse_prerelease "$CURRENT_VERSION" "$PRE_RELEASE")
+    else
+        NEW_VERSION=$(bump_version "$CURRENT_VERSION" "$CMD")
 
-    if [[ -n "$PRE_RELEASE" ]]; then
-        NEW_VERSION=$(parse_prerelease "$NEW_VERSION" "$PRE_RELEASE")
+        if [[ -n "$PRE_RELEASE" ]]; then
+            NEW_VERSION=$(parse_prerelease "$NEW_VERSION" "$PRE_RELEASE")
+        fi
     fi
 
     echo "Bumping $CMD: $CURRENT_VERSION → $NEW_VERSION"

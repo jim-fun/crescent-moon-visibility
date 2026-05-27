@@ -181,7 +181,7 @@ jobs:
             | `crescent_maps-*` | **Main Go orchestrator** (recommended for all users; includes version reporting for bundled renderers) |
             | `visibility-*` | CPU reference renderer (pure double C++ + OpenMP; built best-effort on release runners) |
 
-            **Important:** The GPU renderer (`gpu_visibility.out`) has platform-specific OpenCL / driver dependencies and is **not included** in GitHub releases. Build it locally with `make gpu` (or `make` for everything) after cloning. Full instructions: [README § GPU dependency installation](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#gpu-dependency-installation).
+            **Important:** The GPU renderer (`gpu_visibility.out` / `gpu_visibility*.exe`) has platform-specific OpenCL / driver dependencies and is **never included** in GitHub releases on **any** platform — Linux, macOS, **or Windows**. This is the established local-build-only GPU policy. Build it locally with `make gpu` (or `make` for everything) after cloning; on Windows use `make gpu WINDOWS_OPENCL=1` with a vendor OpenCL SDK. Full instructions: [README § GPU dependency installation](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#gpu-dependency-installation) and [§ Building the GPU renderer on Windows](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#building-the-gpu-renderer-on-windows-local-builds-only--never-shipped-in-releases).
 
             **Quick start from release (Linux):**
             ```bash
@@ -193,10 +193,10 @@ jobs:
             # For a map: crescent_maps -start 2027 -end 2027   # CPU; add -gpu after local GPU build
             ```
 
-            **Windows (x64) users:** Pre-built `crescent_maps-*-windows-amd64.exe` and CPU renderer are included in releases (CPU only).
+            **Windows (x64) users:** Pre-built `crescent_maps-*-windows-amd64.exe` and the CPU renderer are included in releases — **CPU only**. The Windows GPU renderer is **local-build only and is never shipped** (identical to the macOS/Linux policy); build it with `make gpu WINDOWS_OPENCL=1` after installing a vendor OpenCL SDK (NVIDIA CUDA / AMD / Intel). See [README § Building the GPU renderer on Windows](https://github.com/jim-fun/crescent-moon-visibility/blob/main/README.md#building-the-gpu-renderer-on-windows-local-builds-only--never-shipped-in-releases).
             ```powershell
-            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/v0.5.1/crescent_maps-0.5.1-windows-amd64.exe
-            .\crescent_maps-0.5.1-windows-amd64.exe -version
+            curl -LO https://github.com/jim-fun/crescent-moon-visibility/releases/download/${{ github.ref_name }}/crescent_maps-${{ steps.ver.outputs.version }}-windows-amd64.exe
+            .\crescent_maps-${{ steps.ver.outputs.version }}-windows-amd64.exe -version
             ```
 
             **macOS users:** Pre-built binaries are no longer provided by the release workflow.

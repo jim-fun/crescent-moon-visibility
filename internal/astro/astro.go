@@ -8,8 +8,10 @@ package astro
 #cgo LDFLAGS: -lm
 #include "astronomy.c"
 */
-import "C"
-import "time"
+import (
+	"C"
+	"time"
+)
 
 // MoonIlluminationFraction returns the illuminated fraction of the Moon at the
 // given UT time, as a value in [0.0, 1.0]. 0.0 = exact new moon, 1.0 = full.
@@ -90,4 +92,3 @@ func GetMoonAgeHours(latitude, longitude float64, t time.Time) float64 {
 	}
 	return float64(bestTime.ut-nmNearest.ut) * 24.0
 }
-
