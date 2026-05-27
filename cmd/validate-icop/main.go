@@ -7,15 +7,21 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"reflect"
 	"strconv"
 	"strings"
 
+	"github.com/jim-fun/crescent-moon-visibility/internal/validation/hmnao"
 	"github.com/jim-fun/crescent-moon-visibility/internal/validation/icop"
 )
 
 func main() {
 	dataset := flag.String("dataset", "data/validation/icop/sightings.json", "Path to curated sightings JSON")
 	report := flag.String("report", "", "Optional machine-readable report: json")
+	failUnder := flag.Float64("fail-under", -1, "If >=0, exit non-zero when match rate (%) is below this threshold (CI gate)")
+	golden := flag.String("golden", "", "Optional golden summary JSON to diff against; mismatch exits non-zero")
+	updateGolden := flag.Bool("update-golden", false, "Write current Summary to the --golden path (use with ICOP_GOLDEN_UPDATE=1 for safety)")
+	baseline := flag.String("baseline", "", "Optional baseline mode: hmnao (for PR3 HMNAO comparison)")
 	flag.Parse()
 
 	sightings, err := icop.LoadSightings(*dataset)
@@ -202,5 +208,93 @@ func main() {
 		if err := enc.Encode(reportData); err != nil {
 			log.Printf("JSON encode error: %v", err)
 		}
+	}
+
+	// CI gate (opt-in): threshold + optional golden diff. Both write to stderr
+	// and set a non-zero exit so `make validate-icop-ci` fails the build.
+	exitCode := 0
+
+	if *failUnder >= 0 && rate < *failUnder {
+		fmt.Fprintf(os.Stderr, "\nFAIL: match rate %.1f%% is below threshold %.1f%%\n", rate, *failUnder)
+		exitCode = 1
+	}
+
+	if *golden != "" {
+		goldenData, err := os.ReadFile(*golden)
+		switch {
+		case err != nil:
+			fmt.Fprintf(os.Stderr, "\nFAIL: cannot read golden file %s: %v\n", *golden, err)
+			exitCode = 1
+		default:
+			var want icop.Summary
+			if err := json.Unmarshal(goldenData, &want); err != nil {
+				fmt.Fprintf(os.Stderr, "\nFAIL: cannot parse golden file %s: %v\n", *golden, err)
+				exitCode = 1
+			} else if !reflect.DeepEqual(want, summary) {
+				fmt.Fprintf(os.Stderr, "\nFAIL: summary != golden %s\n  want: %+v\n  got:  %+v\n", *golden, want, summary)
+				exitCode = 1
+			} else {
+				fmt.Printf("\nGolden summary match: OK (%s)\n", *golden)
+			}
+		}
+	}
+
+	// PR4: explicit golden update (minimal, guarded by env in Makefile/docs)
+	if *updateGolden && *golden != "" {
+		if os.Getenv("ICOP_GOLDEN_UPDATE") != "1" {
+			fmt.Fprintf(os.Stderr, "\nFAIL: --update-golden requires ICOP_GOLDEN_UPDATE=1 (Accuracy First safety)\n")
+			exitCode = 1
+		} else {
+			data, _ := json.MarshalIndent(summary, "", "  ")
+			if err := os.WriteFile(*golden, data, 0644); err != nil {
+				fmt.Fprintf(os.Stderr, "\nFAIL: could not write golden %s: %v\n", *golden, err)
+				exitCode = 1
+			} else {
+				fmt.Printf("\nGolden updated: %s\n", *golden)
+			}
+		}
+	}
+
+	// PR3 baseline mode (skeleton wiring - real curated data is deferred per Option 3)
+	if *baseline == "hmnao" {
+		fmt.Println("\n--- PR3 HMNAO Baseline Mode (skeleton) ---")
+		fmt.Println("Note: This mode uses placeholder/pending records. Full real HMNAO/UKHO curation is deferred.")
+		hmnaoRecords, err := hmnao.LoadRecords("data/validation/hmnao/examples.json")
+		if err != nil {
+			fmt.Printf("Could not load HMNAO data: %v\n", err)
+		} else {
+			fmt.Printf("Loaded %d HMNAO records (many pending real data).\n", len(hmnaoRecords))
+			deltas := hmnao.Compare(hmnaoRecords, func(date string, lat, lon float64) (string, float64, error) {
+				// Use the same renderer path as the main ICOP loop for fidelity
+				out, err := exec.Command(rendererPath, date, "point", fmt.Sprintf("%.4f", lat), fmt.Sprintf("%.4f", lon), "yallop").Output()
+				if err != nil {
+					return "", 0, err
+				}
+				line := string(out)
+				// Very lightweight parse (re-uses existing patterns)
+				cat := ""
+				if idx := strings.LastIndex(line, "category="); idx != -1 {
+					cat = string(line[idx+9])
+				}
+				q := 0.0
+				if idx := strings.LastIndex(line, "q="); idx != -1 {
+					end := strings.IndexAny(line[idx+2:], " \n")
+					if end == -1 {
+						end = len(line) - idx - 2
+					}
+					q, _ = strconv.ParseFloat(line[idx+2:idx+2+end], 64)
+				}
+				return cat, q, nil
+			})
+			for _, d := range deltas {
+				fmt.Printf("%s  baseline_lon=%.2f  our_cat=%s  our_q=%.3f  q_delta=%.3f  status=%s\n",
+					d.RecordID, d.BaselineLonDeg, d.OurCategory, d.OurQ, d.QDelta, d.Status)
+			}
+			fmt.Println("\n(Real HMNAO table excerpts will be added in future PR3 data population work.)")
+		}
+	}
+
+	if exitCode != 0 {
+		os.Exit(exitCode)
 	}
 }
