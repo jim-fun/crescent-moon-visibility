@@ -51,11 +51,11 @@ These items are the current focus because they most directly strengthen the proj
   Suggested validation: New `TestRendererAccuracy` variant that also exercises the new criterion. Ensure CPU/GPU match remains ≥96% for the new path.
   From agentic review of TODO prioritization on 2026-05-24.
 
-- [ ] **Medium** - Create golden sighting test dataset and regression harness
-  Rationale: As we add new criteria or modeling improvements, we need reproducible test cases that protect the accuracy bar.
-  Ties to Core Principles: Excellent for Verifiability & Reproducibility and long-term protection of Accuracy First.
-  Suggested validation: 20–30 high-quality ICOP or published sightings stored as JSON/CSV. Simple Go test or script that runs the renderer and asserts category or first-visibility time is within tolerance.
-  From agentic review of TODO prioritization on 2026-05-24.
+- [x] **Medium** - Create golden sighting test dataset and regression harness (PR 8 + PR4 foundation)
+  **Status (2026-05)**: Initial golden file `data/validation/golden/validate-icop.json` committed (exact 100% Summary from the hardened ICOP 12-record Ramadan 1446 run using CPU reference renderer). `validate-icop-ci` target already supports `ICOP_GOLDEN=...` for strict comparison. Native `--update-golden` support + guarded Makefile targets (`validate-icop-golden-update`, `validate-icop-golden-check`) added in PR4 hardening. 
+  Rationale and ties to Core Principles unchanged (Verifiability & Reproducibility + Accuracy First protection).
+  See `docs/roadmap-implementation-pr-body-draft.md` (Ollama-generated + Grok-corrected outline) and the companion `docs/roadmap-implementation-pr-creation-checklist.md` (ready-to-execute steps + suggested final PR title/summary) for consolidated PR preparation. Next: make golden-check a mandatory pre-merge gate in CI, capture additional HMNAO golden baselines once PR3 curation advances.
+  From agentic review of TODO prioritization on 2026-05-24 + PR8/PR4 work on roadmap-execution-plan-f01edaab.
 
 - [ ] **Medium** - Dynamic grid dimensions (metadata headers) for binary files
   Rationale: The Go compositor (`internal/blend/blend.go`) currently detects grid resolutions by probing a few hardcoded dimension arrays `{{3600, 2160}, {3840, 2160}, {1440, 720}}`. If the C++ binaries change their resolution macros (e.g. `PIXEL_PER_DEGREE`), the compositor fails to load the binary files.

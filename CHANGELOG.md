@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Accuracy & Validation
 - PR 3 initialization: `data/validation/hmnao/` skeleton + README (HMNAO/UKHO baseline comparison data). Full curated excerpts, harness extension, and deltas targeted for PR 3 body (see roadmap-execution-plan-f01edaab and yallop doc).
+- **PR4 foundation (minimal regression protection)**: Added native `--update-golden` flag + safety guard (`ICOP_GOLDEN_UPDATE=1`) to `cmd/validate-icop`. New guarded Makefile targets `validate-icop-golden-update` and `validate-icop-golden-check` for explicit, auditable protection of the 100% ICOP golden baseline. Reuses existing `--golden` + `reflect.DeepEqual` logic. All changes keep the single consolidated branch clean. (roadmap-execution-plan-f01edaab)
 
 ### Accuracy & Validation (PR 2 of roadmap-execution-plan-f01edaab — highest Accuracy First priority)
 - **ICOP external validation harness hardened** (`cmd/validate-icop`, `internal/validation/icop/compute.go`): Full `InstrumentAwareMatch` (naked-eye seen → A/B only; aided → A-E; documented rules matching Yallop category meanings). Exact moon-age alignment via renderer point mode (now emits `age=` for fidelity). Robust parsing, scored-only denominators, per-instrument breakdowns, richer `Summary` + `--report=json`. `make validate-icop` now produces trustworthy evidence.

@@ -155,6 +155,33 @@ validate-icop:
 # Example with machine-readable output for CI / PR4 regression:
 #   go run ./cmd/validate-icop --report=json
 
+# CI-friendly gate: run the harness and FAIL (non-zero) if the match rate drops
+# below ICOP_MIN_MATCH_RATE (default 85). Set ICOP_GOLDEN to also diff the JSON
+# summary against a committed golden file. Gate logic lives in the Go binary
+# (no jq / external deps). Plain `make validate-icop` is unaffected.
+.PHONY: validate-icop validate-icop-ci
+ICOP_MIN_MATCH_RATE ?= 85
+validate-icop-ci:
+	go run ./cmd/validate-icop --report=json --fail-under=$(ICOP_MIN_MATCH_RATE) $(if $(ICOP_GOLDEN),--golden=$(ICOP_GOLDEN))
+
+# PR4 minimal foundation (builds directly on PR8 golden wiring):
+# Golden comparison already supported via --golden (or ICOP_GOLDEN env) + strict
+# Summary equality inside the binary. These thin targets make the workflow
+# explicit and safe for regression protection (no new heavy deps).
+.PHONY: validate-icop-golden-update validate-icop-golden-check
+validate-icop-golden-update:
+	@if [ "$(ICOP_GOLDEN_UPDATE)" != "1" ]; then \
+		echo "ERROR: Refusing to overwrite golden without ICOP_GOLDEN_UPDATE=1 (Accuracy First safety gate)."; \
+		echo "Usage: ICOP_GOLDEN_UPDATE=1 make validate-icop-golden-update"; \
+		exit 1; \
+	fi
+	@echo "Capturing current run as new golden using native --update-golden (PR4)..."
+	ICOP_GOLDEN_UPDATE=1 go run ./cmd/validate-icop --report=json --golden=data/validation/golden/validate-icop.json --update-golden
+	@echo "Golden updated. Commit the new file explicitly."
+
+validate-icop-golden-check:
+	go run ./cmd/validate-icop --report=json --golden=data/validation/golden/validate-icop.json --fail-under=$(ICOP_MIN_MATCH_RATE)
+
 # === Release targets ===
 
 .PHONY: release release-patch release-minor release-major release-rc release-beta
