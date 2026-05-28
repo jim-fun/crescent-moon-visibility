@@ -2,7 +2,17 @@
 
 **Author**: Grok (following crescent-moon-visibility patterns)  
 **Date**: 2026-05-27  
-**Status**: Revised v2 (after Claude-style review feedback — 2026-05-27). Integration strategy clarified, CGO risk called out, Documentation Impact section added, form coverage expanded, job persistence nuance added. Ready for small spike.  
+**Status**: Revised v2 (after Claude-style review feedback — 2026-05-27). Integration strategy clarified, CGO risk called out, Documentation Impact section added, form coverage expanded, job persistence nuance added. Ready for small spike.
+
+**Current Implementation Status (late 2026)**: A working basic web server (`crescent_maps web`) has been implemented. The primary delivered feature is the **"Visibility for My Location"** observer tool (`/point`):
+- Year → all new moons for that year dropdown with intelligent "next new moon" defaults
+- Interactive Leaflet map + presets + geolocation
+- Atmospheric conditions with heuristic Effective category adjustment
+- 3-day result cards + clear A–E explanations and Raw vs Effective guidance
+- Contextual map now shown on results page
+- Supports `-tags=web` builds
+
+The original broader map-generation job gallery remains future work. See the new section in README.md for usage.  
 **Related**: TODO.md (Future / Stretch Goals), README.md, main.go, Makefile, docs/performance-accuracy.md
 
 ---

@@ -46,3 +46,10 @@ __pycache__/
 # scripts/agentic-review.sh
 # scripts/agents/
 .agentic-review/
+
+# Web UI runtime artifacts
+web_errors.log
+web_errors*.log
+
+# Internal agentic / scratch directories (maintainer only)
+.agentic/

@@ -110,6 +110,28 @@ make cpu && make go
 ./crescent_maps -version
 ```
 
+### Web Interface
+
+A lightweight web UI is included for interactive exploration:
+
+```bash
+./crescent_maps web
+```
+
+Starts a server on http://localhost:8080 (use `--port` to change).
+
+**Key feature: "Visibility for My Location"** (`/point`)
+
+- Choose a year → see all new moons that year
+- Intelligent defaults to the next upcoming new moon + Jerusalem
+- Interactive Leaflet map (drag marker or use presets: Jerusalem, Dallas, Melbourne)
+- Adjust cloud cover and transparency → see **Raw** vs **Effective** visibility category
+- Results show the classic 3-day window with clear A–E explanations
+
+Useful for observers who want a quick answer without running CLI commands.
+
+Note: The web build can use `-tags=web` for environments where full CGO bindings are problematic.
+
 ### CLI Flags
 
 | Flag | Description | Default |
