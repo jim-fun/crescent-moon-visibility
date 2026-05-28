@@ -78,7 +78,8 @@ These items are the current focus because they most directly strengthen the proj
 
 The following items were deprioritized during the May 2026 agentic review because they score significantly lower on Accuracy First and Verifiability compared to external validation work. They remain desirable long-term enhancements.
 
-- Web-Based Interface (WASM + JS frontend)
+- Web-Based Interface (WASM + JS frontend) — See `docs/basic-web-ui-design.md` for the basic (server-driven) MVP plan and status.
+  - "Visibility for my specific location" (point queries) implemented in the basic spike: `/point` handler with year→new-moon dropdown (all new moons for the year), intelligent next-NM + Jerusalem defaults, interactive Leaflet map, atmospheric heuristic adjustment, 3-day result cards, and error logging. Works via `go run -tags=web . web`. Refactoring to internal packages (per Claude-style review) remains future work.
 - Real-Time Visibility Predictions + notifications
 - Terrain Elevation Integration (SRTM + horizon adjustments)
 - Atmospheric Extinction Modeling

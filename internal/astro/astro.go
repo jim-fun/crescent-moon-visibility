@@ -1,6 +1,9 @@
 // Package astro provides CGO bindings to the Astronomy Engine C library for
 // high-precision lunar phase calculations. It wraps the SearchMoonPhase and
 // UtcFromTime functions to compute new moon dates used by the orchestrator.
+//
+// This file is excluded when building with the "web" tag (see astro_stub.go).
+//go:build !web
 package astro
 
 /*
