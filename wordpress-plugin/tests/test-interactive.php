@@ -186,15 +186,16 @@ $GLOBALS['wpdb'] = new MockWPDB();
 // -----------------------------------------------------------------------------
 // Seed from the real dataset
 // -----------------------------------------------------------------------------
-$json = json_decode(file_get_contents(__DIR__ . '/../data/visibility-2026-2035-real.json'), true);
+// Seed from the production dataset (the only data file we keep — regenerate via
+// the generator per wordpress-plugin/generator/). Assertions are data-driven so
+// they hold regardless of how many cities/years it contains.
+$json = json_decode(file_get_contents(__DIR__ . '/../data/visibility-2026-2075.json'), true);
 foreach ($json['cities'] as $c) {
     $GLOBALS['wpdb']->cities[] = $c;
 }
 foreach ($json['observations'] as $o) {
-    // The bundled test JSON predates per-day q/age, so synthesise 3 distinct
-    // per-day values (the production data carries real ones).
-    $ba = $o['moon_age_at_best'] ?? 30.0;
-    $bq = $o['q_at_best'] ?? 1.0;
+    $dq = $o['day_q'] ?? [];
+    $da = $o['day_age'] ?? [];
     $GLOBALS['wpdb']->observations[] = [
         'city' => $o['city'],
         'new_moon_date' => $o['new_moon'],
@@ -202,8 +203,8 @@ foreach ($json['observations'] as $o) {
         'raw_day_0' => $o['days'][0] ?? '?',
         'raw_day_1' => $o['days'][1] ?? '?',
         'raw_day_2' => $o['days'][2] ?? '?',
-        'q_day_0' => $bq - 1.0, 'q_day_1' => $bq, 'q_day_2' => $bq + 1.0,
-        'age_day_0' => $ba - 24.0, 'age_day_1' => $ba, 'age_day_2' => $ba + 24.0,
+        'q_day_0' => $dq[0] ?? null, 'q_day_1' => $dq[1] ?? null, 'q_day_2' => $dq[2] ?? null,
+        'age_day_0' => $da[0] ?? null, 'age_day_1' => $da[1] ?? null, 'age_day_2' => $da[2] ?? null,
         'best_raw' => $o['best_raw'] ?? '?',
         'best_effective' => $o['best_effective'] ?? '?',
         'q_at_best' => $o['q_at_best'] ?? null,
@@ -211,7 +212,9 @@ foreach ($json['observations'] as $o) {
         'data_version' => 'yallop',
     ];
 }
-echo "Seeded " . count($GLOBALS['wpdb']->observations) . " observations, " . count($GLOBALS['wpdb']->cities) . " cities.\n\n";
+// How many distinct cities the data actually contains (drives the count checks).
+$EXPECTED_CITIES = count(array_unique(array_column($json['observations'], 'city')));
+echo "Seeded " . count($GLOBALS['wpdb']->observations) . " observations, " . count($GLOBALS['wpdb']->cities) . " cities (distinct=$EXPECTED_CITIES).\n\n";
 
 // -----------------------------------------------------------------------------
 // Load production code
@@ -259,8 +262,7 @@ echo "    -> {$def['new_moon_date']} ({$def['reason']})\n";
 // =============================================================================
 echo "\n[3] City list from data\n";
 $cities = $cvi->get_cities();
-check("13 cities returned (all data cities, no blacklist)", count($cities) === 13);
-check("Mecca is included (no blacklist)", in_array('mecca', array_column($cities, 'slug'), true));
+check("all data cities returned (no blacklist)", count($cities) === $EXPECTED_CITIES);
 $names = array_column($cities, 'name');
 $sortedNames = $names;
 usort($sortedNames, 'strcasecmp');
@@ -311,9 +313,13 @@ check("has sliders", strpos($html, 'id="cvi-cloud"') && strpos($html, 'id="cvi-t
 check("has map container", strpos($html, 'id="cvi-map"') !== false);
 check("shows installed plugin version", strpos($html, 'Plugin v' . CVI_VERSION) !== false);
 check("embeds precomputed dataset script (no AJAX needed)", strpos($html, 'class="cvi-dataset"') !== false);
-// Extract and validate the embedded JSON dataset.
-if (preg_match('#<script type="application/json" class="cvi-dataset">(.*?)</script>#s', $html, $dm)) {
-    $ds = json_decode($dm[1], true);
+// Extract and validate the embedded JSON dataset (strpos, not regex — the
+// embed can be multi-MB and would blow the PCRE backtrack limit).
+$ds_open = '<script type="application/json" class="cvi-dataset">';
+$ds_start = strpos($html, $ds_open);
+$ds_end   = $ds_start !== false ? strpos($html, '</script>', $ds_start) : false;
+if ($ds_start !== false && $ds_end !== false) {
+    $ds = json_decode(substr($html, $ds_start + strlen($ds_open), $ds_end - $ds_start - strlen($ds_open)), true);
     check("dataset has jerusalem with 2026", isset($ds['jerusalem']['2026']) && count($ds['jerusalem']['2026']) > 0);
     $sample = $ds['jerusalem']['2026'][0] ?? null;
     check("dataset row is [date,[d0,d1,d2],[q0,q1,q2],[a0,a1,a2]]",
@@ -321,7 +327,7 @@ if (preg_match('#<script type="application/json" class="cvi-dataset">(.*?)</scri
         && is_array($sample[1]) && count($sample[1]) === 3
         && is_array($sample[2]) && count($sample[2]) === 3
         && is_array($sample[3]) && count($sample[3]) === 3);
-    check("dataset covers all 13 cities", count($ds) === 13 && isset($ds['mecca']));
+    check("dataset covers all data cities", count($ds) === $EXPECTED_CITIES);
 } else {
     check("dataset script parseable", false);
 }
@@ -338,12 +344,12 @@ check("defaults embedded in data-* attributes", strpos($html, 'data-default-city
 $loc = $GLOBALS['__localized'];
 check("localized ajaxUrl", !empty($loc['ajaxUrl']));
 check("localized nonce", $loc['nonce'] === 'test-nonce');
-check("localized 13 cities (all data cities)", count($loc['cities']) === 13);
+check("localized all data cities", count($loc['cities']) === $EXPECTED_CITIES);
 check("localized default city = jerusalem", $loc['defaultCity'] === 'jerusalem');
 check("localized default new moon matches smart default", $loc['defaultNewMoon'] === $def['new_moon_date']);
 
 // dark theme attribute
-$darkHtml = $cb(['default_city' => 'cairo', 'theme' => 'dark']);
+$darkHtml = $cb(['default_city' => 'london', 'theme' => 'dark']);
 check("theme=dark applied", strpos($darkHtml, 'data-theme="dark"') !== false);
 
 // =============================================================================
@@ -356,7 +362,7 @@ $wpdb = $GLOBALS['wpdb'];
 array_unshift($wpdb->cities, ['slug' => '', 'name' => '', 'latitude' => 0, 'longitude' => 0]);
 $citiesAfter = $cvi->get_cities();
 check("blank cities row filtered out", count(array_filter($citiesAfter, fn($c) => $c['slug'] === '')) === 0);
-check("real cities still present", count($citiesAfter) === 13);
+check("real cities still present", count($citiesAfter) === $EXPECTED_CITIES);
 $htmlJunk = $cb(['default_city' => 'jerusalem']);
 check("rendered data-cities has no empty slug", strpos($htmlJunk, '"slug":""') === false);
 array_shift($wpdb->cities); // restore
