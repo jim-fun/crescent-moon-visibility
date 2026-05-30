@@ -38,6 +38,12 @@ function sanitize_key($s) { return preg_replace('/[^a-z0-9_\-]/', '', strtolower
 function absint($v) { return abs((int) $v); }
 function esc_html($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
 function esc_attr($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
+function __($s, $d = 'default') { return $s; }
+function esc_html__($s, $d = 'default') { return esc_html($s); }
+function esc_attr__($s, $d = 'default') { return esc_attr($s); }
+function esc_html_e($s, $d = 'default') { echo esc_html($s); }
+function esc_attr_e($s, $d = 'default') { echo esc_attr($s); }
+function _e($s, $d = 'default') { echo $s; }
 function current_user_can($c) { return true; }
 function current_time($fmt) { return date($fmt, strtotime('2026-05-29')); } // matches project "today"
 function admin_url($p = '') { return 'http://example.com/wp-admin/' . $p; }

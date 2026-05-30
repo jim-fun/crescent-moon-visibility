@@ -7,7 +7,7 @@
  *   - Re-grades pre-computed categories live as the atmospheric sliders move,
  *     using an exact JS port of main.go:applyAtmosphericAdjustment.
  *   - Renders three rich result cards matching the web app, plus a small
- *     non-interactive Leaflet context map (loaded on demand from a CDN).
+ *     non-interactive Leaflet context map (Leaflet is bundled with the plugin).
  *
  * Accuracy First: no astronomy happens here. Categories come from the
  * pre-computed data; the heuristic only adjusts for weather, identically to
@@ -124,7 +124,6 @@
     var moonCache = {};            // `${city}:${year}` -> normalized rows
     var leafletMap = null;
     var leafletMarker = null;
-    var leafletLoading = false;
 
     // -----------------------------------------------------------------
     // Exact JS port of main.go:applyAtmosphericAdjustment
@@ -242,26 +241,9 @@
     function updateMap(city) {
         if (!mapDiv) { return; }
 
-        if (!window.L) {
-            if (leafletLoading) { return; }
-            leafletLoading = true;
-            // Pinned version + Subresource Integrity so a compromised CDN can't
-            // inject script (official Leaflet 1.9.4 hashes).
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-            link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
-            link.crossOrigin = '';
-            document.head.appendChild(link);
-            var s = document.createElement('script');
-            s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-            s.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
-            s.crossOrigin = '';
-            s.onload = function () { leafletLoading = false; updateMap(city); };
-            s.onerror = function () { leafletLoading = false; mapDiv.style.display = 'none'; };
-            document.head.appendChild(s);
-            return;
-        }
+        // Leaflet is bundled and enqueued as a dependency, so window.L is ready.
+        // If it somehow failed to load, hide the (purely cosmetic) map.
+        if (!window.L) { mapDiv.style.display = 'none'; return; }
 
         if (!leafletMap) {
             leafletMap = window.L.map(mapDiv, {

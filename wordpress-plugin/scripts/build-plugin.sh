@@ -51,10 +51,11 @@ command -v node >/dev/null && node --check "$PLUGIN_DIR/assets/js/interactive.js
 # data is imported via Tools → Crescent Visibility.
 STAGE=$(mktemp -d)
 DEST="$STAGE/$SLUG"
-mkdir -p "$DEST"/{includes,public,admin,assets/css,assets/js}
+mkdir -p "$DEST"/{includes,public,admin,assets/css,assets/js,assets/vendor,data,languages}
 
 cp "$PLUGIN_DIR/crescent-visibility.php"          "$DEST/"
 cp "$PLUGIN_DIR/uninstall.php"                     "$DEST/"
+cp "$PLUGIN_DIR/readme.txt"                        "$DEST/" 2>/dev/null || true
 cp "$PLUGIN_DIR/includes/interactive.php"         "$DEST/includes/"
 cp "$PLUGIN_DIR/public/renderer.php"              "$DEST/public/"
 cp "$PLUGIN_DIR/public/interactive-renderer.php"  "$DEST/public/"
@@ -62,6 +63,11 @@ cp "$PLUGIN_DIR/admin/admin-page.php"             "$DEST/admin/"
 cp "$PLUGIN_DIR/admin/admin.css"                  "$DEST/admin/"
 cp "$PLUGIN_DIR/assets/css/interactive.css"       "$DEST/assets/css/"
 cp "$PLUGIN_DIR/assets/js/interactive.js"         "$DEST/assets/js/"
+cp -R "$PLUGIN_DIR/assets/vendor/leaflet"         "$DEST/assets/vendor/"
+# Bundled sample dataset (small; the full dataset is generated separately).
+cp "$PLUGIN_DIR/data/sample.json"                 "$DEST/data/" 2>/dev/null || true
+# Translation template, if present.
+cp "$PLUGIN_DIR/languages/"*.pot                   "$DEST/languages/" 2>/dev/null || true
 
 rm -f "$ZIP"
 ( cd "$STAGE" && zip -rq "$ZIP" "$SLUG" -x '*.DS_Store' )

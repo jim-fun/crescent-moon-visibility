@@ -1,0 +1,2777 @@
+{
+  "meta": {
+    "generated_at": "2026-05-30T17:09:11Z",
+    "generator": "crescent-moon-visibility real renderer (Yallop)",
+    "start_year": 2026,
+    "end_year": 2028,
+    "cities": 3,
+    "note": "Generated with real visibility.out point queries. Standard clear skies assumption for effective categories."
+  },
+  "cities": [
+    {
+      "slug": "melbourne",
+      "name": "Australia — Melbourne",
+      "latitude": -37.8136,
+      "longitude": 144.9631
+    },
+    {
+      "slug": "jerusalem",
+      "name": "Israel — Jerusalem",
+      "latitude": 31.7683,
+      "longitude": 35.2137
+    },
+    {
+      "slug": "dallas",
+      "name": "USA — Dallas",
+      "latitude": 32.7767,
+      "longitude": -96.797
+    }
+  ],
+  "observations": [
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.264,
+        1.3937
+      ],
+      "day_age": [
+        709.27,
+        19.42,
+        43.88
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3937,
+      "moon_age_at_best": 43.88
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -1.0221,
+        0.5265,
+        2.46
+      ],
+      "day_age": [
+        3.45,
+        27.92,
+        52.39
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5265,
+      "moon_age_at_best": 27.92
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "E",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.2503,
+        1.6498,
+        3.8934
+      ],
+      "day_age": [
+        14.69,
+        39.19,
+        63.71
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6498,
+      "moon_age_at_best": 39.19
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.8198,
+        0.9875,
+        3.1769
+      ],
+      "day_age": [
+        4.37,
+        28.92,
+        53.48
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9875,
+      "moon_age_at_best": 28.92
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.4341,
+        2.4331
+      ],
+      "day_age": [
+        700.62,
+        20.98,
+        45.52
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4341,
+      "moon_age_at_best": 20.98
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.0994,
+        1.573,
+        3.4334
+      ],
+      "day_age": [
+        14.21,
+        38.64,
+        63
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.573,
+      "moon_age_at_best": 38.64
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6413,
+        0.6603,
+        2.1934
+      ],
+      "day_age": [
+        7.19,
+        31.52,
+        55.79
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6603,
+      "moon_age_at_best": 31.52
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.1944,
+        1.0866
+      ],
+      "day_age": [
+        702.7,
+        23.03,
+        47.25
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0866,
+      "moon_age_at_best": 47.25
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        -0.9225,
+        0.1381,
+        1.426
+      ],
+      "day_age": [
+        12.42,
+        36.62,
+        60.82
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.426,
+      "moon_age_at_best": 60.82
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.6494,
+        0.5256
+      ],
+      "day_age": [
+        707.76,
+        23.44,
+        47.67
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5256,
+      "moon_age_at_best": 47.67
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.2278,
+        1.1253
+      ],
+      "day_age": [
+        7.68,
+        31.88,
+        56.21
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1253,
+      "moon_age_at_best": 56.21
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.8944,
+        0.3866,
+        1.9438
+      ],
+      "day_age": [
+        13.76,
+        38.16,
+        62.58
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3866,
+      "moon_age_at_best": 38.16
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.2879,
+        2.0586
+      ],
+      "day_age": [
+        3.9,
+        28.35,
+        52.82
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2879,
+      "moon_age_at_best": 28.35
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.5129,
+        1.1943,
+        3.2354
+      ],
+      "day_age": [
+        12.4,
+        36.88,
+        61.36
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1943,
+      "moon_age_at_best": 36.88
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "A",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0.3988,
+        2.4353,
+        4.8312
+      ],
+      "day_age": [
+        23.68,
+        48.19,
+        72.73
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3988,
+      "moon_age_at_best": 23.68
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.213,
+        1.7598,
+        4.0482
+      ],
+      "day_age": [
+        13.39,
+        37.95,
+        62.51
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7598,
+      "moon_age_at_best": 37.95
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6361,
+        1.1359,
+        3.1962
+      ],
+      "day_age": [
+        5.47,
+        30.03,
+        54.54
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1359,
+      "moon_age_at_best": 30.03
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "A",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0.4737,
+        2.2059,
+        4.1566
+      ],
+      "day_age": [
+        23.22,
+        47.63,
+        71.96
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4737,
+      "moon_age_at_best": 23.22
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.2161,
+        1.1768,
+        2.7494
+      ],
+      "day_age": [
+        16.16,
+        40.46,
+        64.71
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1768,
+      "moon_age_at_best": 40.46
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.857,
+        0.2254,
+        1.5518
+      ],
+      "day_age": [
+        7.71,
+        31.94,
+        56.14
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2254,
+      "moon_age_at_best": 31.94
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.5903,
+        0.5529,
+        1.8891
+      ],
+      "day_age": [
+        21.29,
+        45.49,
+        69.69
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5529,
+      "moon_age_at_best": 45.49
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "I",
+        "E",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.2777,
+        0.9637
+      ],
+      "day_age": [
+        8.16,
+        32.3,
+        56.54
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9637,
+      "moon_age_at_best": 56.54
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        -0.9556,
+        0.2033,
+        1.6273
+      ],
+      "day_age": [
+        16.46,
+        40.76,
+        65.1
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6273,
+      "moon_age_at_best": 65.1
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.486,
+        0.8972,
+        2.5266
+      ],
+      "day_age": [
+        22.66,
+        47.07,
+        71.49
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8972,
+      "moon_age_at_best": 47.07
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.482,
+        0.4747
+      ],
+      "day_age": [
+        703.98,
+        14.05,
+        38.27
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4747,
+      "moon_age_at_best": 38.27
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.4755,
+        0.5775
+      ],
+      "day_age": [
+        709.39,
+        21.39,
+        45.56
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5775,
+      "moon_age_at_best": 45.56
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.2103,
+        1.1158
+      ],
+      "day_age": [
+        7.16,
+        31.3,
+        55.51
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1158,
+      "moon_age_at_best": 55.51
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.752,
+        0.6435
+      ],
+      "day_age": [
+        702.45,
+        19.99,
+        44.28
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6435,
+      "moon_age_at_best": 44.28
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "I",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0,
+        0.4122
+      ],
+      "day_age": [
+        691.44,
+        11.27,
+        35.64
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4122,
+      "moon_age_at_best": 35.64
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.293,
+        2.3835
+      ],
+      "day_age": [
+        4.21,
+        28.64,
+        53.22
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.293,
+      "moon_age_at_best": 28.64
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0808,
+        2.1176
+      ],
+      "day_age": [
+        700.4,
+        21.99,
+        46.56
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.1176,
+      "moon_age_at_best": 46.56
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.3342,
+        1.5205
+      ],
+      "day_age": [
+        693.96,
+        14.36,
+        38.89
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5205,
+      "moon_age_at_best": 38.89
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.8766,
+        0.7183,
+        2.5768
+      ],
+      "day_age": [
+        4.74,
+        29.24,
+        53.73
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7183,
+      "moon_age_at_best": 29.24
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.1177,
+        1.482
+      ],
+      "day_age": [
+        701.08,
+        17.05,
+        41.53
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.482,
+      "moon_age_at_best": 41.53
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.8542,
+        0.4042,
+        1.8554
+      ],
+      "day_age": [
+        2.09,
+        26.57,
+        51.02
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4042,
+      "moon_age_at_best": 26.57
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.5403,
+        0.532,
+        1.7509
+      ],
+      "day_age": [
+        8.91,
+        33.29,
+        57.61
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.532,
+      "moon_age_at_best": 33.29
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.4112,
+        1.0534
+      ],
+      "day_age": [
+        709.97,
+        18.67,
+        43.11
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0534,
+      "moon_age_at_best": 43.11
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0668,
+        1.6829
+      ],
+      "day_age": [
+        714.87,
+        23.73,
+        48.15
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6829,
+      "moon_age_at_best": 48.15
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.8198,
+        0.676,
+        2.5004
+      ],
+      "day_age": [
+        6.28,
+        30.72,
+        55.17
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.676,
+      "moon_age_at_best": 30.72
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.1228,
+        1.6602
+      ],
+      "day_age": [
+        702.53,
+        16.48,
+        40.97
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6602,
+      "moon_age_at_best": 40.97
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6928,
+        0.9661,
+        2.9511
+      ],
+      "day_age": [
+        5.52,
+        30.05,
+        54.55
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9661,
+      "moon_age_at_best": 30.05
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.3157,
+        2.0919
+      ],
+      "day_age": [
+        701.7,
+        21.49,
+        45.93
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3157,
+      "moon_age_at_best": 21.49
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.331,
+        1.1774,
+        2.9267
+      ],
+      "day_age": [
+        14.02,
+        38.37,
+        62.66
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1774,
+      "moon_age_at_best": 38.37
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.9266,
+        0.3129,
+        1.8528
+      ],
+      "day_age": [
+        6.54,
+        30.81,
+        55.06
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3129,
+      "moon_age_at_best": 30.81
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.434,
+        0.9485
+      ],
+      "day_age": [
+        701.99,
+        22.5,
+        46.73
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9485,
+      "moon_age_at_best": 46.73
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.1934,
+        1.7085
+      ],
+      "day_age": [
+        12.82,
+        37.05,
+        61.32
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7085,
+      "moon_age_at_best": 61.32
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.4416,
+        1
+      ],
+      "day_age": [
+        1.26,
+        25.38,
+        49.72
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1,
+      "moon_age_at_best": 49.72
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.9943,
+        0.3338,
+        1.9532
+      ],
+      "day_age": [
+        11.18,
+        35.58,
+        60
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3338,
+      "moon_age_at_best": 35.58
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.395,
+        1.0855
+      ],
+      "day_age": [
+        707.29,
+        18.74,
+        43.18
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0855,
+      "moon_age_at_best": 43.18
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0757,
+        1.6342
+      ],
+      "day_age": [
+        3.19,
+        27.59,
+        52.03
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6342,
+      "moon_age_at_best": 52.03
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.7959,
+        0.6217,
+        2.3295
+      ],
+      "day_age": [
+        8.23,
+        32.66,
+        57.09
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6217,
+      "moon_age_at_best": 32.66
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.3144,
+        1.3154,
+        3.2344
+      ],
+      "day_age": [
+        15.24,
+        39.69,
+        64.15
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3154,
+      "moon_age_at_best": 39.69
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -1.0242,
+        0.4934,
+        2.3922
+      ],
+      "day_age": [
+        1,
+        25.48,
+        49.98
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4934,
+      "moon_age_at_best": 25.48
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.1308,
+        1.663,
+        3.7233
+      ],
+      "day_age": [
+        14.55,
+        39.08,
+        63.57
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.663,
+      "moon_age_at_best": 39.08
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.626,
+        0.9277,
+        2.7632
+      ],
+      "day_age": [
+        6.02,
+        30.5,
+        54.92
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9277,
+      "moon_age_at_best": 30.5
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0.1691,
+        1.7555,
+        3.6181
+      ],
+      "day_age": [
+        23,
+        47.32,
+        71.59
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7555,
+      "moon_age_at_best": 47.32
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.538,
+        0.8193,
+        2.4283
+      ],
+      "day_age": [
+        15.47,
+        39.73,
+        63.96
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8193,
+      "moon_age_at_best": 39.73
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0122,
+        1.4623
+      ],
+      "day_age": [
+        7.19,
+        31.39,
+        55.62
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4623,
+      "moon_age_at_best": 55.62
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6555,
+        0.6787,
+        2.275
+      ],
+      "day_age": [
+        21.68,
+        45.93,
+        70.21
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6787,
+      "moon_age_at_best": 45.93
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0198,
+        1.5396
+      ],
+      "day_age": [
+        10.03,
+        34.27,
+        58.61
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5396,
+      "moon_age_at_best": 58.61
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.5732,
+        0.8659,
+        2.5534
+      ],
+      "day_age": [
+        20.08,
+        44.49,
+        68.92
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8659,
+      "moon_age_at_best": 44.49
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0979,
+        1.663
+      ],
+      "day_age": [
+        3.26,
+        27.66,
+        52.1
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.663,
+      "moon_age_at_best": 52.1
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.5559,
+        0.3433
+      ],
+      "day_age": [
+        704.89,
+        13.55,
+        37.79
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3433,
+      "moon_age_at_best": 37.79
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "B"
+      ],
+      "day_q": [
+        0,
+        -0.7093,
+        0.1614
+      ],
+      "day_age": [
+        709.06,
+        17.63,
+        41.8
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.1614,
+      "moon_age_at_best": 41.8
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.7303,
+        0.2837
+      ],
+      "day_age": [
+        712.9,
+        23.38,
+        47.54
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2837,
+      "moon_age_at_best": 47.54
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "I",
+        "F"
+      ],
+      "day_q": [
+        0,
+        0,
+        -0.3509
+      ],
+      "day_age": [
+        694.61,
+        8.23,
+        32.33
+      ],
+      "best_raw": "E",
+      "best_effective": "E"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.7318,
+        0.7625
+      ],
+      "day_age": [
+        703.61,
+        20.52,
+        44.89
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7625,
+      "moon_age_at_best": 44.89
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.9429,
+        0.7065
+      ],
+      "day_age": [
+        692.16,
+        11.48,
+        35.99
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7065,
+      "moon_age_at_best": 35.99
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.6166,
+        2.8264
+      ],
+      "day_age": [
+        4.17,
+        28.74,
+        53.33
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6166,
+      "moon_age_at_best": 28.74
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.3227,
+        2.4673
+      ],
+      "day_age": [
+        700.51,
+        21.94,
+        46.51
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3227,
+      "moon_age_at_best": 21.94
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.1569,
+        1.8197
+      ],
+      "day_age": [
+        693.87,
+        14.59,
+        39.14
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8197,
+      "moon_age_at_best": 39.14
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.7026,
+        1.0164,
+        2.996
+      ],
+      "day_age": [
+        5.91,
+        30.44,
+        54.98
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0164,
+      "moon_age_at_best": 30.44
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.1564,
+        1.8139
+      ],
+      "day_age": [
+        702.24,
+        19.69,
+        44.2
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8139,
+      "moon_age_at_best": 44.2
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6629,
+        0.5649,
+        1.9476
+      ],
+      "day_age": [
+        6.14,
+        30.58,
+        54.96
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5649,
+      "moon_age_at_best": 30.58
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.5503,
+        0.4448
+      ],
+      "day_age": [
+        702.32,
+        13.74,
+        38.02
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4448,
+      "moon_age_at_best": 38.02
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0743,
+        1.6083
+      ],
+      "day_age": [
+        714.91,
+        24.29,
+        48.71
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6083,
+      "moon_age_at_best": 48.71
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.8858,
+        0.4495,
+        2.0526
+      ],
+      "day_age": [
+        4.99,
+        29.39,
+        53.8
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4495,
+      "moon_age_at_best": 29.39
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.5065,
+        0.9692,
+        2.7089
+      ],
+      "day_age": [
+        11.57,
+        35.99,
+        60.43
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9692,
+      "moon_age_at_best": 35.99
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.1044,
+        1.7511
+      ],
+      "day_age": [
+        707.71,
+        20.85,
+        45.31
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7511,
+      "moon_age_at_best": 45.31
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.583,
+        0.8797,
+        2.6072
+      ],
+      "day_age": [
+        8.49,
+        32.94,
+        57.36
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8797,
+      "moon_age_at_best": 32.94
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.0621,
+        1.6098
+      ],
+      "day_age": [
+        704.52,
+        22.7,
+        47.05
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6098,
+      "moon_age_at_best": 47.05
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6508,
+        0.7209,
+        2.3791
+      ],
+      "day_age": [
+        13.79,
+        38.08,
+        62.34
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7209,
+      "moon_age_at_best": 38.08
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.0077,
+        1.5637
+      ],
+      "day_age": [
+        5.54,
+        29.74,
+        53.99
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5637,
+      "moon_age_at_best": 53.99
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.5859,
+        0.9246
+      ],
+      "day_age": [
+        700.94,
+        21.33,
+        45.6
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9246,
+      "moon_age_at_best": 45.6
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.3935,
+        2.1819
+      ],
+      "day_age": [
+        12.1,
+        36.4,
+        60.77
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3935,
+      "moon_age_at_best": 36.4
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.1042,
+        1.6247
+      ],
+      "day_age": [
+        1.34,
+        25.61,
+        50.04
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6247,
+      "moon_age_at_best": 50.04
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6438,
+        0.933,
+        2.7737
+      ],
+      "day_age": [
+        12.66,
+        37.13,
+        61.6
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.933,
+      "moon_age_at_best": 37.13
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.7602,
+        0.6038,
+        2.2108
+      ],
+      "day_age": [
+        8.8,
+        33.22,
+        57.64
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6038,
+      "moon_age_at_best": 33.22
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.43,
+        1.0136,
+        2.6904
+      ],
+      "day_age": [
+        13.93,
+        38.34,
+        62.75
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0136,
+      "moon_age_at_best": 38.34
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0.0035,
+        1.5852,
+        3.4003
+      ],
+      "day_age": [
+        20.53,
+        44.97,
+        69.42
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5852,
+      "moon_age_at_best": 44.97
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.7582,
+        0.6779,
+        2.4073
+      ],
+      "day_age": [
+        5.39,
+        29.85,
+        54.32
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6779,
+      "moon_age_at_best": 29.85
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.0882,
+        1.4761,
+        3.2615
+      ],
+      "day_age": [
+        17.5,
+        41.94,
+        66.34
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4761,
+      "moon_age_at_best": 41.94
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.7469,
+        0.5805,
+        2.1918
+      ],
+      "day_age": [
+        7.31,
+        31.68,
+        56
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5805,
+      "moon_age_at_best": 31.68
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.2107,
+        1.2567,
+        3.04
+      ],
+      "day_age": [
+        22.73,
+        47,
+        71.25
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2567,
+      "moon_age_at_best": 47
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.846,
+        0.5001,
+        2.167
+      ],
+      "day_age": [
+        14.4,
+        38.64,
+        62.89
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5001,
+      "moon_age_at_best": 38.64
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.1034,
+        1.5028
+      ],
+      "day_age": [
+        6.07,
+        30.22,
+        54.5
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5028,
+      "moon_age_at_best": 54.5
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.5935,
+        0.9687,
+        2.8748
+      ],
+      "day_age": [
+        20.97,
+        45.3,
+        69.68
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9687,
+      "moon_age_at_best": 45.3
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -1.0086,
+        0.461,
+        2.2786
+      ],
+      "day_age": [
+        10.11,
+        34.52,
+        58.97
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.461,
+      "moon_age_at_best": 34.52
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.1264,
+        1.5592,
+        3.4645
+      ],
+      "day_age": [
+        21.59,
+        46.06,
+        70.53
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5592,
+      "moon_age_at_best": 46.06
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "B"
+      ],
+      "day_q": [
+        0,
+        -0.7132,
+        0.1569
+      ],
+      "day_age": [
+        709.42,
+        18.52,
+        42.7
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.1569,
+      "moon_age_at_best": 42.7
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "B"
+      ],
+      "day_q": [
+        0,
+        -0.8443,
+        0.0458
+      ],
+      "day_age": [
+        713.89,
+        22.48,
+        46.64
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.0458,
+      "moon_age_at_best": 46.64
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.7279,
+        0.3366
+      ],
+      "day_age": [
+        3.84,
+        27.85,
+        52.05
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3366,
+      "moon_age_at_best": 52.05
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "I",
+        "C"
+      ],
+      "day_q": [
+        0,
+        0,
+        -0.1508
+      ],
+      "day_age": [
+        699.15,
+        11.87,
+        36.06
+      ],
+      "best_raw": "C",
+      "best_effective": "C",
+      "q_at_best": -0.1508,
+      "moon_age_at_best": 36.06
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.4342,
+        1.1576
+      ],
+      "day_age": [
+        707.42,
+        23.12,
+        47.56
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1576,
+      "moon_age_at_best": 47.56
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.645,
+        1.0715
+      ],
+      "day_age": [
+        694.86,
+        12.84,
+        37.38
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0715,
+      "moon_age_at_best": 37.38
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.9068,
+        0.8387,
+        3.0359
+      ],
+      "day_age": [
+        4.45,
+        29.02,
+        53.58
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8387,
+      "moon_age_at_best": 29.02
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.4242,
+        2.5832
+      ],
+      "day_age": [
+        700.78,
+        21.58,
+        46.14
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4242,
+      "moon_age_at_best": 21.58
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "day_q": [
+        0,
+        -0.096,
+        1.9288
+      ],
+      "day_age": [
+        693.48,
+        14.16,
+        38.73
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.9288,
+      "moon_age_at_best": 38.73
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.6492,
+        1.109,
+        3.1279
+      ],
+      "day_age": [
+        5.87,
+        30.44,
+        54.99
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.109,
+      "moon_age_at_best": 30.44
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "day_q": [
+        0,
+        0.1613,
+        1.7923
+      ],
+      "day_age": [
+        702.23,
+        20.35,
+        44.83
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7923,
+      "moon_age_at_best": 44.83
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "day_q": [
+        -0.7635,
+        0.4056,
+        1.7398
+      ],
+      "day_age": [
+        7.67,
+        32.04,
+        56.34
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4056,
+      "moon_age_at_best": 32.04
+    }
+  ],
+  "yearly_summaries": [
+    {
+      "city": "jerusalem",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "dallas",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "melbourne",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "jerusalem",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "dallas",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "melbourne",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 11,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "jerusalem",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "dallas",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "melbourne",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 9,
+      "windows_with_b_or_better": 11,
+      "windows_with_c_or_better": 12
+    }
+  ]
+}

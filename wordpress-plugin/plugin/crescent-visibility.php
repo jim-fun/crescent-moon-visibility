@@ -3,11 +3,14 @@
  * Plugin Name:       Young Crescent Moon Visibility
  * Plugin URI:        https://github.com/jim-fun/crescent-moon-visibility
  * Description:       Minimal-footprint plugin showing pre-computed crescent visibility data for major cities (2026 onward). Uses accurate Yallop data generated offline.
- * Version:           0.4.3
+ * Version:           0.5.0
+ * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Crescent Moon Visibility Project
- * License:           MIT
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       crescent-visibility
+ * Domain Path:       /languages
  *
  * Production release synthesized from exploratory drafts (v3 + v4) via the
  * dedicated Claude production prompt. Clean module loading, schema versioning,
@@ -21,7 +24,7 @@ if (!defined('ABSPATH')) {
 // Plugin version — bump on every package update. Must match the "Version:"
 // header above. Also used to cache-bust the enqueued CSS/JS assets.
 if (!defined('CVI_VERSION')) {
-    define('CVI_VERSION', '0.4.3');
+    define('CVI_VERSION', '0.5.0');
 }
 
 // Production schema version for auto-upgrade logic
@@ -41,6 +44,7 @@ class Crescent_Visibility_Plugin {
         $this->table_observations = $wpdb->prefix . 'crescent_observations';
         $this->table_summaries    = $wpdb->prefix . 'crescent_yearly_summary';
 
+        add_action('init', [$this, 'load_textdomain']);
         add_action('admin_menu', [$this, 'add_admin_menu']);
         add_shortcode('crescent_visibility', [$this, 'render_shortcode']);
 
@@ -63,6 +67,10 @@ class Crescent_Visibility_Plugin {
         }
         $this->create_or_update_tables(); // dbDelta: adds missing columns only, never drops data
         update_option('cvi_plugin_version', CVI_VERSION);
+    }
+
+    public function load_textdomain() {
+        load_plugin_textdomain('crescent-visibility', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
 
     public function add_admin_menu() {
@@ -506,6 +514,77 @@ class Crescent_Visibility_Plugin {
 
     public function activate() {
         $this->create_or_update_tables();
+        $this->seed_sample_data();
+    }
+
+    /**
+     * On a fresh install, load the bundled small sample dataset (3 cities,
+     * 2026-2028) so the shortcode works immediately. Skips silently if the
+     * table already has data or the sample file is missing.
+     */
+    private function seed_sample_data() {
+        global $wpdb;
+
+        $existing = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$this->table_observations}");
+        if ($existing > 0) {
+            return;
+        }
+
+        $file = plugin_dir_path(__FILE__) . 'data/sample.json';
+        if (!is_readable($file)) {
+            return;
+        }
+        $data = json_decode(file_get_contents($file), true);
+        if (!is_array($data) || empty($data['observations'])) {
+            return;
+        }
+
+        $city_id = 1;
+        foreach (($data['cities'] ?? []) as $c) {
+            $slug = sanitize_text_field($c['slug'] ?? '');
+            if ($slug === '') {
+                continue;
+            }
+            $wpdb->insert($this->table_cities, [
+                'id'        => $city_id++,
+                'slug'      => $slug,
+                'name'      => sanitize_text_field($c['name'] ?? ''),
+                'latitude'  => floatval($c['latitude'] ?? 0),
+                'longitude' => floatval($c['longitude'] ?? 0),
+            ]);
+        }
+
+        $obs_id = 1;
+        foreach ($data['observations'] as $o) {
+            $city = sanitize_text_field($o['city'] ?? '');
+            $moon = sanitize_text_field($o['new_moon'] ?? '');
+            if ($city === '' || $moon === '') {
+                continue;
+            }
+            $days = isset($o['days']) && is_array($o['days']) ? $o['days'] : [];
+            $dq   = isset($o['day_q']) && is_array($o['day_q']) ? $o['day_q'] : [];
+            $da   = isset($o['day_age']) && is_array($o['day_age']) ? $o['day_age'] : [];
+            $wpdb->insert($this->table_observations, [
+                'id'              => $obs_id++,
+                'city'            => $city,
+                'new_moon_date'   => $moon,
+                'year'            => intval($o['year'] ?? 0),
+                'raw_day_0'       => sanitize_text_field($days[0] ?? '?'),
+                'raw_day_1'       => sanitize_text_field($days[1] ?? '?'),
+                'raw_day_2'       => sanitize_text_field($days[2] ?? '?'),
+                'best_raw'        => sanitize_text_field($o['best_raw'] ?? '?'),
+                'best_effective'  => sanitize_text_field($o['best_effective'] ?? '?'),
+                'q_at_best'       => isset($o['q_at_best']) ? floatval($o['q_at_best']) : null,
+                'moon_age_at_best'=> isset($o['moon_age_at_best']) ? floatval($o['moon_age_at_best']) : null,
+                'q_day_0'         => isset($dq[0]) ? floatval($dq[0]) : null,
+                'q_day_1'         => isset($dq[1]) ? floatval($dq[1]) : null,
+                'q_day_2'         => isset($dq[2]) ? floatval($dq[2]) : null,
+                'age_day_0'       => isset($da[0]) ? floatval($da[0]) : null,
+                'age_day_1'       => isset($da[1]) ? floatval($da[1]) : null,
+                'age_day_2'       => isset($da[2]) ? floatval($da[2]) : null,
+                'data_version'    => 'sample',
+            ]);
+        }
     }
 }
 

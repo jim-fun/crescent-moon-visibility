@@ -156,9 +156,14 @@ function crescent_visibility_render_interactive($atts) {
 
     // Enqueue assets only when the shortcode actually renders.
     $base_url = plugin_dir_url(dirname(__FILE__, 2) . '/crescent-visibility.php');
-    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.4.3';
-    wp_enqueue_style('cvi-interactive', $base_url . 'assets/css/interactive.css', [], $asset_ver);
-    wp_enqueue_script('cvi-interactive', $base_url . 'assets/js/interactive.js', [], $asset_ver, true);
+    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.5.0';
+
+    // Leaflet is bundled locally (no external CDN) per WordPress.org guidelines.
+    wp_enqueue_style('cvi-leaflet', $base_url . 'assets/vendor/leaflet/leaflet.css', [], '1.9.4');
+    wp_enqueue_script('cvi-leaflet', $base_url . 'assets/vendor/leaflet/leaflet.js', [], '1.9.4', true);
+
+    wp_enqueue_style('cvi-interactive', $base_url . 'assets/css/interactive.css', ['cvi-leaflet'], $asset_ver);
+    wp_enqueue_script('cvi-interactive', $base_url . 'assets/js/interactive.js', ['cvi-leaflet'], $asset_ver, true);
 
     wp_localize_script('cvi-interactive', 'cviInteractiveData', [
         'ajaxUrl'        => admin_url('admin-ajax.php'),
@@ -183,50 +188,49 @@ function crescent_visibility_render_interactive($atts) {
 
         <script type="application/json" class="cvi-dataset"><?php echo wp_json_encode($dataset, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?></script>
 
-        <h2 class="cvi-title">Young Crescent Moon Visibility</h2>
+        <h2 class="cvi-title"><?php esc_html_e('Young Crescent Moon Visibility', 'crescent-visibility'); ?></h2>
         <p class="cvi-intro">
-            Select your nearest city and a New Moon date, then adjust the sky conditions to explore
-            your chances of spotting the delicate thin crescent on each of the first three evenings.
+            <?php esc_html_e('Select your nearest city and a New Moon date, then adjust the sky conditions to explore your chances of spotting the delicate thin crescent on each of the first three evenings.', 'crescent-visibility'); ?>
         </p>
 
         <div class="cvi-field">
-            <div class="cvi-quick" id="cvi-quick" role="group" aria-label="Quick city selection">
-                <span class="cvi-quick__label">Quick select:</span>
+            <div class="cvi-quick" id="cvi-quick" role="group" aria-label="<?php esc_attr_e('Quick city selection', 'crescent-visibility'); ?>">
+                <span class="cvi-quick__label"><?php esc_html_e('Quick select:', 'crescent-visibility'); ?></span>
                 <button type="button" class="cvi-quick__btn" data-slug="jerusalem">Jerusalem</button>
                 <button type="button" class="cvi-quick__btn" data-slug="dallas">Dallas</button>
                 <button type="button" class="cvi-quick__btn" data-slug="melbourne">Melbourne</button>
             </div>
-            <label class="cvi-label" for="cvi-city">City</label>
+            <label class="cvi-label" for="cvi-city"><?php esc_html_e('City', 'crescent-visibility'); ?></label>
             <select id="cvi-city" class="cvi-select"></select>
             <div id="cvi-city-context" class="cvi-hint"></div>
         </div>
 
         <div class="cvi-field cvi-field--row">
             <div>
-                <label class="cvi-label" for="cvi-year">Year</label>
+                <label class="cvi-label" for="cvi-year"><?php esc_html_e('Year', 'crescent-visibility'); ?></label>
                 <select id="cvi-year" class="cvi-select"></select>
             </div>
             <div>
-                <label class="cvi-label" for="cvi-newmoon">New Moon (3-day window)</label>
+                <label class="cvi-label" for="cvi-newmoon"><?php esc_html_e('New Moon (3-day window)', 'crescent-visibility'); ?></label>
                 <select id="cvi-newmoon" class="cvi-select">
-                    <option value="">Select a new moon&hellip;</option>
+                    <option value=""><?php esc_html_e('Select a new moon…', 'crescent-visibility'); ?></option>
                 </select>
             </div>
         </div>
 
         <div class="cvi-controls">
-            <div class="cvi-controls__title">Atmospheric Conditions</div>
+            <div class="cvi-controls__title"><?php esc_html_e('Atmospheric Conditions', 'crescent-visibility'); ?></div>
             <div class="cvi-controls__grid">
                 <div>
                     <div class="cvi-slider-head">
-                        <span>Cloud Cover</span>
+                        <span><?php esc_html_e('Cloud Cover', 'crescent-visibility'); ?></span>
                         <span><strong id="cvi-cloud-val">20</strong>%</span>
                     </div>
                     <input type="range" id="cvi-cloud" class="cvi-range" min="0" max="100" value="20">
-                    <div class="cvi-hint">0% clear &rarr; 100% overcast</div>
+                    <div class="cvi-hint"><?php esc_html_e('0% clear → 100% overcast', 'crescent-visibility'); ?></div>
                 </div>
                 <div>
-                    <label class="cvi-label" for="cvi-trans">Transparency</label>
+                    <label class="cvi-label" for="cvi-trans"><?php esc_html_e('Transparency', 'crescent-visibility'); ?></label>
                     <div class="cvi-slider-inline">
                         <input type="range" id="cvi-trans" class="cvi-range" min="1" max="10" step="0.5" value="7">
                         <input type="number" id="cvi-trans-num" class="cvi-number" min="1" max="10" step="0.5" value="7">
@@ -238,41 +242,40 @@ function crescent_visibility_render_interactive($atts) {
         <div id="cvi-status" class="cvi-status" role="status" aria-live="polite"></div>
 
         <div id="cvi-results" class="cvi-results" hidden>
-            <div class="cvi-results__title">Results for the three evenings after conjunction</div>
+            <div class="cvi-results__title"><?php esc_html_e('Results for the three evenings after conjunction', 'crescent-visibility'); ?></div>
             <div id="cvi-cards" class="cvi-cards"></div>
         </div>
 
         <div class="cvi-map-wrap">
-            <div class="cvi-results__title">Location context</div>
+            <div class="cvi-results__title"><?php esc_html_e('Location context', 'crescent-visibility'); ?></div>
             <div id="cvi-map" class="cvi-map"></div>
-            <div class="cvi-hint">Map shown for geographic context only (marker at the selected city).</div>
+            <div class="cvi-hint"><?php esc_html_e('Map shown for geographic context only (marker at the selected city).', 'crescent-visibility'); ?></div>
         </div>
 
         <details class="cvi-legend" open>
-            <summary>How to read the visibility rating</summary>
+            <summary><?php esc_html_e('How to read the visibility rating', 'crescent-visibility'); ?></summary>
             <div class="cvi-legend__grid">
                 <div>
-                    <span class="cvi-legend__key" style="color:#22d3ee;">A</span> Easily visible to the naked eye<br>
-                    <span class="cvi-legend__key" style="color:#67e8f9;">B</span> Visible naked eye under good conditions<br>
-                    <span class="cvi-legend__key" style="color:#facc15;">C</span> Visible naked eye, but requires effort
+                    <span class="cvi-legend__key" style="color:#22d3ee;">A</span> <?php esc_html_e('Easily visible to the naked eye', 'crescent-visibility'); ?><br>
+                    <span class="cvi-legend__key" style="color:#67e8f9;">B</span> <?php esc_html_e('Visible naked eye under good conditions', 'crescent-visibility'); ?><br>
+                    <span class="cvi-legend__key" style="color:#facc15;">C</span> <?php esc_html_e('Visible naked eye, but requires effort', 'crescent-visibility'); ?>
                 </div>
                 <div>
-                    <span class="cvi-legend__key" style="color:#fde047;">D</span> Usually needs binoculars or a telescope<br>
-                    <span class="cvi-legend__key" style="color:#f59e0b;">E</span> Very difficult or not visible even with aid
+                    <span class="cvi-legend__key" style="color:#fde047;">D</span> <?php esc_html_e('Usually needs binoculars or a telescope', 'crescent-visibility'); ?><br>
+                    <span class="cvi-legend__key" style="color:#f59e0b;">E</span> <?php esc_html_e('Very difficult or not visible even with aid', 'crescent-visibility'); ?>
                 </div>
             </div>
             <div class="cvi-legend__notes">
-                <div><strong>Raw</strong>: pure astronomical prediction using the Yallop criterion at the city's location and time.</div>
-                <div><strong>Effective</strong>: adjusted for the cloud cover and transparency you entered.</div>
-                <div><strong>Age</strong>: hours since the exact moment of new moon (conjunction).</div>
-                <div><strong>Q</strong>: model quality factor (higher generally indicates more favorable geometry).</div>
+                <div><strong><?php esc_html_e('Raw', 'crescent-visibility'); ?></strong>: <?php esc_html_e("pure astronomical prediction using the Yallop criterion at the city's location and time.", 'crescent-visibility'); ?></div>
+                <div><strong><?php esc_html_e('Effective', 'crescent-visibility'); ?></strong>: <?php esc_html_e('adjusted for the cloud cover and transparency you entered.', 'crescent-visibility'); ?></div>
+                <div><strong><?php esc_html_e('Age', 'crescent-visibility'); ?></strong>: <?php esc_html_e('hours since the exact moment of new moon (conjunction).', 'crescent-visibility'); ?></div>
+                <div><strong><?php esc_html_e('Q', 'crescent-visibility'); ?></strong>: <?php esc_html_e('model quality factor (higher generally indicates more favorable geometry).', 'crescent-visibility'); ?></div>
             </div>
         </details>
 
         <p class="cvi-footnote">
-            Yallop criterion (clear-sky baseline). Atmospheric adjustment applied live in the browser
-            using the same model as the reference web app. No astronomy is computed at runtime.
-            <span class="cvi-version">Plugin v<?php echo esc_html(defined('CVI_VERSION') ? CVI_VERSION : '?'); ?></span>
+            <?php esc_html_e('Yallop criterion (clear-sky baseline). Atmospheric adjustment applied live in the browser. No astronomy is computed at runtime.', 'crescent-visibility'); ?>
+            <span class="cvi-version"><?php echo esc_html(sprintf(/* translators: %s: plugin version */ __('Plugin v%s', 'crescent-visibility'), defined('CVI_VERSION') ? CVI_VERSION : '?')); ?></span>
         </p>
 
         <noscript>
