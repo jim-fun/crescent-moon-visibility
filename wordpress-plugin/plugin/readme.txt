@@ -4,7 +4,7 @@ Tags: moon, crescent, astronomy, hijri, lunar
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ The Yallop crescent-visibility criterion, computed by the project's reference re
 3. Tools → Crescent Visibility data import screen.
 
 == Changelog ==
+
+= 0.5.2 =
+* Internationalize the admin screen and import notices; full .pot (150 strings).
 
 = 0.5.1 =
 * Internationalize the full front-end UI and JavaScript; add translation template (.pot).

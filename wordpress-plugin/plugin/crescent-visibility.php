@@ -3,7 +3,7 @@
  * Plugin Name:       Young Crescent Moon Visibility
  * Plugin URI:        https://github.com/jim-fun/crescent-moon-visibility
  * Description:       Minimal-footprint plugin showing pre-computed crescent visibility data for major cities (2026 onward). Uses accurate Yallop data generated offline.
- * Version:           0.5.1
+ * Version:           0.5.2
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Crescent Moon Visibility Project
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 // Plugin version — bump on every package update. Must match the "Version:"
 // header above. Also used to cache-bust the enqueued CSS/JS assets.
 if (!defined('CVI_VERSION')) {
-    define('CVI_VERSION', '0.5.1');
+    define('CVI_VERSION', '0.5.2');
 }
 
 // Production schema version for auto-upgrade logic
@@ -128,10 +128,13 @@ class Crescent_Visibility_Plugin {
 
         $err = $drop_err_obs ?: $drop_err_city;
         if ($err) {
-            echo '<div class="notice notice-error"><p><strong>Could not drop tables.</strong> ';
-            echo 'Database error: <code>' . esc_html($err) . '</code>. ';
-            echo 'Your database user likely lacks the DROP privilege — this is why re-importing kept collapsing to one row. ';
-            echo 'Ask your host to grant DROP, or use phpMyAdmin to drop <code>' . esc_html($this->table_observations) . '</code> manually.</p></div>';
+            echo '<div class="notice notice-error"><p><strong>' . esc_html__('Could not drop tables.', 'crescent-visibility') . '</strong> ';
+            /* translators: %s: database error message */
+            echo wp_kses(sprintf(__('Database error: %s.', 'crescent-visibility'), '<code>' . esc_html($err) . '</code>'), ['code' => []]) . ' ';
+            echo esc_html__('Your database user likely lacks the DROP privilege.', 'crescent-visibility') . ' ';
+            /* translators: %s: database table name */
+            echo wp_kses(sprintf(__('Ask your host to grant DROP, or use phpMyAdmin to drop %s manually.', 'crescent-visibility'), '<code>' . esc_html($this->table_observations) . '</code>'), ['code' => []]);
+            echo '</p></div>';
             return;
         }
 
@@ -139,9 +142,11 @@ class Crescent_Visibility_Plugin {
         $id_col   = $wpdb->get_row("SHOW COLUMNS FROM {$this->table_observations} LIKE 'id'", ARRAY_A);
         $id_extra = is_array($id_col) ? ($id_col['Extra'] ?? '') : 'no id column';
 
-        echo '<div class="notice notice-success"><p><strong>Tables dropped and recreated empty.</strong> ';
-        echo 'id column is now: <code>' . esc_html($id_extra !== '' ? $id_extra : '(no AUTO_INCREMENT)') . '</code>. ';
-        echo 'Now re-import your JSON to repopulate.</p></div>';
+        echo '<div class="notice notice-success"><p><strong>' . esc_html__('Tables dropped and recreated empty.', 'crescent-visibility') . '</strong> ';
+        /* translators: %s: id column definition */
+        echo wp_kses(sprintf(__('id column is now: %s.', 'crescent-visibility'), '<code>' . esc_html($id_extra !== '' ? $id_extra : __('(no AUTO_INCREMENT)', 'crescent-visibility')) . '</code>'), ['code' => []]) . ' ';
+        echo esc_html__('Now re-import your JSON to repopulate.', 'crescent-visibility');
+        echo '</p></div>';
     }
 
     private function handle_import() {
@@ -149,7 +154,7 @@ class Crescent_Visibility_Plugin {
         @set_time_limit(0);
 
         if (empty($_FILES['import_file']['tmp_name'])) {
-            $this->record_import_result(['error' => 'No file was received by the server. Check your upload size limits (post_max_size / upload_max_filesize).']);
+            $this->record_import_result(['error' => __('No file was received by the server. Check your upload size limits (post_max_size / upload_max_filesize).', 'crescent-visibility')]);
             $this->print_import_notice();
             return;
         }
@@ -158,7 +163,8 @@ class Crescent_Visibility_Plugin {
         $size   = (int) ($upload['size'] ?? 0);
 
         if (!empty($upload['error'])) {
-            $this->record_import_result(['error' => 'Upload error code ' . intval($upload['error']) . ' (often a server file-size limit).', 'file_size' => $size]);
+            /* translators: %d: PHP upload error code */
+            $this->record_import_result(['error' => sprintf(__('Upload error code %d (often a server file-size limit).', 'crescent-visibility'), intval($upload['error'])), 'file_size' => $size]);
             $this->print_import_notice();
             return;
         }
@@ -169,8 +175,8 @@ class Crescent_Visibility_Plugin {
         $max_bytes = (int) apply_filters('cvi_max_import_bytes', 64 * 1024 * 1024);
         if ($size > $max_bytes) {
             $this->record_import_result([
-                'error'     => 'File too large (' . number_format($size) . ' bytes). The limit is '
-                    . number_format($max_bytes) . ' bytes. Generate a smaller dataset (fewer years/cities).',
+                /* translators: 1: uploaded size in bytes, 2: limit in bytes */
+                'error'     => sprintf(__('File too large (%1$s bytes). The limit is %2$s bytes. Generate a smaller dataset (fewer years/cities).', 'crescent-visibility'), number_format($size), number_format($max_bytes)),
                 'file_size' => $size,
             ]);
             $this->print_import_notice();
@@ -182,8 +188,9 @@ class Crescent_Visibility_Plugin {
 
         if (!is_array($data) || empty($data['observations']) || !is_array($data['observations'])) {
             $hint = (json_last_error() !== JSON_ERROR_NONE)
-                ? 'JSON parse error: ' . json_last_error_msg() . ' (the file may be truncated by an upload limit).'
-                : 'The file must contain a non-empty "observations" array.';
+                /* translators: %s: JSON parser error message */
+                ? sprintf(__('JSON parse error: %s (the file may be truncated by an upload limit).', 'crescent-visibility'), json_last_error_msg())
+                : __('The file must contain a non-empty "observations" array.', 'crescent-visibility');
             $this->record_import_result(['error' => $hint, 'file_size' => $size]);
             $this->print_import_notice();
             return;
@@ -358,7 +365,7 @@ class Crescent_Visibility_Plugin {
         }
 
         if (!empty($r['error'])) {
-            echo '<div class="notice notice-error"><p><strong>Import failed.</strong> ' . esc_html($r['error']) . '</p></div>';
+            echo '<div class="notice notice-error"><p><strong>' . esc_html__('Import failed.', 'crescent-visibility') . '</strong> ' . esc_html($r['error']) . '</p></div>';
             return;
         }
 
@@ -368,14 +375,16 @@ class Crescent_Visibility_Plugin {
         $failed   = intval($r['failed'] ?? 0);
 
         if ($imported === 0) {
-            echo '<div class="notice notice-error"><p><strong>Import failed.</strong> ';
-            echo 'Found ' . $found . ' observations in the file but stored none ';
-            echo '(' . $skipped . ' skipped, ' . $failed . ' db errors).</p>';
+            echo '<div class="notice notice-error"><p><strong>' . esc_html__('Import failed.', 'crescent-visibility') . '</strong> ';
+            /* translators: 1: observations found, 2: skipped count, 3: db error count */
+            echo esc_html(sprintf(__('Found %1$d observations in the file but stored none (%2$d skipped, %3$d db errors).', 'crescent-visibility'), $found, $skipped, $failed)) . '</p>';
             if (!empty($r['first_error'])) {
-                echo '<p>Database error: <code>' . esc_html($r['first_error']) . '</code></p>';
+                /* translators: %s: database error message */
+                echo '<p>' . wp_kses(sprintf(__('Database error: %s', 'crescent-visibility'), '<code>' . esc_html($r['first_error']) . '</code>'), ['code' => []]) . '</p>';
             }
             if (!empty($r['first_skip'])) {
-                echo '<p>First skipped row ' . esc_html($r['first_skip']) . ' — the file rows are missing <code>city</code>/<code>new_moon</code>.</p>';
+                /* translators: %s: list of JSON keys present on the row */
+                echo '<p>' . esc_html(sprintf(__('First skipped row %s — the file rows are missing city/new_moon.', 'crescent-visibility'), $r['first_skip'])) . '</p>';
             }
             echo '</div>';
             return;
@@ -386,24 +395,41 @@ class Crescent_Visibility_Plugin {
         // Collapse detection: many inserts but few surviving rows means the table
         // keys are broken (lost AUTO_INCREMENT / stale unique index).
         if ($stored < $imported) {
-            echo '<div class="notice notice-error"><p><strong>Import stored only ' . $stored . ' of ' . $imported . ' rows.</strong> ';
-            echo 'The database table keys are corrupted (rows are overwriting each other). ';
-            echo 'Deactivate the plugin, then in your database drop the <code>' . esc_html($this->table_observations) . '</code> table, reactivate, and import again.</p></div>';
+            echo '<div class="notice notice-error"><p><strong>';
+            /* translators: 1: rows stored, 2: rows attempted */
+            echo esc_html(sprintf(__('Import stored only %1$d of %2$d rows.', 'crescent-visibility'), $stored, $imported)) . '</strong> ';
+            echo esc_html__('The database table keys are corrupted (rows are overwriting each other).', 'crescent-visibility') . ' ';
+            /* translators: %s: database table name */
+            echo wp_kses(sprintf(__('Deactivate the plugin, then in your database drop the %s table, reactivate, and import again.', 'crescent-visibility'), '<code>' . esc_html($this->table_observations) . '</code>'), ['code' => []]);
+            echo '</p></div>';
             return;
         }
 
         $class = ($skipped > 0 || $failed > 0) ? 'notice-warning' : 'notice-success';
-        echo '<div class="notice ' . $class . '"><p><strong>Import ' . (($skipped || $failed) ? 'completed with warnings' : 'successful') . '!</strong> ';
-        echo 'Stored <strong>' . $stored . '</strong> of ' . $found . ' observations';
-        echo intval($r['cities'] ?? 0) ? ' and <strong>' . intval($r['cities']) . '</strong> cities' : '';
-        echo '.';
-        if ($skipped > 0) { echo ' Skipped ' . $skipped . ' (missing city/new_moon).'; }
-        if ($failed > 0)  { echo ' ' . $failed . ' db errors.'; }
+        $headline = ($skipped || $failed) ? __('Import completed with warnings!', 'crescent-visibility') : __('Import successful!', 'crescent-visibility');
+        echo '<div class="notice ' . esc_attr($class) . '"><p><strong>' . esc_html($headline) . '</strong> ';
+        if (intval($r['cities'] ?? 0)) {
+            /* translators: 1: observations stored, 2: total observations, 3: cities stored */
+            echo esc_html(sprintf(__('Stored %1$d of %2$d observations and %3$d cities.', 'crescent-visibility'), $stored, $found, intval($r['cities'])));
+        } else {
+            /* translators: 1: observations stored, 2: total observations */
+            echo esc_html(sprintf(__('Stored %1$d of %2$d observations.', 'crescent-visibility'), $stored, $found));
+        }
+        if ($skipped > 0) {
+            /* translators: %d: skipped row count */
+            echo ' ' . esc_html(sprintf(__('Skipped %d (missing city/new_moon).', 'crescent-visibility'), $skipped));
+        }
+        if ($failed > 0) {
+            /* translators: %d: db error count */
+            echo ' ' . esc_html(sprintf(__('%d db errors.', 'crescent-visibility'), $failed));
+        }
         echo '</p>';
         if (!empty($r['first_error'])) {
-            echo '<p>First db error: <code>' . esc_html($r['first_error']) . '</code></p>';
+            /* translators: %s: database error message */
+            echo '<p>' . wp_kses(sprintf(__('First db error: %s', 'crescent-visibility'), '<code>' . esc_html($r['first_error']) . '</code>'), ['code' => []]) . '</p>';
         }
-        echo '<p>You can now use <code>[crescent_visibility_interactive]</code>.</p></div>';
+        /* translators: %s: shortcode wrapped in <code> */
+        echo '<p>' . wp_kses(sprintf(__('You can now use %s.', 'crescent-visibility'), '<code>[crescent_visibility_interactive]</code>'), ['code' => []]) . '</p></div>';
     }
 
     public function render_shortcode($atts) {

@@ -1,5 +1,5 @@
 # Translation template for Young Crescent Moon Visibility
-# Copyright (C) 2026 Crescent Moon Visibility Project
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-30 13:19-0400\n"
+"POT-Creation-Date: 2026-05-30 13:27-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,6 +26,161 @@ msgstr ""
 msgid "Crescent Visibility"
 msgstr ""
 
+#: plugin/crescent-visibility.php:131
+msgid "Could not drop tables."
+msgstr ""
+
+#. translators: %s: database error message
+#: plugin/crescent-visibility.php:133
+#, php-format
+msgid "Database error: %s."
+msgstr ""
+
+#: plugin/crescent-visibility.php:134
+msgid "Your database user likely lacks the DROP privilege."
+msgstr ""
+
+#. translators: %s: database table name
+#: plugin/crescent-visibility.php:136
+#, php-format
+msgid "Ask your host to grant DROP, or use phpMyAdmin to drop %s manually."
+msgstr ""
+
+#: plugin/crescent-visibility.php:145
+msgid "Tables dropped and recreated empty."
+msgstr ""
+
+#. translators: %s: id column definition
+#: plugin/crescent-visibility.php:147
+#, php-format
+msgid "id column is now: %s."
+msgstr ""
+
+#: plugin/crescent-visibility.php:147 plugin/admin/admin-page.php:164
+msgid "(no AUTO_INCREMENT)"
+msgstr ""
+
+#: plugin/crescent-visibility.php:148
+msgid "Now re-import your JSON to repopulate."
+msgstr ""
+
+#: plugin/crescent-visibility.php:157
+msgid ""
+"No file was received by the server. Check your upload size limits "
+"(post_max_size / upload_max_filesize)."
+msgstr ""
+
+#. translators: %d: PHP upload error code
+#: plugin/crescent-visibility.php:167
+#, php-format
+msgid "Upload error code %d (often a server file-size limit)."
+msgstr ""
+
+#. translators: 1: uploaded size in bytes, 2: limit in bytes
+#: plugin/crescent-visibility.php:179
+#, php-format
+msgid ""
+"File too large (%1$s bytes). The limit is %2$s bytes. Generate a smaller "
+"dataset (fewer years/cities)."
+msgstr ""
+
+#. translators: %s: JSON parser error message
+#: plugin/crescent-visibility.php:192
+#, php-format
+msgid "JSON parse error: %s (the file may be truncated by an upload limit)."
+msgstr ""
+
+#: plugin/crescent-visibility.php:193
+msgid "The file must contain a non-empty \"observations\" array."
+msgstr ""
+
+#: plugin/crescent-visibility.php:368 plugin/crescent-visibility.php:378
+msgid "Import failed."
+msgstr ""
+
+#. translators: 1: observations found, 2: skipped count, 3: db error count
+#: plugin/crescent-visibility.php:380
+#, php-format
+msgid ""
+"Found %1$d observations in the file but stored none (%2$d skipped, %3$d db "
+"errors)."
+msgstr ""
+
+#. translators: %s: database error message
+#: plugin/crescent-visibility.php:383
+#, php-format
+msgid "Database error: %s"
+msgstr ""
+
+#. translators: %s: list of JSON keys present on the row
+#: plugin/crescent-visibility.php:387
+#, php-format
+msgid "First skipped row %s — the file rows are missing city/new_moon."
+msgstr ""
+
+#. translators: 1: rows stored, 2: rows attempted
+#: plugin/crescent-visibility.php:400
+#, php-format
+msgid "Import stored only %1$d of %2$d rows."
+msgstr ""
+
+#: plugin/crescent-visibility.php:401
+msgid ""
+"The database table keys are corrupted (rows are overwriting each other)."
+msgstr ""
+
+#. translators: %s: database table name
+#: plugin/crescent-visibility.php:403
+#, php-format
+msgid ""
+"Deactivate the plugin, then in your database drop the %s table, reactivate, "
+"and import again."
+msgstr ""
+
+#: plugin/crescent-visibility.php:409
+msgid "Import completed with warnings!"
+msgstr ""
+
+#: plugin/crescent-visibility.php:409
+msgid "Import successful!"
+msgstr ""
+
+#. translators: 1: observations stored, 2: total observations, 3: cities stored
+#: plugin/crescent-visibility.php:413
+#, php-format
+msgid "Stored %1$d of %2$d observations and %3$d cities."
+msgstr ""
+
+#. translators: 1: observations stored, 2: total observations
+#: plugin/crescent-visibility.php:416
+#, php-format
+msgid "Stored %1$d of %2$d observations."
+msgstr ""
+
+#. translators: %d: skipped row count
+#: plugin/crescent-visibility.php:420
+#, php-format
+msgid "Skipped %d (missing city/new_moon)."
+msgstr ""
+
+#. translators: %d: db error count
+#: plugin/crescent-visibility.php:424
+#, php-format
+msgid "%d db errors."
+msgstr ""
+
+#. translators: %s: database error message
+#: plugin/crescent-visibility.php:429
+#, php-format
+msgid "First db error: %s"
+msgstr ""
+
+#. translators: %s: shortcode wrapped in <code>
+#: plugin/crescent-visibility.php:432
+#, php-format
+msgid "You can now use %s."
+msgstr ""
+
 #: plugin/includes/interactive.php:180 plugin/assets/js/interactive.js:160
 msgid "Atmospheric conditions have minimal impact on this prediction."
 msgstr ""
@@ -39,6 +194,304 @@ msgstr ""
 
 #: plugin/includes/interactive.php:185 plugin/assets/js/interactive.js:164
 msgid "Excellent atmospheric conditions are slightly improving the prediction."
+msgstr ""
+
+#: plugin/admin/admin-page.php:7
+msgid "Crescent Visibility Data Management"
+msgstr ""
+
+#. translators: %s: plugin version
+#: plugin/admin/admin-page.php:10
+#, php-format
+msgid "(plugin v%s)"
+msgstr ""
+
+#: plugin/admin/admin-page.php:15
+msgid "This plugin does not contain any visibility data by default."
+msgstr ""
+
+#: plugin/admin/admin-page.php:17
+msgid ""
+"To use it, you must import a data file generated by the offline generator "
+"tool."
+msgstr ""
+
+#: plugin/admin/admin-page.php:19
+msgid "How to Use"
+msgstr ""
+
+#: plugin/admin/admin-page.php:21
+msgid ""
+"Generate a .json data file with the project's generator. Years and cities "
+"are set there:"
+msgstr ""
+
+#: plugin/admin/admin-page.php:23
+msgid ""
+"The dropdown shows every city in the file (Jerusalem, Dallas and Melbourne "
+"are always included); the Year list shows every year in the file."
+msgstr ""
+
+#: plugin/admin/admin-page.php:25
+msgid "Upload that file below to import the data into your WordPress database."
+msgstr ""
+
+#: plugin/admin/admin-page.php:26
+msgid "Use the shortcode on any page or post, for example:"
+msgstr ""
+
+#: plugin/admin/admin-page.php:29
+msgid "New (recommended for most users):"
+msgstr ""
+
+#: plugin/admin/admin-page.php:29
+msgid "For the full interactive experience:"
+msgstr ""
+
+#: plugin/admin/admin-page.php:30
+msgid "or"
+msgstr ""
+
+#: plugin/admin/admin-page.php:31
+msgid "Optional attributes: default_city=\"cairo\" and theme=\"dark\"."
+msgstr ""
+
+#: plugin/admin/admin-page.php:35
+msgid ""
+"You can re-import updated data files at any time to refresh or extend the "
+"dataset (for example, adding 2029 data later)."
+msgstr ""
+
+#: plugin/admin/admin-page.php:38
+msgid "Important for the interactive experience:"
+msgstr ""
+
+#: plugin/admin/admin-page.php:39
+msgid ""
+"The database is upgraded automatically when you update the plugin (per-"
+"evening Age/Q columns are added if missing). Those columns are only "
+"populated from your data file, so re-import after updating to get the "
+"richest result cards."
+msgstr ""
+
+#: plugin/admin/admin-page.php:44
+msgid "Import Data"
+msgstr ""
+
+#: plugin/admin/admin-page.php:45
+msgid "Upload a JSON file containing pre-computed visibility data."
+msgstr ""
+
+#: plugin/admin/admin-page.php:51
+msgid "Import / Update Data"
+msgstr ""
+
+#: plugin/admin/admin-page.php:56
+msgid "Reset Database Tables"
+msgstr ""
+
+#: plugin/admin/admin-page.php:57
+msgid ""
+"Permanently delete the plugin's tables (observations + cities) and recreate "
+"them empty. Use this if the data looks stuck or corrupted (e.g. only 1 row "
+"stored), then re-import. This does not affect any other plugin or content."
+msgstr ""
+
+#: plugin/admin/admin-page.php:62
+msgid "Drop & Recreate Tables…"
+msgstr ""
+
+#: plugin/admin/admin-page.php:68
+msgid "⚠️ Delete all crescent visibility data?"
+msgstr ""
+
+#: plugin/admin/admin-page.php:72
+#, php-format
+msgid ""
+"This permanently deletes the %1$s and %2$s tables and recreates them empty. "
+"There is no undo. You will need to re-import your JSON afterward."
+msgstr ""
+
+#: plugin/admin/admin-page.php:80
+#, php-format
+msgid "Currently stored: %s observation row."
+msgid_plural "Currently stored: %s observation rows."
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin/admin/admin-page.php:86
+msgid ""
+"I understand this permanently deletes all imported crescent visibility data."
+msgstr ""
+
+#: plugin/admin/admin-page.php:89
+msgid "Cancel"
+msgstr ""
+
+#: plugin/admin/admin-page.php:93
+msgid "Yes, delete & recreate"
+msgstr ""
+
+#: plugin/admin/admin-page.php:133
+msgid "Current Data Status"
+msgstr ""
+
+#: plugin/admin/admin-page.php:140
+msgid "✓ Data loaded:"
+msgstr ""
+
+#. translators: %s: number of observation records
+#: plugin/admin/admin-page.php:142
+#, php-format
+msgid "%s observation record in the database."
+msgid_plural "%s observation records in the database."
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin/admin/admin-page.php:145
+msgid "No data imported yet."
+msgstr ""
+
+#: plugin/admin/admin-page.php:146
+msgid "Please upload a data file above."
+msgstr ""
+
+#: plugin/admin/admin-page.php:152
+msgid "Last Import Attempt"
+msgstr ""
+
+#. translators for the diagnostic labels below are self-evident field names.
+#: plugin/admin/admin-page.php:156
+msgid "When"
+msgstr ""
+
+#: plugin/admin/admin-page.php:157
+msgid "Uploaded file size"
+msgstr ""
+
+#: plugin/admin/admin-page.php:157
+#, php-format
+msgid "%s bytes"
+msgstr ""
+
+#: plugin/admin/admin-page.php:158
+msgid "Result"
+msgstr ""
+
+#: plugin/admin/admin-page.php:158
+#, php-format
+msgid "FAILED — %s"
+msgstr ""
+
+#: plugin/admin/admin-page.php:159
+msgid "Observations in file"
+msgstr ""
+
+#: plugin/admin/admin-page.php:160
+msgid "Stored this import"
+msgstr ""
+
+#: plugin/admin/admin-page.php:161
+msgid "Skipped (missing city/new_moon)"
+msgstr ""
+
+#: plugin/admin/admin-page.php:162
+msgid "DB errors"
+msgstr ""
+
+#: plugin/admin/admin-page.php:163
+msgid "Total rows now in table"
+msgstr ""
+
+#: plugin/admin/admin-page.php:164
+msgid "id column type"
+msgstr ""
+
+#: plugin/admin/admin-page.php:165
+msgid "Indexes"
+msgstr ""
+
+#: plugin/admin/admin-page.php:166
+msgid "Distinct city+date stored"
+msgstr ""
+
+#: plugin/admin/admin-page.php:167
+msgid "First stored rows"
+msgstr ""
+
+#: plugin/admin/admin-page.php:168
+msgid "Table rebuild error"
+msgstr ""
+
+#: plugin/admin/admin-page.php:169
+msgid "First DB error"
+msgstr ""
+
+#: plugin/admin/admin-page.php:170
+msgid "First skipped row"
+msgstr ""
+
+#. translators: %s: city name
+#: plugin/public/renderer.php:31
+#, php-format
+msgid "Crescent Visibility — %s"
+msgstr ""
+
+#: plugin/public/renderer.php:35
+msgid "Period:"
+msgstr ""
+
+#. translators: %d: number of new moons
+#: plugin/public/renderer.php:38
+#, php-format
+msgid "(%d new moon)"
+msgid_plural "(%d new moons)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin/public/renderer.php:45
+msgid "No data found for this city and period."
+msgstr ""
+
+#: plugin/public/renderer.php:46
+msgid "Next step:"
+msgstr ""
+
+#: plugin/public/renderer.php:46
+msgid ""
+"Go to Tools → Crescent Visibility in the WordPress admin dashboard and "
+"import a visibility JSON file using the Import form."
+msgstr ""
+
+#: plugin/public/renderer.php:70
+msgid ""
+"Excellent conditions — crescent should be easily visible to the naked eye."
+msgstr ""
+
+#: plugin/public/renderer.php:71
+msgid "Good conditions — visible to the naked eye under clear skies."
+msgstr ""
+
+#: plugin/public/renderer.php:72
+msgid "Moderate — visible naked eye but requires good conditions."
+msgstr ""
+
+#: plugin/public/renderer.php:73
+msgid "Difficult — usually needs binoculars or a telescope."
+msgstr ""
+
+#: plugin/public/renderer.php:74
+msgid "Very difficult or not visible even with aid."
+msgstr ""
+
+#: plugin/public/renderer.php:76
+msgid "Visibility conditions vary."
+msgstr ""
+
+#: plugin/public/renderer.php:84
+msgid ""
+"Pre-computed Yallop data (clear skies baseline). Atmospheric adjustment "
+"coming in a future update."
 msgstr ""
 
 #: plugin/public/interactive-renderer.php:50
@@ -231,69 +684,6 @@ msgstr ""
 #: plugin/public/interactive-renderer.php:294
 #, php-format
 msgid "Plugin v%s"
-msgstr ""
-
-#. translators: %s: city name
-#: plugin/public/renderer.php:31
-#, php-format
-msgid "Crescent Visibility — %s"
-msgstr ""
-
-#: plugin/public/renderer.php:35
-msgid "Period:"
-msgstr ""
-
-#. translators: %d: number of new moons
-#: plugin/public/renderer.php:38
-#, php-format
-msgid "(%d new moon)"
-msgid_plural "(%d new moons)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: plugin/public/renderer.php:45
-msgid "No data found for this city and period."
-msgstr ""
-
-#: plugin/public/renderer.php:46
-msgid "Next step:"
-msgstr ""
-
-#: plugin/public/renderer.php:46
-msgid ""
-"Go to Tools → Crescent Visibility in the WordPress admin dashboard and "
-"import a visibility JSON file using the Import form."
-msgstr ""
-
-#: plugin/public/renderer.php:70
-msgid ""
-"Excellent conditions — crescent should be easily visible to the naked eye."
-msgstr ""
-
-#: plugin/public/renderer.php:71
-msgid "Good conditions — visible to the naked eye under clear skies."
-msgstr ""
-
-#: plugin/public/renderer.php:72
-msgid "Moderate — visible naked eye but requires good conditions."
-msgstr ""
-
-#: plugin/public/renderer.php:73
-msgid "Difficult — usually needs binoculars or a telescope."
-msgstr ""
-
-#: plugin/public/renderer.php:74
-msgid "Very difficult or not visible even with aid."
-msgstr ""
-
-#: plugin/public/renderer.php:76
-msgid "Visibility conditions vary."
-msgstr ""
-
-#: plugin/public/renderer.php:84
-msgid ""
-"Pre-computed Yallop data (clear skies baseline). Atmospheric adjustment "
-"coming in a future update."
 msgstr ""
 
 #: plugin/assets/js/interactive.js:277

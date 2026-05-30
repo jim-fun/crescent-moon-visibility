@@ -169,7 +169,7 @@ function crescent_visibility_render_interactive($atts) {
 
     // Enqueue assets only when the shortcode actually renders.
     $base_url = plugin_dir_url(dirname(__FILE__, 2) . '/crescent-visibility.php');
-    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.5.1';
+    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.5.2';
 
     // Leaflet is bundled locally (no external CDN) per WordPress.org guidelines.
     wp_enqueue_style('cvi-leaflet', $base_url . 'assets/vendor/leaflet/leaflet.css', [], '1.9.4');
