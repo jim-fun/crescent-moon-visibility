@@ -47,8 +47,8 @@ function cvi_render_card($label, $raw, $cloud, $trans, $age, $q) {
     if ($raw === 'J' || $raw === '?' || $raw === '' || $age > 100) {
         return '<div class="cvi-card cvi-card--empty">'
             . '<div class="cvi-card__label">' . esc_html($label) . '</div>'
-            . '<div class="cvi-card__empty-title">Not a good crescent window</div>'
-            . '<div class="cvi-card__empty-note">The selected date is too far from actual new moon conjunction for reliable prediction.</div>'
+            . '<div class="cvi-card__empty-title">' . esc_html__('Not a good crescent window', 'crescent-visibility') . '</div>'
+            . '<div class="cvi-card__empty-note">' . esc_html__('The selected date is too far from actual new moon conjunction for reliable prediction.', 'crescent-visibility') . '</div>'
             . '</div>';
     }
 
@@ -56,14 +56,17 @@ function cvi_render_card($label, $raw, $cloud, $trans, $age, $q) {
     $colors = cvi_category_colors();
     $color  = $colors[$eff] ?? '#64748b';
 
+    /* translators: 1: moon age in hours, 2: Q value */
+    $age_q = sprintf(__('Age: %1$s h • Q: %2$s', 'crescent-visibility'), number_format((float) $age, 1), number_format((float) $q, 3));
+
     return '<div class="cvi-card cvi-card--cat" style="--cat:' . esc_attr($color) . ';">'
         . '<div class="cvi-card__label">' . esc_html($label) . '</div>'
         . '<div class="cvi-card__head">'
-        . '<div><div class="cvi-card__sub">Effective</div>'
+        . '<div><div class="cvi-card__sub">' . esc_html__('Effective', 'crescent-visibility') . '</div>'
         . '<div class="cvi-card__big">' . esc_html($eff) . '</div></div>'
         . '<div class="cvi-card__meta">'
-        . '<div>Raw <span class="cvi-mono">' . esc_html($raw) . '</span></div>'
-        . '<div class="cvi-card__sub">Age: ' . esc_html(number_format((float) $age, 1)) . ' h &bull; Q: ' . esc_html(number_format((float) $q, 3)) . '</div>'
+        . '<div>' . esc_html__('Raw', 'crescent-visibility') . ' <span class="cvi-mono">' . esc_html($raw) . '</span></div>'
+        . '<div class="cvi-card__sub">' . esc_html($age_q) . '</div>'
         . '</div></div>'
         . '<div class="cvi-card__note">' . esc_html($note) . '</div>'
         . '</div>';
@@ -74,8 +77,11 @@ function cvi_render_card($label, $raw, $cloud, $trans, $age, $q) {
  */
 function cvi_render_noscript_fallback($interactive, $defaults) {
     if (!$interactive || empty($defaults['new_moon_date'])) {
-        return '<p class="cvi-noscript">Enable JavaScript to use the interactive visibility tool, or see the '
-            . '<code>[crescent_visibility]</code> shortcode for a static table.</p>';
+        return '<p class="cvi-noscript">' . wp_kses(
+            /* translators: %s: shortcode name wrapped in <code> */
+            sprintf(__('Enable JavaScript to use the interactive visibility tool, or see the %s shortcode for a static table.', 'crescent-visibility'), '<code>[crescent_visibility]</code>'),
+            ['code' => []]
+        ) . '</p>';
     }
 
     $rows = $interactive->get_new_moons_with_details($defaults['city'], $defaults['year']);
@@ -88,7 +94,7 @@ function cvi_render_noscript_fallback($interactive, $defaults) {
     }
 
     if (!$row) {
-        return '<p class="cvi-noscript">Enable JavaScript to use the interactive visibility tool.</p>';
+        return '<p class="cvi-noscript">' . esc_html__('Enable JavaScript to use the interactive visibility tool.', 'crescent-visibility') . '</p>';
     }
 
     // Default atmospheric assumption (clear-ish sky), matching the UI defaults.
@@ -96,7 +102,11 @@ function cvi_render_noscript_fallback($interactive, $defaults) {
     $trans   = 7;
     $day_q   = isset($row['day_q']) && is_array($row['day_q']) ? $row['day_q'] : [];
     $day_age = isset($row['day_age']) && is_array($row['day_age']) ? $row['day_age'] : [];
-    $labels  = ['Day +0', 'Day +1', 'Day +2'];
+    $labels  = [
+        __('Day +0', 'crescent-visibility'),
+        __('Day +1', 'crescent-visibility'),
+        __('Day +2', 'crescent-visibility'),
+    ];
 
     $cards = '';
     foreach ($row['days'] as $i => $raw) {
@@ -106,8 +116,11 @@ function cvi_render_noscript_fallback($interactive, $defaults) {
     }
 
     return '<div class="cvi-noscript">'
-        . '<p>Showing the default window (' . esc_html($defaults['new_moon_date'])
-        . ') at clear-sky conditions. Enable JavaScript for the full interactive tool.</p>'
+        . '<p>' . sprintf(
+            /* translators: %s: a new moon date (YYYY-MM-DD) */
+            esc_html__('Showing the default window (%s) at clear-sky conditions. Enable JavaScript for the full interactive tool.', 'crescent-visibility'),
+            esc_html($defaults['new_moon_date'])
+        ) . '</p>'
         . '<div class="cvi-cards">' . $cards . '</div>'
         . '</div>';
 }
@@ -156,14 +169,17 @@ function crescent_visibility_render_interactive($atts) {
 
     // Enqueue assets only when the shortcode actually renders.
     $base_url = plugin_dir_url(dirname(__FILE__, 2) . '/crescent-visibility.php');
-    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.5.0';
+    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.5.1';
 
     // Leaflet is bundled locally (no external CDN) per WordPress.org guidelines.
     wp_enqueue_style('cvi-leaflet', $base_url . 'assets/vendor/leaflet/leaflet.css', [], '1.9.4');
     wp_enqueue_script('cvi-leaflet', $base_url . 'assets/vendor/leaflet/leaflet.js', [], '1.9.4', true);
 
     wp_enqueue_style('cvi-interactive', $base_url . 'assets/css/interactive.css', ['cvi-leaflet'], $asset_ver);
-    wp_enqueue_script('cvi-interactive', $base_url . 'assets/js/interactive.js', ['cvi-leaflet'], $asset_ver, true);
+    wp_enqueue_script('cvi-interactive', $base_url . 'assets/js/interactive.js', ['cvi-leaflet', 'wp-i18n'], $asset_ver, true);
+    if (function_exists('wp_set_script_translations')) {
+        wp_set_script_translations('cvi-interactive', 'crescent-visibility');
+    }
 
     wp_localize_script('cvi-interactive', 'cviInteractiveData', [
         'ajaxUrl'        => admin_url('admin-ajax.php'),

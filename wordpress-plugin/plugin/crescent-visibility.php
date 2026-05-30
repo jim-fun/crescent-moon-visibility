@@ -3,7 +3,7 @@
  * Plugin Name:       Young Crescent Moon Visibility
  * Plugin URI:        https://github.com/jim-fun/crescent-moon-visibility
  * Description:       Minimal-footprint plugin showing pre-computed crescent visibility data for major cities (2026 onward). Uses accurate Yallop data generated offline.
- * Version:           0.5.0
+ * Version:           0.5.1
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Crescent Moon Visibility Project
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')) {
 // Plugin version — bump on every package update. Must match the "Version:"
 // header above. Also used to cache-bust the enqueued CSS/JS assets.
 if (!defined('CVI_VERSION')) {
-    define('CVI_VERSION', '0.5.0');
+    define('CVI_VERSION', '0.5.1');
 }
 
 // Production schema version for auto-upgrade logic
@@ -75,8 +75,8 @@ class Crescent_Visibility_Plugin {
 
     public function add_admin_menu() {
         add_management_page(
-            'Crescent Visibility Data',
-            'Crescent Visibility',
+            __('Crescent Visibility Data', 'crescent-visibility'),
+            __('Crescent Visibility', 'crescent-visibility'),
             'manage_options',
             'crescent-visibility',
             [$this, 'render_admin_page']

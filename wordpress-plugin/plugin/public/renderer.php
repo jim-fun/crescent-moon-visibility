@@ -26,18 +26,24 @@ function crescent_visibility_render($atts) {
     ?>
     <div class="crescent-visibility" style="font-family: system-ui, -apple-system, sans-serif; max-width: 900px; margin: 20px 0;">
         <h3 style="margin-bottom: 8px;">
-            Crescent Visibility — <?php echo esc_html(ucwords(str_replace('-', ' ', $city))); ?>
+            <?php
+            /* translators: %s: city name */
+            echo esc_html(sprintf(__('Crescent Visibility — %s', 'crescent-visibility'), ucwords(str_replace('-', ' ', $city))));
+            ?>
         </h3>
         <p style="margin: 0 0 12px; color: #555;">
-            <strong>Period:</strong> <?php echo esc_html($years); ?> 
-            (<?php echo count($results); ?> new moons)
+            <strong><?php esc_html_e('Period:', 'crescent-visibility'); ?></strong> <?php echo esc_html($years); ?>
+            <?php
+            /* translators: %d: number of new moons */
+            echo esc_html(sprintf(_n('(%d new moon)', '(%d new moons)', count($results), 'crescent-visibility'), count($results)));
+            ?>
         </p>
 
         <?php if (empty($results)): ?>
             <div style="padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px;">
                 <p style="margin: 0; color: #856404;">
-                    <strong>No data found for this city and period.</strong><br><br>
-                    <strong>Next step:</strong> Go to <strong>Tools → Crescent Visibility</strong> in the WordPress admin dashboard and import a visibility JSON file (e.g. <code>visibility-2026-2035-real.json</code>) using the Import form.
+                    <strong><?php esc_html_e('No data found for this city and period.', 'crescent-visibility'); ?></strong><br><br>
+                    <strong><?php esc_html_e('Next step:', 'crescent-visibility'); ?></strong> <?php esc_html_e('Go to Tools → Crescent Visibility in the WordPress admin dashboard and import a visibility JSON file using the Import form.', 'crescent-visibility'); ?>
                 </p>
             </div>
         <?php else: ?>
@@ -61,13 +67,13 @@ function crescent_visibility_render($atts) {
                         <?php 
                         // Simple explanation based on best effective
                         $explanations = [
-                            'A' => 'Excellent conditions — crescent should be easily visible to the naked eye.',
-                            'B' => 'Good conditions — visible to the naked eye under clear skies.',
-                            'C' => 'Moderate — visible naked eye but requires good conditions.',
-                            'D' => 'Difficult — usually needs binoculars or a telescope.',
-                            'E' => 'Very difficult or not visible even with aid.'
+                            'A' => __('Excellent conditions — crescent should be easily visible to the naked eye.', 'crescent-visibility'),
+                            'B' => __('Good conditions — visible to the naked eye under clear skies.', 'crescent-visibility'),
+                            'C' => __('Moderate — visible naked eye but requires good conditions.', 'crescent-visibility'),
+                            'D' => __('Difficult — usually needs binoculars or a telescope.', 'crescent-visibility'),
+                            'E' => __('Very difficult or not visible even with aid.', 'crescent-visibility'),
                         ];
-                        echo esc_html($explanations[$row->best_effective] ?? 'Visibility conditions vary.');
+                        echo esc_html($explanations[$row->best_effective] ?? __('Visibility conditions vary.', 'crescent-visibility'));
                         ?>
                     </div>
                 </div>
@@ -75,7 +81,7 @@ function crescent_visibility_render($atts) {
         <?php endif; ?>
 
         <p style="font-size: 12px; color: #6c757d; margin-top: 12px;">
-            Pre-computed Yallop data (clear skies baseline). Atmospheric adjustment coming in a future update.
+            <?php esc_html_e('Pre-computed Yallop data (clear skies baseline). Atmospheric adjustment coming in a future update.', 'crescent-visibility'); ?>
         </p>
     </div>
     <?php

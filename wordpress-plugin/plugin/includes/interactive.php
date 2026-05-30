@@ -177,11 +177,12 @@ function cvi_apply_atmospheric_adjustment($raw_category, $cloud_percent, $transp
     $effective   = [5 => 'A', 4 => 'B', 3 => 'C', 2 => 'D', 1 => 'E'][$final_value];
 
     if ($adjustment === 0) {
-        $note = 'Atmospheric conditions have minimal impact on this prediction.';
+        $note = __('Atmospheric conditions have minimal impact on this prediction.', 'crescent-visibility');
     } elseif ($adjustment < 0) {
-        $note = sprintf('Conditions are reducing visibility by approximately %d category level(s).', -$adjustment);
+        /* translators: %d: number of visibility category levels lost */
+        $note = sprintf(__('Conditions are reducing visibility by approximately %d category level(s).', 'crescent-visibility'), -$adjustment);
     } else {
-        $note = 'Excellent atmospheric conditions are slightly improving the prediction.';
+        $note = __('Excellent atmospheric conditions are slightly improving the prediction.', 'crescent-visibility');
     }
 
     return [$effective, $note];

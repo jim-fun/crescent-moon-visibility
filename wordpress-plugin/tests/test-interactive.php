@@ -44,6 +44,8 @@ function esc_attr__($s, $d = 'default') { return esc_attr($s); }
 function esc_html_e($s, $d = 'default') { echo esc_html($s); }
 function esc_attr_e($s, $d = 'default') { echo esc_attr($s); }
 function _e($s, $d = 'default') { echo $s; }
+function _n($s, $p, $n, $d = 'default') { return $n == 1 ? $s : $p; }
+function wp_kses($s, $allowed = []) { return $s; }
 function current_user_can($c) { return true; }
 function current_time($fmt) { return date($fmt, strtotime('2026-05-29')); } // matches project "today"
 function admin_url($p = '') { return 'http://example.com/wp-admin/' . $p; }

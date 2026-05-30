@@ -22,6 +22,15 @@
         return;
     }
 
+    // i18n via @wordpress/i18n (enqueued as a dependency). Falls back to the
+    // English source string if wp.i18n is unavailable.
+    var wpI18n = (window.wp && window.wp.i18n) ? window.wp.i18n : null;
+    function __(s) { return wpI18n ? wpI18n.__(s, 'crescent-visibility') : s; }
+    function _sprintf(fmt, a, b) {
+        if (wpI18n && wpI18n.sprintf) { return wpI18n.sprintf(fmt, a, b); }
+        return fmt.replace('%1$s', a).replace('%2$s', b).replace('%d', a);
+    }
+
     var citySel  = document.getElementById('cvi-city');
     var yearSel   = document.getElementById('cvi-year');
     var moonSel   = document.getElementById('cvi-newmoon');
@@ -148,11 +157,11 @@
 
         var note;
         if (adjustment === 0) {
-            note = 'Atmospheric conditions have minimal impact on this prediction.';
+            note = __('Atmospheric conditions have minimal impact on this prediction.');
         } else if (adjustment < 0) {
-            note = 'Conditions are reducing visibility by approximately ' + (-adjustment) + ' category level(s).';
+            note = _sprintf(__('Conditions are reducing visibility by approximately %d category level(s).'), -adjustment);
         } else {
-            note = 'Excellent atmospheric conditions are slightly improving the prediction.';
+            note = __('Excellent atmospheric conditions are slightly improving the prediction.');
         }
         return [effective, note];
     }
@@ -265,8 +274,8 @@
     function loadYears(city) {
         if (!city) {
             // Guard against the empty-city request that produced years:[] live.
-            yearSel.innerHTML = '<option value="">No city selected</option>';
-            setStatus('No city available. Check that data has been imported.', true);
+            yearSel.innerHTML = '<option value="">' + escapeHtml(__('No city selected')) + '</option>';
+            setStatus(__('No city available. Check that data has been imported.'), true);
             return Promise.resolve([]);
         }
         // Prefer the embedded dataset (no network — survives Cloudflare Access).
@@ -279,17 +288,17 @@
                 yearSel.appendChild(o);
             });
             if (!dsYears.length) {
-                yearSel.innerHTML = '<option value="">No data</option>';
-                moonSel.innerHTML = '<option value="">No data</option>';
+                yearSel.innerHTML = '<option value="">' + escapeHtml(__('No data')) + '</option>';
+                moonSel.innerHTML = '<option value="">' + escapeHtml(__('No data')) + '</option>';
                 results.hidden = true;
-                setStatus('No visibility data for this city yet.', true);
+                setStatus(__('No visibility data for this city yet.'), true);
             } else {
                 setStatus('');
             }
             return Promise.resolve(dsYears);
         }
 
-        yearSel.innerHTML = '<option>Loading…</option>';
+        yearSel.innerHTML = '<option>' + escapeHtml(__('Loading…')) + '</option>';
         return ajax('cvi_get_years', { city: city }).then(function (d) {
             var years = d.years || [];
             yearSel.innerHTML = '';
@@ -301,17 +310,17 @@
             if (!years.length) {
                 // No observations for this city yet — tell the user why the
                 // year/new-moon dropdowns are empty instead of failing silently.
-                yearSel.innerHTML = '<option value="">No data</option>';
-                moonSel.innerHTML = '<option value="">No data</option>';
+                yearSel.innerHTML = '<option value="">' + escapeHtml(__('No data')) + '</option>';
+                moonSel.innerHTML = '<option value="">' + escapeHtml(__('No data')) + '</option>';
                 results.hidden = true;
-                setStatus('No visibility data for this city yet. An administrator needs to import a dataset under Tools → Crescent Visibility.', true);
+                setStatus(__('No visibility data for this city yet. An administrator needs to import a dataset under Tools → Crescent Visibility.'), true);
             } else {
                 setStatus('');
             }
             return years;
         }).catch(function () {
-            yearSel.innerHTML = '<option value="">No data</option>';
-            setStatus('Could not reach the data endpoint. Please try again.', true);
+            yearSel.innerHTML = '<option value="">' + escapeHtml(__('No data')) + '</option>';
+            setStatus(__('Could not reach the data endpoint. Please try again.'), true);
             return [];
         });
     }
@@ -319,12 +328,12 @@
     function loadNewMoons(city, year, preferDate) {
         var key = city + ':' + year;
         moonSel.disabled = true;
-        moonSel.innerHTML = '<option>Loading new moons…</option>';
+        moonSel.innerHTML = '<option>' + escapeHtml(__('Loading new moons…')) + '</option>';
 
         var apply = function (moons) {
             moonSel.innerHTML = '';
             if (!moons.length) {
-                moonSel.innerHTML = '<option value="">No new moons for this year</option>';
+                moonSel.innerHTML = '<option value="">' + escapeHtml(__('No new moons for this year')) + '</option>';
                 moonSel.disabled = false;
                 return;
             }
@@ -374,9 +383,9 @@
             })
             .catch(function (err) {
                 if (err && err.name === 'AbortError') { return; }
-                moonSel.innerHTML = '<option value="">Error loading data</option>';
+                moonSel.innerHTML = '<option value="">' + escapeHtml(__('Error loading data')) + '</option>';
                 moonSel.disabled = false;
-                setStatus('Could not load new moon data. Please try again.', true);
+                setStatus(__('Could not load new moon data. Please try again.'), true);
             });
     }
 
@@ -395,7 +404,7 @@
         var dayAge = JSON.parse(opt.dataset.dayage || '[]');
         var cloud = parseInt(cloudR.value, 10);
         var trans = parseFloat(transNum.value);
-        var labels = ['Day +0', 'Day +1', 'Day +2'];
+        var labels = [__('Day +0'), __('Day +1'), __('Day +2')];
         var html = '';
 
         for (var i = 0; i < 3; i++) {
@@ -407,9 +416,9 @@
             // Same graceful handling as main.go's handlePointQuery.
             if (raw === 'J' || raw === '?' || age > 100) {
                 html += '<div class="cvi-card cvi-card--empty">'
-                    + '<div class="cvi-card__label">' + labels[i] + '</div>'
-                    + '<div class="cvi-card__empty-title">Not a good crescent window</div>'
-                    + '<div class="cvi-card__empty-note">The selected date is too far from actual new moon conjunction for reliable prediction.</div>'
+                    + '<div class="cvi-card__label">' + escapeHtml(labels[i]) + '</div>'
+                    + '<div class="cvi-card__empty-title">' + escapeHtml(__('Not a good crescent window')) + '</div>'
+                    + '<div class="cvi-card__empty-note">' + escapeHtml(__('The selected date is too far from actual new moon conjunction for reliable prediction.')) + '</div>'
                     + '</div>';
                 continue;
             }
@@ -418,15 +427,16 @@
             var eff = pair[0];
             var note = pair[1];
             var color = CATEGORY_COLORS[eff] || '#64748b';
+            var ageQ = _sprintf(__('Age: %1$s h • Q: %2$s'), age.toFixed(1), q.toFixed(3));
 
             html += '<div class="cvi-card cvi-card--cat" style="--cat:' + color + ';">'
-                + '<div class="cvi-card__label">' + labels[i] + '</div>'
+                + '<div class="cvi-card__label">' + escapeHtml(labels[i]) + '</div>'
                 + '<div class="cvi-card__head">'
-                + '<div><div class="cvi-card__sub">Effective</div>'
+                + '<div><div class="cvi-card__sub">' + escapeHtml(__('Effective')) + '</div>'
                 + '<div class="cvi-card__big">' + escapeHtml(eff) + '</div></div>'
                 + '<div class="cvi-card__meta">'
-                + '<div>Raw <span class="cvi-mono">' + escapeHtml(raw) + '</span></div>'
-                + '<div class="cvi-card__sub">Age: ' + age.toFixed(1) + ' h • Q: ' + q.toFixed(3) + '</div>'
+                + '<div>' + escapeHtml(__('Raw')) + ' <span class="cvi-mono">' + escapeHtml(raw) + '</span></div>'
+                + '<div class="cvi-card__sub">' + escapeHtml(ageQ) + '</div>'
                 + '</div></div>'
                 + '<div class="cvi-card__note">' + escapeHtml(note) + '</div>'
                 + '</div>';
@@ -519,7 +529,7 @@
     var bootDate = data.defaultNewMoon || closestNewMoonDate(citySel.value);
     selectCity(citySel.value, bootDate).then(function () {
         if (!Object.keys(DATASET).length && !yearSel.value) {
-            setStatus('No data imported yet. Import a dataset under Tools → Crescent Visibility.', true);
+            setStatus(__('No data imported yet. Import a dataset under Tools → Crescent Visibility.'), true);
         }
     });
 })();

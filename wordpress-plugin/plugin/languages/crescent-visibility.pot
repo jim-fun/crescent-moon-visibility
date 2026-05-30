@@ -1,0 +1,350 @@
+# Translation template for Young Crescent Moon Visibility
+# Copyright (C) 2026 Crescent Moon Visibility Project
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-30 13:19-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: plugin/crescent-visibility.php:78
+msgid "Crescent Visibility Data"
+msgstr ""
+
+#: plugin/crescent-visibility.php:79
+msgid "Crescent Visibility"
+msgstr ""
+
+#: plugin/includes/interactive.php:180 plugin/assets/js/interactive.js:160
+msgid "Atmospheric conditions have minimal impact on this prediction."
+msgstr ""
+
+#. translators: %d: number of visibility category levels lost
+#: plugin/includes/interactive.php:183 plugin/assets/js/interactive.js:162
+#, javascript-format, php-format
+msgid ""
+"Conditions are reducing visibility by approximately %d category level(s)."
+msgstr ""
+
+#: plugin/includes/interactive.php:185 plugin/assets/js/interactive.js:164
+msgid "Excellent atmospheric conditions are slightly improving the prediction."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:50
+#: plugin/assets/js/interactive.js:420
+msgid "Not a good crescent window"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:51
+#: plugin/assets/js/interactive.js:421
+msgid ""
+"The selected date is too far from actual new moon conjunction for reliable "
+"prediction."
+msgstr ""
+
+#. translators: 1: moon age in hours, 2: Q value
+#: plugin/public/interactive-renderer.php:60
+#: plugin/assets/js/interactive.js:430
+#, javascript-format, php-format
+msgid "Age: %1$s h • Q: %2$s"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:65
+#: plugin/public/interactive-renderer.php:286
+#: plugin/assets/js/interactive.js:435
+msgid "Effective"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:68
+#: plugin/public/interactive-renderer.php:285
+#: plugin/assets/js/interactive.js:438
+msgid "Raw"
+msgstr ""
+
+#. translators: %s: shortcode name wrapped in <code>
+#: plugin/public/interactive-renderer.php:82
+#, php-format
+msgid ""
+"Enable JavaScript to use the interactive visibility tool, or see the %s "
+"shortcode for a static table."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:97
+msgid "Enable JavaScript to use the interactive visibility tool."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:106
+#: plugin/assets/js/interactive.js:407
+msgid "Day +0"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:107
+#: plugin/assets/js/interactive.js:407
+msgid "Day +1"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:108
+#: plugin/assets/js/interactive.js:407
+msgid "Day +2"
+msgstr ""
+
+#. translators: %s: a new moon date (YYYY-MM-DD)
+#: plugin/public/interactive-renderer.php:121
+#, php-format
+msgid ""
+"Showing the default window (%s) at clear-sky conditions. Enable JavaScript "
+"for the full interactive tool."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:207
+msgid "Young Crescent Moon Visibility"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:209
+msgid ""
+"Select your nearest city and a New Moon date, then adjust the sky conditions "
+"to explore your chances of spotting the delicate thin crescent on each of "
+"the first three evenings."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:213
+msgid "Quick city selection"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:214
+msgid "Quick select:"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:219
+msgid "City"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:226
+msgid "Year"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:230
+msgid "New Moon (3-day window)"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:232
+msgid "Select a new moon…"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:238
+msgid "Atmospheric Conditions"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:242
+msgid "Cloud Cover"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:246
+msgid "0% clear → 100% overcast"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:249
+msgid "Transparency"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:261
+msgid "Results for the three evenings after conjunction"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:266
+msgid "Location context"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:268
+msgid "Map shown for geographic context only (marker at the selected city)."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:272
+msgid "How to read the visibility rating"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:275
+msgid "Easily visible to the naked eye"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:276
+msgid "Visible naked eye under good conditions"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:277
+msgid "Visible naked eye, but requires effort"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:280
+msgid "Usually needs binoculars or a telescope"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:281
+msgid "Very difficult or not visible even with aid"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:285
+msgid ""
+"pure astronomical prediction using the Yallop criterion at the city's "
+"location and time."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:286
+msgid "adjusted for the cloud cover and transparency you entered."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:287
+msgid "Age"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:287
+msgid "hours since the exact moment of new moon (conjunction)."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:288
+msgid "Q"
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:288
+msgid ""
+"model quality factor (higher generally indicates more favorable geometry)."
+msgstr ""
+
+#: plugin/public/interactive-renderer.php:293
+msgid ""
+"Yallop criterion (clear-sky baseline). Atmospheric adjustment applied live "
+"in the browser. No astronomy is computed at runtime."
+msgstr ""
+
+#. translators: %s: plugin version
+#: plugin/public/interactive-renderer.php:294
+#, php-format
+msgid "Plugin v%s"
+msgstr ""
+
+#. translators: %s: city name
+#: plugin/public/renderer.php:31
+#, php-format
+msgid "Crescent Visibility — %s"
+msgstr ""
+
+#: plugin/public/renderer.php:35
+msgid "Period:"
+msgstr ""
+
+#. translators: %d: number of new moons
+#: plugin/public/renderer.php:38
+#, php-format
+msgid "(%d new moon)"
+msgid_plural "(%d new moons)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: plugin/public/renderer.php:45
+msgid "No data found for this city and period."
+msgstr ""
+
+#: plugin/public/renderer.php:46
+msgid "Next step:"
+msgstr ""
+
+#: plugin/public/renderer.php:46
+msgid ""
+"Go to Tools → Crescent Visibility in the WordPress admin dashboard and "
+"import a visibility JSON file using the Import form."
+msgstr ""
+
+#: plugin/public/renderer.php:70
+msgid ""
+"Excellent conditions — crescent should be easily visible to the naked eye."
+msgstr ""
+
+#: plugin/public/renderer.php:71
+msgid "Good conditions — visible to the naked eye under clear skies."
+msgstr ""
+
+#: plugin/public/renderer.php:72
+msgid "Moderate — visible naked eye but requires good conditions."
+msgstr ""
+
+#: plugin/public/renderer.php:73
+msgid "Difficult — usually needs binoculars or a telescope."
+msgstr ""
+
+#: plugin/public/renderer.php:74
+msgid "Very difficult or not visible even with aid."
+msgstr ""
+
+#: plugin/public/renderer.php:76
+msgid "Visibility conditions vary."
+msgstr ""
+
+#: plugin/public/renderer.php:84
+msgid ""
+"Pre-computed Yallop data (clear skies baseline). Atmospheric adjustment "
+"coming in a future update."
+msgstr ""
+
+#: plugin/assets/js/interactive.js:277
+msgid "No city selected"
+msgstr ""
+
+#: plugin/assets/js/interactive.js:278
+msgid "No city available. Check that data has been imported."
+msgstr ""
+
+#: plugin/assets/js/interactive.js:291 plugin/assets/js/interactive.js:292
+#: plugin/assets/js/interactive.js:313 plugin/assets/js/interactive.js:314
+#: plugin/assets/js/interactive.js:322
+msgid "No data"
+msgstr ""
+
+#: plugin/assets/js/interactive.js:294
+msgid "No visibility data for this city yet."
+msgstr ""
+
+#: plugin/assets/js/interactive.js:301
+msgid "Loading…"
+msgstr ""
+
+#: plugin/assets/js/interactive.js:316
+msgid ""
+"No visibility data for this city yet. An administrator needs to import a "
+"dataset under Tools → Crescent Visibility."
+msgstr ""
+
+#: plugin/assets/js/interactive.js:323
+msgid "Could not reach the data endpoint. Please try again."
+msgstr ""
+
+#: plugin/assets/js/interactive.js:331
+msgid "Loading new moons…"
+msgstr ""
+
+#: plugin/assets/js/interactive.js:336
+msgid "No new moons for this year"
+msgstr ""
+
+#: plugin/assets/js/interactive.js:386
+msgid "Error loading data"
+msgstr ""
+
+#: plugin/assets/js/interactive.js:388
+msgid "Could not load new moon data. Please try again."
+msgstr ""
+
+#: plugin/assets/js/interactive.js:532
+msgid ""
+"No data imported yet. Import a dataset under Tools → Crescent Visibility."
+msgstr ""
