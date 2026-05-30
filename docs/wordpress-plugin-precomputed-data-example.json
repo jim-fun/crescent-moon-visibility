@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "generated_at": "2026-05-28",
+    "generator": "crescent-moon-visibility point mode + Yallop",
+    "cities": 10,
+    "start_year": 2006,
+    "end_year": 2028,
+    "note": "Pre-computed for clear atmospheric conditions (0% cloud, transparency ~7-8). Use for historical context only."
+  },
+  "cities": {
+    "jerusalem": {
+      "name": "Jerusalem",
+      "lat": 31.7683,
+      "lon": 35.2137
+    },
+    "cairo": {
+      "name": "Cairo",
+      "lat": 30.0444,
+      "lon": 31.2357
+    },
+    "london": {
+      "name": "London",
+      "lat": 51.5074,
+      "lon": -0.1278
+    }
+  },
+  "data": [
+    {
+      "city": "jerusalem",
+      "new_moon": "2006-02-28",
+      "year": 2006,
+      "days": ["D", "C", "B"],
+      "best_raw": "B",
+      "best_effective": "B"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2006-03-29",
+      "year": 2006,
+      "days": ["E", "D", "C"],
+      "best_raw": "C",
+      "best_effective": "C"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2025-03-29",
+      "year": 2025,
+      "days": ["B", "A", "C"],
+      "best_raw": "A",
+      "best_effective": "A"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2025-03-29",
+      "year": 2025,
+      "days": ["C", "B", "B"],
+      "best_raw": "B",
+      "best_effective": "B"
+    },
+    {
+      "city": "london",
+      "new_moon": "2025-03-29",
+      "year": 2025,
+      "days": ["D", "C", "C"],
+      "best_raw": "C",
+      "best_effective": "C"
+    }
+  ]
+}

@@ -1,0 +1,7175 @@
+{
+  "meta": {
+    "generated_at": "2026-05-29T02:31:10Z",
+    "generator": "crescent-moon-visibility real renderer (Yallop)",
+    "start_year": 2026,
+    "end_year": 2028,
+    "cities": 13,
+    "note": "Generated with real visibility.out point queries. Standard clear skies assumption for effective categories."
+  },
+  "cities": [
+    {
+      "slug": "jerusalem",
+      "name": "Jerusalem",
+      "latitude": 31.7683,
+      "longitude": 35.2137
+    },
+    {
+      "slug": "dallas",
+      "name": "Dallas",
+      "latitude": 32.7767,
+      "longitude": -96.797
+    },
+    {
+      "slug": "melbourne",
+      "name": "Melbourne",
+      "latitude": -37.8136,
+      "longitude": 144.9631
+    },
+    {
+      "slug": "cairo",
+      "name": "Cairo",
+      "latitude": 30.0444,
+      "longitude": 31.2357
+    },
+    {
+      "slug": "london",
+      "name": "London",
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    },
+    {
+      "slug": "istanbul",
+      "name": "Istanbul",
+      "latitude": 41.0136,
+      "longitude": 28.955
+    },
+    {
+      "slug": "mumbai",
+      "name": "Mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777
+    },
+    {
+      "slug": "tokyo",
+      "name": "Tokyo",
+      "latitude": 35.6762,
+      "longitude": 139.6503
+    },
+    {
+      "slug": "rio",
+      "name": "Rio de Janeiro",
+      "latitude": -22.9068,
+      "longitude": -43.1729
+    },
+    {
+      "slug": "capetown",
+      "name": "Cape Town",
+      "latitude": -33.9249,
+      "longitude": 18.4241
+    },
+    {
+      "slug": "mecca",
+      "name": "Mecca",
+      "latitude": 21.3891,
+      "longitude": 39.8579
+    },
+    {
+      "slug": "karachi",
+      "name": "Karachi",
+      "latitude": 24.8607,
+      "longitude": 67.0011
+    },
+    {
+      "slug": "rabat",
+      "name": "Rabat",
+      "latitude": 33.9716,
+      "longitude": -6.8498
+    }
+  ],
+  "observations": [
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3937,
+      "moon_age_at_best": 43.88
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5265,
+      "moon_age_at_best": 27.92
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "E",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6498,
+      "moon_age_at_best": 39.19
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9875,
+      "moon_age_at_best": 28.92
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4341,
+      "moon_age_at_best": 20.98
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.573,
+      "moon_age_at_best": 38.64
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6603,
+      "moon_age_at_best": 31.52
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0866,
+      "moon_age_at_best": 47.25
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.426,
+      "moon_age_at_best": 60.82
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5256,
+      "moon_age_at_best": 47.67
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1253,
+      "moon_age_at_best": 56.21
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3866,
+      "moon_age_at_best": 38.16
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2879,
+      "moon_age_at_best": 28.35
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1943,
+      "moon_age_at_best": 36.88
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "A",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3988,
+      "moon_age_at_best": 23.68
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7598,
+      "moon_age_at_best": 37.95
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1359,
+      "moon_age_at_best": 30.03
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "A",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4737,
+      "moon_age_at_best": 23.22
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1768,
+      "moon_age_at_best": 40.46
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2254,
+      "moon_age_at_best": 31.94
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5529,
+      "moon_age_at_best": 45.49
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "I",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9637,
+      "moon_age_at_best": 56.54
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6273,
+      "moon_age_at_best": 65.1
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8972,
+      "moon_age_at_best": 47.07
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4747,
+      "moon_age_at_best": 38.27
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5775,
+      "moon_age_at_best": 45.56
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1158,
+      "moon_age_at_best": 55.51
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6435,
+      "moon_age_at_best": 44.28
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "I",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4122,
+      "moon_age_at_best": 35.64
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.293,
+      "moon_age_at_best": 28.64
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.1176,
+      "moon_age_at_best": 46.56
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5205,
+      "moon_age_at_best": 38.89
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7183,
+      "moon_age_at_best": 29.24
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.482,
+      "moon_age_at_best": 41.53
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4042,
+      "moon_age_at_best": 26.57
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.532,
+      "moon_age_at_best": 33.29
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4427,
+      "moon_age_at_best": 44.2
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5537,
+      "moon_age_at_best": 28.21
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "E",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6698,
+      "moon_age_at_best": 39.45
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0035,
+      "moon_age_at_best": 29.14
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.45,
+      "moon_age_at_best": 21.18
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6258,
+      "moon_age_at_best": 38.84
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7128,
+      "moon_age_at_best": 31.73
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1668,
+      "moon_age_at_best": 47.49
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5261,
+      "moon_age_at_best": 61.1
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6095,
+      "moon_age_at_best": 47.98
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2195,
+      "moon_age_at_best": 56.55
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4523,
+      "moon_age_at_best": 38.51
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0631,
+      "moon_age_at_best": 45.46
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5065,
+      "moon_age_at_best": 29.96
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7419,
+      "moon_age_at_best": 41.87
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.127,
+      "moon_age_at_best": 32.1
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5255,
+      "moon_age_at_best": 24.59
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1234,
+      "moon_age_at_best": 42.29
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2253,
+      "moon_age_at_best": 34.88
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "F",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3573,
+      "moon_age_at_best": 50.04
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4863,
+      "moon_age_at_best": 63.03
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "I",
+        "I",
+        "E"
+      ],
+      "best_raw": "E",
+      "best_effective": "E"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "I",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.1991,
+      "moon_age_at_best": 57.5
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1011,
+      "moon_age_at_best": 63.78
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2308,
+      "moon_age_at_best": 43.99
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4925,
+      "moon_age_at_best": 28.2
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.669,
+      "moon_age_at_best": 39.72
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0297,
+      "moon_age_at_best": 29.63
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4644,
+      "moon_age_at_best": 21.85
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.379,
+      "moon_age_at_best": 39.54
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4607,
+      "moon_age_at_best": 32.32
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7385,
+      "moon_age_at_best": 47.84
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9743,
+      "moon_age_at_best": 61.18
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.157,
+      "moon_age_at_best": 47.86
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6984,
+      "moon_age_at_best": 56.22
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5653,
+      "moon_age_at_best": 62.55
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3635,
+      "moon_age_at_best": 41.67
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3683,
+      "moon_age_at_best": 25.53
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3651,
+      "moon_age_at_best": 36.53
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6854,
+      "moon_age_at_best": 26.05
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.2699,
+      "moon_age_at_best": 42.47
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.544,
+      "moon_age_at_best": 35.59
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7081,
+      "moon_age_at_best": 28.57
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3608,
+      "moon_age_at_best": 44.53
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3576,
+      "moon_age_at_best": 34.09
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8532,
+      "moon_age_at_best": 45.38
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4797,
+      "moon_age_at_best": 54.1
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5516,
+      "moon_age_at_best": 36.11
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8096,
+      "moon_age_at_best": 36.65
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8421,
+      "moon_age_at_best": 45.25
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0601,
+      "moon_age_at_best": 32.11
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4275,
+      "moon_age_at_best": 21.9
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7943,
+      "moon_age_at_best": 38.58
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0031,
+      "moon_age_at_best": 31.75
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5861,
+      "moon_age_at_best": 48.88
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5672,
+      "moon_age_at_best": 40.3
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8605,
+      "moon_age_at_best": 53.78
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "I",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.0201,
+      "moon_age_at_best": 40.55
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5431,
+      "moon_age_at_best": 48.99
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3195,
+      "moon_age_at_best": 55.31
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5326,
+      "moon_age_at_best": 50.48
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4062,
+      "moon_age_at_best": 33.82
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0192,
+      "moon_age_at_best": 44.09
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4342,
+      "moon_age_at_best": 33.08
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.1165,
+      "moon_age_at_best": 49.05
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8551,
+      "moon_age_at_best": 42.12
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3797,
+      "moon_age_at_best": 35.34
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6766,
+      "moon_age_at_best": 27.46
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6427,
+      "moon_age_at_best": 41.99
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6146,
+      "moon_age_at_best": 29.55
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1568,
+      "moon_age_at_best": 38.78
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3753,
+      "moon_age_at_best": 45.35
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "G",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9898,
+      "moon_age_at_best": 46.65
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1768,
+      "moon_age_at_best": 54.01
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3627,
+      "moon_age_at_best": 39.85
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4467,
+      "moon_age_at_best": 52.96
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2541,
+      "moon_age_at_best": 44.42
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.13,
+      "moon_age_at_best": 37.47
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8421,
+      "moon_age_at_best": 30.78
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3083,
+      "moon_age_at_best": 23.07
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3582,
+      "moon_age_at_best": 37.84
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4053,
+      "moon_age_at_best": 25.57
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9096,
+      "moon_age_at_best": 35
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0125,
+      "moon_age_at_best": 41.64
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5096,
+      "moon_age_at_best": 43.86
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5283,
+      "moon_age_at_best": 27.74
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5741,
+      "moon_age_at_best": 38.79
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8959,
+      "moon_age_at_best": 28.34
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3586,
+      "moon_age_at_best": 20.28
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7057,
+      "moon_age_at_best": 37.91
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8298,
+      "moon_age_at_best": 30.87
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4337,
+      "moon_age_at_best": 46.79
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4244,
+      "moon_age_at_best": 36.31
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9068,
+      "moon_age_at_best": 47.57
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5415,
+      "moon_age_at_best": 56.26
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.64,
+      "moon_age_at_best": 38.26
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3351,
+      "moon_age_at_best": 41.92
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3938,
+      "moon_age_at_best": 25.85
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.442,
+      "moon_age_at_best": 36.97
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7695,
+      "moon_age_at_best": 26.57
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2377,
+      "moon_age_at_best": 18.55
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "E",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5201,
+      "moon_age_at_best": 36.2
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.654,
+      "moon_age_at_best": 29.14
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2053,
+      "moon_age_at_best": 45.01
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2277,
+      "moon_age_at_best": 34.48
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6732,
+      "moon_age_at_best": 45.67
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.287,
+      "moon_age_at_best": 54.31
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4434,
+      "moon_age_at_best": 36.29
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5667,
+      "moon_age_at_best": 46.67
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7238,
+      "moon_age_at_best": 30.75
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8965,
+      "moon_age_at_best": 42.08
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2333,
+      "moon_age_at_best": 31.85
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6542,
+      "moon_age_at_best": 23.95
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7306,
+      "moon_age_at_best": 41.59
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7779,
+      "moon_age_at_best": 34.44
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "F",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1575,
+      "moon_age_at_best": 50.11
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4734,
+      "moon_age_at_best": 63.64
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5829,
+      "moon_age_at_best": 50.45
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1924,
+      "moon_age_at_best": 58.97
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4874,
+      "moon_age_at_best": 40.91
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0534,
+      "moon_age_at_best": 43.11
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6829,
+      "moon_age_at_best": 48.15
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.676,
+      "moon_age_at_best": 30.72
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6602,
+      "moon_age_at_best": 40.97
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9661,
+      "moon_age_at_best": 30.05
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3157,
+      "moon_age_at_best": 21.49
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1774,
+      "moon_age_at_best": 38.37
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3129,
+      "moon_age_at_best": 30.81
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9485,
+      "moon_age_at_best": 46.73
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7085,
+      "moon_age_at_best": 61.32
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1,
+      "moon_age_at_best": 49.72
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3338,
+      "moon_age_at_best": 35.58
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0855,
+      "moon_age_at_best": 43.18
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6342,
+      "moon_age_at_best": 52.03
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6217,
+      "moon_age_at_best": 32.66
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3154,
+      "moon_age_at_best": 39.69
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4934,
+      "moon_age_at_best": 25.48
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.663,
+      "moon_age_at_best": 39.08
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9277,
+      "moon_age_at_best": 30.5
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7555,
+      "moon_age_at_best": 47.32
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8193,
+      "moon_age_at_best": 39.73
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4623,
+      "moon_age_at_best": 55.62
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6787,
+      "moon_age_at_best": 45.93
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5396,
+      "moon_age_at_best": 58.61
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8659,
+      "moon_age_at_best": 44.49
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.663,
+      "moon_age_at_best": 52.1
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3433,
+      "moon_age_at_best": 37.79
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.1614,
+      "moon_age_at_best": 41.8
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2837,
+      "moon_age_at_best": 47.54
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "I",
+        "F"
+      ],
+      "best_raw": "E",
+      "best_effective": "E"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7625,
+      "moon_age_at_best": 44.89
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7065,
+      "moon_age_at_best": 35.99
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6166,
+      "moon_age_at_best": 28.74
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3227,
+      "moon_age_at_best": 21.94
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8197,
+      "moon_age_at_best": 39.14
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0164,
+      "moon_age_at_best": 30.44
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8139,
+      "moon_age_at_best": 44.2
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5649,
+      "moon_age_at_best": 30.58
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4448,
+      "moon_age_at_best": 38.02
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1024,
+      "moon_age_at_best": 43.44
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7115,
+      "moon_age_at_best": 48.45
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6897,
+      "moon_age_at_best": 30.99
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6758,
+      "moon_age_at_best": 41.21
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9852,
+      "moon_age_at_best": 30.25
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3397,
+      "moon_age_at_best": 21.68
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2424,
+      "moon_age_at_best": 38.57
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3739,
+      "moon_age_at_best": 31.04
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0382,
+      "moon_age_at_best": 46.99
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2703,
+      "moon_age_at_best": 37.34
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0942,
+      "moon_age_at_best": 50.04
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.402,
+      "moon_age_at_best": 35.92
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.139,
+      "moon_age_at_best": 43.51
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6783,
+      "moon_age_at_best": 44.52
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5809,
+      "moon_age_at_best": 50.1
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7906,
+      "moon_age_at_best": 33.14
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7533,
+      "moon_age_at_best": 44.02
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1,
+      "moon_age_at_best": 33.53
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2488,
+      "moon_age_at_best": 25.18
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6118,
+      "moon_age_at_best": 41.79
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9373,
+      "moon_age_at_best": 57.94
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "I",
+        "I",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.1656,
+      "moon_age_at_best": 49.16
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "I",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6578,
+      "moon_age_at_best": 63.17
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "I",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.124,
+      "moon_age_at_best": 51.17
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "I",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.058,
+      "moon_age_at_best": 61.23
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6477,
+      "moon_age_at_best": 44.5
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.876,
+      "moon_age_at_best": 43.15
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6249,
+      "moon_age_at_best": 48.4
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7073,
+      "moon_age_at_best": 31.15
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6893,
+      "moon_age_at_best": 41.64
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9736,
+      "moon_age_at_best": 30.87
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2839,
+      "moon_age_at_best": 22.39
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9186,
+      "moon_age_at_best": 39.19
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4143,
+      "moon_age_at_best": 55.68
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5654,
+      "moon_age_at_best": 47.18
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.204,
+      "moon_age_at_best": 61.54
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5867,
+      "moon_age_at_best": 49.78
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5475,
+      "moon_age_at_best": 59.99
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8825,
+      "moon_age_at_best": 43.19
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0642,
+      "moon_age_at_best": 40.96
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5202,
+      "moon_age_at_best": 45.8
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4352,
+      "moon_age_at_best": 28.17
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3635,
+      "moon_age_at_best": 38.16
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7092,
+      "moon_age_at_best": 27.06
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.0802,
+      "moon_age_at_best": 42.88
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2726,
+      "moon_age_at_best": 35.4
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4398,
+      "moon_age_at_best": 28
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2748,
+      "moon_age_at_best": 44.16
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4532,
+      "moon_age_at_best": 34.67
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3396,
+      "moon_age_at_best": 47.54
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5049,
+      "moon_age_at_best": 33.5
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1238,
+      "moon_age_at_best": 41.06
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5272,
+      "moon_age_at_best": 35.86
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1597,
+      "moon_age_at_best": 40.99
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.945,
+      "moon_age_at_best": 48.09
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1191,
+      "moon_age_at_best": 33.95
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4506,
+      "moon_age_at_best": 23.08
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4816,
+      "moon_age_at_best": 39.03
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6219,
+      "moon_age_at_best": 31.47
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2185,
+      "moon_age_at_best": 48.11
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3776,
+      "moon_age_at_best": 39.72
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0473,
+      "moon_age_at_best": 54.2
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3954,
+      "moon_age_at_best": 42.52
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3017,
+      "moon_age_at_best": 52.74
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5482,
+      "moon_age_at_best": 35.93
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2995,
+      "moon_age_at_best": 49.92
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2525,
+      "moon_age_at_best": 54.18
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6113,
+      "moon_age_at_best": 60.25
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9193,
+      "moon_age_at_best": 45.32
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.505,
+      "moon_age_at_best": 33.79
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.231,
+      "moon_age_at_best": 24.93
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.0558,
+      "moon_age_at_best": 42.12
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5093,
+      "moon_age_at_best": 35.12
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8008,
+      "moon_age_at_best": 27.51
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.9723,
+      "moon_age_at_best": 43.02
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9617,
+      "moon_age_at_best": 32.03
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4575,
+      "moon_age_at_best": 42.69
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4367,
+      "moon_age_at_best": 50.12
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "G",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8142,
+      "moon_age_at_best": 46.14
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6612,
+      "moon_age_at_best": 50.21
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8786,
+      "moon_age_at_best": 56.06
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "I",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2377,
+      "moon_age_at_best": 40.94
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6018,
+      "moon_age_at_best": 53.65
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.574,
+      "moon_age_at_best": 44.81
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4531,
+      "moon_age_at_best": 37.55
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0792,
+      "moon_age_at_best": 30.68
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4969,
+      "moon_age_at_best": 23.25
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6913,
+      "moon_age_at_best": 39
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7137,
+      "moon_age_at_best": 28.17
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "E",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0948,
+      "moon_age_at_best": 38.97
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9433,
+      "moon_age_at_best": 46.37
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1882,
+      "moon_age_at_best": 43.13
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6833,
+      "moon_age_at_best": 48
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6041,
+      "moon_age_at_best": 30.41
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5679,
+      "moon_age_at_best": 40.45
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9037,
+      "moon_age_at_best": 29.38
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.304,
+      "moon_age_at_best": 20.75
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4012,
+      "moon_age_at_best": 37.7
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5436,
+      "moon_age_at_best": 30.27
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3467,
+      "moon_age_at_best": 46.39
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5275,
+      "moon_age_at_best": 36.87
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4123,
+      "moon_age_at_best": 49.72
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5984,
+      "moon_age_at_best": 35.66
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2452,
+      "moon_age_at_best": 43.23
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0232,
+      "moon_age_at_best": 41.18
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.554,
+      "moon_age_at_best": 46.11
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5009,
+      "moon_age_at_best": 28.57
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.451,
+      "moon_age_at_best": 38.67
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.78,
+      "moon_age_at_best": 27.64
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.0477,
+      "moon_age_at_best": 43.49
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1937,
+      "moon_age_at_best": 35.98
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3473,
+      "moon_age_at_best": 28.51
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0895,
+      "moon_age_at_best": 44.57
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2989,
+      "moon_age_at_best": 35
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1488,
+      "moon_age_at_best": 47.78
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3914,
+      "moon_age_at_best": 33.7
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0708,
+      "moon_age_at_best": 41.27
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1977,
+      "moon_age_at_best": 45.88
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2294,
+      "moon_age_at_best": 26.53
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8786,
+      "moon_age_at_best": 33.58
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8927,
+      "moon_age_at_best": 43.89
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.182,
+      "moon_age_at_best": 33
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4952,
+      "moon_age_at_best": 24.45
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3026,
+      "moon_age_at_best": 41.29
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4174,
+      "moon_age_at_best": 33.7
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0253,
+      "moon_age_at_best": 49.57
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2743,
+      "moon_age_at_best": 39.85
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0803,
+      "moon_age_at_best": 52.48
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4394,
+      "moon_age_at_best": 38.34
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.224,
+      "moon_age_at_best": 45.95
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6083,
+      "moon_age_at_best": 48.71
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4495,
+      "moon_age_at_best": 29.39
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9692,
+      "moon_age_at_best": 35.99
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7511,
+      "moon_age_at_best": 45.31
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8797,
+      "moon_age_at_best": 32.94
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6098,
+      "moon_age_at_best": 47.05
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7209,
+      "moon_age_at_best": 38.08
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5637,
+      "moon_age_at_best": 53.99
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9246,
+      "moon_age_at_best": 45.6
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3935,
+      "moon_age_at_best": 36.4
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6247,
+      "moon_age_at_best": 50.04
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.933,
+      "moon_age_at_best": 37.13
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6038,
+      "moon_age_at_best": 33.22
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0136,
+      "moon_age_at_best": 38.34
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5852,
+      "moon_age_at_best": 44.97
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6779,
+      "moon_age_at_best": 29.85
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4761,
+      "moon_age_at_best": 41.94
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5805,
+      "moon_age_at_best": 31.68
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "D",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2567,
+      "moon_age_at_best": 47
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5001,
+      "moon_age_at_best": 38.64
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5028,
+      "moon_age_at_best": 54.5
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9687,
+      "moon_age_at_best": 45.3
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.461,
+      "moon_age_at_best": 34.52
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5592,
+      "moon_age_at_best": 46.06
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.1569,
+      "moon_age_at_best": 42.7
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.0458,
+      "moon_age_at_best": 46.64
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3366,
+      "moon_age_at_best": 52.05
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "I",
+        "C"
+      ],
+      "best_raw": "C",
+      "best_effective": "C",
+      "q_at_best": -0.1508,
+      "moon_age_at_best": 36.06
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1576,
+      "moon_age_at_best": 47.56
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0715,
+      "moon_age_at_best": 37.38
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8387,
+      "moon_age_at_best": 29.02
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4242,
+      "moon_age_at_best": 21.58
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.9288,
+      "moon_age_at_best": 38.73
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.109,
+      "moon_age_at_best": 30.44
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7923,
+      "moon_age_at_best": 44.83
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4056,
+      "moon_age_at_best": 32.04
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6384,
+      "moon_age_at_best": 49.02
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4609,
+      "moon_age_at_best": 29.68
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9779,
+      "moon_age_at_best": 36.24
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7743,
+      "moon_age_at_best": 45.53
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9113,
+      "moon_age_at_best": 33.14
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.682,
+      "moon_age_at_best": 47.25
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.793,
+      "moon_age_at_best": 38.3
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6684,
+      "moon_age_at_best": 54.25
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0198,
+      "moon_age_at_best": 45.89
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4756,
+      "moon_age_at_best": 36.71
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "I",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7168,
+      "moon_age_at_best": 50.38
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9909,
+      "moon_age_at_best": 37.47
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4575,
+      "moon_age_at_best": 50.48
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5532,
+      "moon_age_at_best": 31.61
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "E",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1097,
+      "moon_age_at_best": 38.78
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2661,
+      "moon_age_at_best": 24.09
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6976,
+      "moon_age_at_best": 36.54
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9427,
+      "moon_age_at_best": 50.5
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3574,
+      "moon_age_at_best": 65.33
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6454,
+      "moon_age_at_best": 56.54
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "I",
+        "B"
+      ],
+      "best_raw": "B",
+      "best_effective": "B",
+      "q_at_best": 0.1147,
+      "moon_age_at_best": 47.7
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0833,
+      "moon_age_at_best": 62.35
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7778,
+      "moon_age_at_best": 51.35
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4756,
+      "moon_age_at_best": 38.41
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5331,
+      "moon_age_at_best": 48.89
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4801,
+      "moon_age_at_best": 29.74
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0192,
+      "moon_age_at_best": 36.57
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7211,
+      "moon_age_at_best": 46.09
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7991,
+      "moon_age_at_best": 33.82
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "G",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3079,
+      "moon_age_at_best": 47.88
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4274,
+      "moon_age_at_best": 38.79
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1136,
+      "moon_age_at_best": 54.48
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.525,
+      "moon_age_at_best": 45.92
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6603,
+      "moon_age_at_best": 60.88
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2311,
+      "moon_age_at_best": 50.05
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.718,
+      "moon_age_at_best": 37.13
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4732,
+      "moon_age_at_best": 46.42
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2296,
+      "moon_age_at_best": 26.93
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6952,
+      "moon_age_at_best": 33.29
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5287,
+      "moon_age_at_best": 42.39
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7486,
+      "moon_age_at_best": 29.91
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7498,
+      "moon_age_at_best": 44.06
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9046,
+      "moon_age_at_best": 35.22
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.9535,
+      "moon_age_at_best": 51.37
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2614,
+      "moon_age_at_best": 43.17
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6421,
+      "moon_age_at_best": 34.14
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.882,
+      "moon_age_at_best": 47.92
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9778,
+      "moon_age_at_best": 35.03
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1088,
+      "moon_age_at_best": 41.53
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5673,
+      "moon_age_at_best": 46.7
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5281,
+      "moon_age_at_best": 28.96
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2409,
+      "moon_age_at_best": 38.35
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4002,
+      "moon_age_at_best": 26.03
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0305,
+      "moon_age_at_best": 40.15
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6771,
+      "moon_age_at_best": 55.4
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.906,
+      "moon_age_at_best": 46.99
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "I",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3012,
+      "moon_age_at_best": 38.52
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "D",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4255,
+      "moon_age_at_best": 53.58
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9408,
+      "moon_age_at_best": 42.79
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3565,
+      "moon_age_at_best": 29.86
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2225,
+      "moon_age_at_best": 54.99
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.2214,
+      "moon_age_at_best": 59.22
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2849,
+      "moon_age_at_best": 40.7
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1725,
+      "moon_age_at_best": 49.24
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8002,
+      "moon_age_at_best": 36.49
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4483,
+      "moon_age_at_best": 26.26
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.0816,
+      "moon_age_at_best": 42.24
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4913,
+      "moon_age_at_best": 34.56
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.828,
+      "moon_age_at_best": 26.89
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "B",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 2.1543,
+      "moon_age_at_best": 42.86
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0856,
+      "moon_age_at_best": 32.57
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4649,
+      "moon_age_at_best": 44.15
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6451,
+      "moon_age_at_best": 51.1
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5678,
+      "moon_age_at_best": 55.11
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "I",
+        "E",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9619,
+      "moon_age_at_best": 60.63
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4745,
+      "moon_age_at_best": 44.74
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.9954,
+      "moon_age_at_best": 56.34
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8987,
+      "moon_age_at_best": 46.17
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6233,
+      "moon_age_at_best": 37.77
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1503,
+      "moon_age_at_best": 30.26
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.5557,
+      "moon_age_at_best": 22.77
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "C",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8149,
+      "moon_age_at_best": 38.96
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7433,
+      "moon_age_at_best": 28.79
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9652,
+      "moon_age_at_best": 40.41
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6248,
+      "moon_age_at_best": 48.61
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.3807,
+      "moon_age_at_best": 29.15
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8688,
+      "moon_age_at_best": 35.55
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7125,
+      "moon_age_at_best": 44.69
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9083,
+      "moon_age_at_best": 32.23
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.8712,
+      "moon_age_at_best": 46.37
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.006,
+      "moon_age_at_best": 37.51
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2555,
+      "moon_age_at_best": 29.31
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.3432,
+      "moon_age_at_best": 45.38
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7362,
+      "moon_age_at_best": 36.33
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.9908,
+      "moon_age_at_best": 50.09
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1098,
+      "moon_age_at_best": 37.2
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.4981,
+      "moon_age_at_best": 46.71
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2912,
+      "moon_age_at_best": 27.29
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7791,
+      "moon_age_at_best": 33.75
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.5901,
+      "moon_age_at_best": 42.94
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7711,
+      "moon_age_at_best": 30.51
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "J",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.6521,
+      "moon_age_at_best": 44.65
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.7851,
+      "moon_age_at_best": 35.75
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7344,
+      "moon_age_at_best": 51.8
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "J",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.066,
+      "moon_age_at_best": 43.52
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4871,
+      "moon_age_at_best": 34.42
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "J",
+        "C",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7237,
+      "moon_age_at_best": 48.13
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.9172,
+      "moon_age_at_best": 35.23
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2283,
+      "moon_age_at_best": 27.09
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.6292,
+      "moon_age_at_best": 32.23
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.1694,
+      "moon_age_at_best": 38.88
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "G",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.2906,
+      "moon_age_at_best": 23.78
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.047,
+      "moon_age_at_best": 35.89
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7278,
+      "moon_age_at_best": 49.98
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.8238,
+      "moon_age_at_best": 40.98
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.651,
+      "moon_age_at_best": 56.84
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "F",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0165,
+      "moon_age_at_best": 48.42
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "I",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 0.4988,
+      "moon_age_at_best": 39.18
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "I",
+        "B",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.7461,
+      "moon_age_at_best": 52.81
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "F",
+        "A",
+        "A"
+      ],
+      "best_raw": "A",
+      "best_effective": "A",
+      "q_at_best": 1.0831,
+      "moon_age_at_best": 39.9
+    }
+  ],
+  "yearly_summaries": [
+    {
+      "city": "jerusalem",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "dallas",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "melbourne",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "cairo",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "london",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 10,
+      "windows_with_b_or_better": 11,
+      "windows_with_c_or_better": 11
+    },
+    {
+      "city": "istanbul",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 11,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mumbai",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "tokyo",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 11,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rio",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "capetown",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mecca",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "karachi",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rabat",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "jerusalem",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "dallas",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "melbourne",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 11,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "cairo",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "london",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 11,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "istanbul",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "mumbai",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "tokyo",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "rio",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "capetown",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "mecca",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "karachi",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "rabat",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "A",
+      "windows_with_a": 13,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "jerusalem",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "dallas",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "melbourne",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 9,
+      "windows_with_b_or_better": 11,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "cairo",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "london",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 11,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "istanbul",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mumbai",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "tokyo",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rio",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "capetown",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mecca",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "karachi",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rabat",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "A",
+      "windows_with_a": 12,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    }
+  ]
+}

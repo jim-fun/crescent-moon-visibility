@@ -1,0 +1,6217 @@
+{
+  "meta": {
+    "generated_at": "2026-05-29T02:31:02Z",
+    "generator": "crescent-moon-visibility real renderer (Yallop)",
+    "start_year": 2026,
+    "end_year": 2028,
+    "cities": 13,
+    "note": "Generated with real visibility.out point queries. Standard clear skies assumption for effective categories."
+  },
+  "cities": [
+    {
+      "slug": "jerusalem",
+      "name": "Jerusalem",
+      "latitude": 31.7683,
+      "longitude": 35.2137
+    },
+    {
+      "slug": "dallas",
+      "name": "Dallas",
+      "latitude": 32.7767,
+      "longitude": -96.797
+    },
+    {
+      "slug": "melbourne",
+      "name": "Melbourne",
+      "latitude": -37.8136,
+      "longitude": 144.9631
+    },
+    {
+      "slug": "cairo",
+      "name": "Cairo",
+      "latitude": 30.0444,
+      "longitude": 31.2357
+    },
+    {
+      "slug": "london",
+      "name": "London",
+      "latitude": 51.5074,
+      "longitude": -0.1278
+    },
+    {
+      "slug": "istanbul",
+      "name": "Istanbul",
+      "latitude": 41.0136,
+      "longitude": 28.955
+    },
+    {
+      "slug": "mumbai",
+      "name": "Mumbai",
+      "latitude": 19.076,
+      "longitude": 72.8777
+    },
+    {
+      "slug": "tokyo",
+      "name": "Tokyo",
+      "latitude": 35.6762,
+      "longitude": 139.6503
+    },
+    {
+      "slug": "rio",
+      "name": "Rio de Janeiro",
+      "latitude": -22.9068,
+      "longitude": -43.1729
+    },
+    {
+      "slug": "capetown",
+      "name": "Cape Town",
+      "latitude": -33.9249,
+      "longitude": 18.4241
+    },
+    {
+      "slug": "mecca",
+      "name": "Mecca",
+      "latitude": 21.3891,
+      "longitude": 39.8579
+    },
+    {
+      "slug": "karachi",
+      "name": "Karachi",
+      "latitude": 24.8607,
+      "longitude": 67.0011
+    },
+    {
+      "slug": "rabat",
+      "name": "Rabat",
+      "latitude": 33.9716,
+      "longitude": -6.8498
+    }
+  ],
+  "observations": [
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-01-18",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-02-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-03-19",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-04-17",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-05-16",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-06-15",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-07-14",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-08-12",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-09-11",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-10-10",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-11-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2026-12-09",
+      "year": 2026,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-01-07",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-02-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-03-08",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-04-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-05-06",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-06-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-07-04",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-08-02",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-08-31",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-09-30",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-10-29",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-11-28",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2027-12-27",
+      "year": 2027,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "jerusalem",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "dallas",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "melbourne",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "cairo",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "london",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "istanbul",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mumbai",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "tokyo",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rio",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "capetown",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "mecca",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "karachi",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-01-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-02-25",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-03-26",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-04-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-05-24",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-06-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-07-22",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-08-20",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-09-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-10-18",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-11-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    },
+    {
+      "city": "rabat",
+      "new_moon": "2028-12-16",
+      "year": 2028,
+      "days": [
+        "?",
+        "?",
+        "?"
+      ],
+      "best_raw": "?",
+      "best_effective": "?"
+    }
+  ],
+  "yearly_summaries": [
+    {
+      "city": "jerusalem",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "dallas",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "melbourne",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "cairo",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "london",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "istanbul",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mumbai",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "tokyo",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rio",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "capetown",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mecca",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "karachi",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rabat",
+      "year": 2026,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "jerusalem",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "dallas",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "melbourne",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "cairo",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "london",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "istanbul",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "mumbai",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "tokyo",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "rio",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "capetown",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "mecca",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "karachi",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "rabat",
+      "year": 2027,
+      "new_moons_count": 13,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 13,
+      "windows_with_c_or_better": 13
+    },
+    {
+      "city": "jerusalem",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "dallas",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "melbourne",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "cairo",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "london",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "istanbul",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mumbai",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "tokyo",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rio",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "capetown",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "mecca",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "karachi",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    },
+    {
+      "city": "rabat",
+      "year": 2028,
+      "new_moons_count": 12,
+      "best_effective": "?",
+      "windows_with_a": 0,
+      "windows_with_b_or_better": 12,
+      "windows_with_c_or_better": 12
+    }
+  ]
+}
