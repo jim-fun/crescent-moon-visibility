@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 #
-# Build the installable crescent-visibility.zip from the current plugin files.
+# Build an installable, versioned plugin zip into wordpress-plugin/dist/.
 #
-# Enforces that the plugin is versioned on every package update:
+# Output: dist/crescent-visibility-<version>.zip
+# (The folder INSIDE the zip stays "crescent-visibility/" — that is the install
+#  slug / text domain and must not change between releases.)
+#
+# Enforces versioning:
 #   - the "Version:" header and the CVI_VERSION constant must match
-#   - refuses to overwrite a zip that already embeds this exact version
-#     (pass --force to override) so you remember to bump it
+#   - refuses to overwrite an already-built zip for this version (pass --force)
 #
 # Usage:  bash wordpress-plugin/scripts/build-plugin.sh [--force]
 
@@ -14,7 +17,8 @@ set -euo pipefail
 cd "$(dirname "$0")/.."   # -> wordpress-plugin/
 
 PLUGIN_DIR="plugin"
-ZIP="$PWD/crescent-visibility.zip"
+SLUG="crescent-visibility"
+DIST="$PWD/dist"
 FORCE="${1:-}"
 
 main_php="$PLUGIN_DIR/crescent-visibility.php"
@@ -30,24 +34,23 @@ if [[ "$header_ver" != "$const_ver" ]]; then
   exit 1
 fi
 
+mkdir -p "$DIST"
+ZIP="$DIST/${SLUG}-${header_ver}.zip"
+
 # Guard: don't silently re-ship the same version.
 if [[ -f "$ZIP" && "$FORCE" != "--force" ]]; then
-  if unzip -p "$ZIP" crescent-visibility/crescent-visibility.php 2>/dev/null | grep -q "Version:.*$header_ver"; then
-    echo "ERROR: $ZIP already contains version $header_ver. Bump the version, or pass --force." >&2
-    exit 1
-  fi
+  echo "ERROR: $ZIP already exists. Bump the version, or pass --force." >&2
+  exit 1
 fi
 
 # Lint everything before packaging.
-find "$PLUGIN_DIR" -name '*.php' -not -name 'renderer-improved.php' -not -name 'renderer-with-atmosphere.php' \
-  -exec php -l {} \; >/dev/null
+find "$PLUGIN_DIR" -name '*.php' -exec php -l {} \; >/dev/null
 command -v node >/dev/null && node --check "$PLUGIN_DIR/assets/js/interactive.js"
 
-# Stage only the files the plugin actually loads (exclude exploratory renderers).
-# Note: no data file is bundled — data is imported separately via
-# Tools → Crescent Visibility (the JSON is parsed into the DB on upload).
+# Stage only the files the plugin actually loads. No data file is bundled —
+# data is imported via Tools → Crescent Visibility.
 STAGE=$(mktemp -d)
-DEST="$STAGE/crescent-visibility"
+DEST="$STAGE/$SLUG"
 mkdir -p "$DEST"/{includes,public,admin,assets/css,assets/js}
 
 cp "$PLUGIN_DIR/crescent-visibility.php"          "$DEST/"
@@ -61,7 +64,7 @@ cp "$PLUGIN_DIR/assets/css/interactive.css"       "$DEST/assets/css/"
 cp "$PLUGIN_DIR/assets/js/interactive.js"         "$DEST/assets/js/"
 
 rm -f "$ZIP"
-( cd "$STAGE" && zip -rq "$ZIP" crescent-visibility -x '*.DS_Store' )
+( cd "$STAGE" && zip -rq "$ZIP" "$SLUG" -x '*.DS_Store' )
 rm -rf "$STAGE"
 
-echo "Built $ZIP (v$header_ver, no bundled data, $(du -h "$ZIP" | cut -f1))"
+echo "Built dist/${SLUG}-${header_ver}.zip ($(du -h "$ZIP" | cut -f1), no bundled data)"

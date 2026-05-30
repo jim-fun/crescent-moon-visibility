@@ -56,6 +56,7 @@ web_errors*.log
 
 # WordPress plugin build artifacts (reproducible via wordpress-plugin/scripts/build-plugin.sh)
 wordpress-plugin/*.zip
+wordpress-plugin/dist/
 
 # Local pre-change snapshots
 backups/
