@@ -1,5 +1,20 @@
 # Changelog – Crescent Visibility (WordPress Plugin)
 
+## [0.5.5] – 2026-06-15
+
+### Changed
+- Capitalize "Sunset" on result card date labels.
+
+## [0.5.4] – 2026-06-15
+
+### Changed
+- Result card headers: Day +0/+1/+2 left-aligned, sunset date (YYYY-MM-DD) right-aligned on one line.
+
+## [0.5.3] – 2026-06-15
+
+### Changed
+- Result cards show the calendar date (YYYY-MM-DD) below each Day +0/+1/+2 label.
+
 ## [0.2.0] – 2026-05-29
 
 ### Added

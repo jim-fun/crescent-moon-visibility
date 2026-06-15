@@ -30,23 +30,42 @@ function cvi_category_colors() {
 }
 
 /**
+ * Render the day label + calendar date shown atop each result card.
+ *
+ * @param string $label Day label, e.g. "Day +0".
+ * @param string $date  Calendar date (YYYY-MM-DD) for that evening.
+ */
+function cvi_render_card_label($label, $date) {
+    /* translators: %1$s: calendar date (YYYY-MM-DD) */
+    $sunset = $date !== ''
+        ? sprintf(__('Sunset %1$s', 'crescent-visibility'), $date)
+        : '';
+
+    return '<div class="cvi-card__label">'
+        . '<div class="cvi-card__label-day">' . esc_html($label) . '</div>'
+        . ($sunset !== '' ? '<div class="cvi-card__label-date">' . esc_html($sunset) . '</div>' : '')
+        . '</div>';
+}
+
+/**
  * Render one result card server-side (used for the no-JS fallback). Mirrors
  * the JS card markup and the web app's graceful handling of "J" / "?" /
  * large moon ages.
  *
  * @param string $label Day label, e.g. "Day +0".
+ * @param string $date  Calendar date (YYYY-MM-DD) for that evening.
  * @param string $raw   Raw category letter.
  * @param int    $cloud Cloud cover 0-100.
  * @param float  $trans Transparency 1-10.
  * @param float  $age   Moon age in hours (best evening).
  * @param float  $q     Q value (best evening).
  */
-function cvi_render_card($label, $raw, $cloud, $trans, $age, $q) {
+function cvi_render_card($label, $date, $raw, $cloud, $trans, $age, $q) {
     $raw = strtoupper((string) $raw);
 
     if ($raw === 'J' || $raw === '?' || $raw === '' || $age > 100) {
         return '<div class="cvi-card cvi-card--empty">'
-            . '<div class="cvi-card__label">' . esc_html($label) . '</div>'
+            . cvi_render_card_label($label, $date)
             . '<div class="cvi-card__empty-title">' . esc_html__('Not a good crescent window', 'crescent-visibility') . '</div>'
             . '<div class="cvi-card__empty-note">' . esc_html__('The selected date is too far from actual new moon conjunction for reliable prediction.', 'crescent-visibility') . '</div>'
             . '</div>';
@@ -60,7 +79,7 @@ function cvi_render_card($label, $raw, $cloud, $trans, $age, $q) {
     $age_q = sprintf(__('Age: %1$s h • Q: %2$s', 'crescent-visibility'), number_format((float) $age, 1), number_format((float) $q, 3));
 
     return '<div class="cvi-card cvi-card--cat" style="--cat:' . esc_attr($color) . ';">'
-        . '<div class="cvi-card__label">' . esc_html($label) . '</div>'
+        . cvi_render_card_label($label, $date)
         . '<div class="cvi-card__head">'
         . '<div><div class="cvi-card__sub">' . esc_html__('Effective', 'crescent-visibility') . '</div>'
         . '<div class="cvi-card__big">' . esc_html($eff) . '</div></div>'
@@ -108,11 +127,13 @@ function cvi_render_noscript_fallback($interactive, $defaults) {
         __('Day +2', 'crescent-visibility'),
     ];
 
-    $cards = '';
+    $base_date = $row['new_moon_date'];
+    $cards     = '';
     foreach ($row['days'] as $i => $raw) {
-        $age = $day_age[$i] ?? 0;
-        $q   = $day_q[$i] ?? 0;
-        $cards .= cvi_render_card($labels[$i] ?? ('Day +' . $i), $raw, $cloud, $trans, $age, $q);
+        $age  = $day_age[$i] ?? 0;
+        $q    = $day_q[$i] ?? 0;
+        $date = gmdate('Y-m-d', strtotime($base_date . ' +' . $i . ' days'));
+        $cards .= cvi_render_card($labels[$i] ?? ('Day +' . $i), $date, $raw, $cloud, $trans, $age, $q);
     }
 
     return '<div class="cvi-noscript">'
@@ -169,7 +190,7 @@ function crescent_visibility_render_interactive($atts) {
 
     // Enqueue assets only when the shortcode actually renders.
     $base_url = plugin_dir_url(dirname(__FILE__, 2) . '/crescent-visibility.php');
-    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.5.2';
+    $asset_ver = defined('CVI_VERSION') ? CVI_VERSION : '0.5.5';
 
     // Leaflet is bundled locally (no external CDN) per WordPress.org guidelines.
     wp_enqueue_style('cvi-leaflet', $base_url . 'assets/vendor/leaflet/leaflet.css', [], '1.9.4');

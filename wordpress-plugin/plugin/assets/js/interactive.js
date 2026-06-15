@@ -389,6 +389,27 @@
             });
     }
 
+    // Add calendar days to a YYYY-MM-DD string (UTC-safe).
+    function addDays(isoDate, days) {
+        var parts = isoDate.split('-');
+        var d = new Date(Date.UTC(
+            parseInt(parts[0], 10),
+            parseInt(parts[1], 10) - 1,
+            parseInt(parts[2], 10) + days
+        ));
+        return d.toISOString().slice(0, 10);
+    }
+
+    function renderCardLabel(label, dateStr) {
+        var sunset = dateStr
+            ? _sprintf(__('Sunset %1$s'), dateStr)
+            : '';
+        return '<div class="cvi-card__label">'
+            + '<div class="cvi-card__label-day">' + escapeHtml(label) + '</div>'
+            + (sunset ? '<div class="cvi-card__label-date">' + escapeHtml(sunset) + '</div>' : '')
+            + '</div>';
+    }
+
     // -----------------------------------------------------------------
     // Result cards
     // -----------------------------------------------------------------
@@ -405,9 +426,11 @@
         var cloud = parseInt(cloudR.value, 10);
         var trans = parseFloat(transNum.value);
         var labels = [__('Day +0'), __('Day +1'), __('Day +2')];
+        var baseDate = moonSel.value || '';
         var html = '';
 
         for (var i = 0; i < 3; i++) {
+            var dayDate = baseDate ? addDays(baseDate, i) : '';
             var raw = String(days[i] || '?').toUpperCase();
             // Each evening has its own age + Q (not the best evening's).
             var age = (dayAge[i] === null || dayAge[i] === undefined) ? 0 : Number(dayAge[i]);
@@ -416,7 +439,7 @@
             // Same graceful handling as main.go's handlePointQuery.
             if (raw === 'J' || raw === '?' || age > 100) {
                 html += '<div class="cvi-card cvi-card--empty">'
-                    + '<div class="cvi-card__label">' + escapeHtml(labels[i]) + '</div>'
+                    + renderCardLabel(labels[i], dayDate)
                     + '<div class="cvi-card__empty-title">' + escapeHtml(__('Not a good crescent window')) + '</div>'
                     + '<div class="cvi-card__empty-note">' + escapeHtml(__('The selected date is too far from actual new moon conjunction for reliable prediction.')) + '</div>'
                     + '</div>';
@@ -430,7 +453,7 @@
             var ageQ = _sprintf(__('Age: %1$s h • Q: %2$s'), age.toFixed(1), q.toFixed(3));
 
             html += '<div class="cvi-card cvi-card--cat" style="--cat:' + color + ';">'
-                + '<div class="cvi-card__label">' + escapeHtml(labels[i]) + '</div>'
+                + renderCardLabel(labels[i], dayDate)
                 + '<div class="cvi-card__head">'
                 + '<div><div class="cvi-card__sub">' + escapeHtml(__('Effective')) + '</div>'
                 + '<div class="cvi-card__big">' + escapeHtml(eff) + '</div></div>'

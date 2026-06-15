@@ -4,7 +4,7 @@ Tags: moon, crescent, astronomy, hijri, lunar
 Requires at least: 5.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 0.5.2
+Stable tag: 0.5.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,15 @@ The Yallop crescent-visibility criterion, computed by the project's reference re
 
 == Changelog ==
 
+= 0.5.5 =
+* Capitalize "Sunset" on result card date labels.
+
+= 0.5.4 =
+* Result card headers: Day +0/+1/+2 left, sunset date (YYYY-MM-DD) right on one line.
+
+= 0.5.3 =
+* Show the calendar date (YYYY-MM-DD) below each Day +0/+1/+2 label on result cards.
+
 = 0.5.2 =
 * Internationalize the admin screen and import notices; full .pot (150 strings).
 
@@ -76,6 +85,15 @@ The Yallop crescent-visibility criterion, computed by the project's reference re
 * License set to GPLv2-or-later; internationalization of the front-end UI.
 
 == Upgrade Notice ==
+
+= 0.5.5 =
+Minor label capitalization fix on result cards.
+
+= 0.5.4 =
+Result cards show the sunset date on the right of each day label.
+
+= 0.5.3 =
+Result cards now show the evening date under each day label.
 
 = 0.5.0 =
 First public release.
